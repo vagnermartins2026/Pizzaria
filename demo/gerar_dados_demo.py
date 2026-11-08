@@ -78,15 +78,21 @@ def gerar(hoje, rng):
                                   email=f"{nome.split()[0].lower()}@demo.invalid"))
     for i, (n, slices, mx, mult) in enumerate(SIZES):
         data["pizza_sizes"].append(dict(id=uid("size", n), tenant_id=t, name=n, slices=slices, max_flavors=mx, sort_order=i))
+    for i, cat in enumerate(["Tradicionais", "Especiais", "Doces", "Bebidas"]):
+        data["categories"].append(dict(id=uid("category", cat), tenant_id=t, name=cat, sort_order=i, active=True))
     for n, (cat, base) in FLAVORS.items():
-        data["flavors"].append(dict(id=uid("flavor", n), tenant_id=t, name=n, category=cat, active=True))
+        data["flavors"].append(dict(id=uid("flavor", n), tenant_id=t, category_id=uid("category", cat),
+                                    name=n, active=True))
         for s, _, _, mult in SIZES:
             data["flavor_prices"].append(dict(flavor_id=uid("flavor", n), size_id=uid("size", s),
                                               price_cents=price_cents(base, mult)))
-    for n, p in BORDERS:
-        data["addons"].append(dict(id=uid("addon", n), tenant_id=t, group="Bordas", name=n, price_cents=p))
+    data["addon_groups"].append(dict(id=uid("addon_group", "Bordas"), tenant_id=t, name="Bordas", min_choices=0, max_choices=1))
+    for n, p in BORDERS:  # simplificação da demo: mesmo preço em todos os tamanhos
+        data["addons"].append(dict(id=uid("addon", n), tenant_id=t, group_id=uid("addon_group", "Bordas"),
+                                   name=n, price_cents=p))
     for n, cat, p in PRODUCTS:
-        data["products"].append(dict(id=uid("product", n), tenant_id=t, name=n, category=cat, price_cents=p))
+        data["products"].append(dict(id=uid("product", n), tenant_id=t, category_id=uid("category", cat),
+                                     name=n, price_cents=p, active=True))
     for n, fee, extra in ZONES:
         data["delivery_zones"].append(dict(id=uid("zone", n), tenant_id=t, neighborhood=n, fee_cents=fee, extra_minutes=extra))
     price = {(r["flavor_id"], r["size_id"]): r["price_cents"] for r in data["flavor_prices"]}
@@ -108,9 +114,19 @@ def gerar(hoje, rng):
         zone = rng.choice(ZONES)[0]
         data["customers"].append(dict(
             id=cid, tenant_id=t, name=f"{rng.choice(FIRST)} {rng.choice(LAST)}",
-            phone_e164=f"+5519900{ci:06d}",
-            birth_date=bday.isoformat() if bday else "", neighborhood=zone, persona_demo=persona,
-            marketing_consent="revoked" if optout else ("granted" if consent else "none"), is_demo=True))
+            phone_e164=f"+5519900{ci:06d}", birth_date=bday.isoformat() if bday else "",
+            persona_demo=persona, is_demo=True))  # persona_demo: coluna só da demo
+        data["customer_addresses"].append(dict(id=uid("address", ci), tenant_id=t, customer_id=cid, cep="",
+                                               street=f"Rua Demonstração, {100 + ci}", neighborhood=zone))
+        if consent:  # histórico só com inserção (RN-50/51)
+            when = datetime.combine(hoje - timedelta(days=200), datetime.min.time(), TZ).isoformat()
+            data["marketing_consents"].append(dict(tenant_id=t, customer_id=cid, channel="whatsapp", status="granted",
+                                                   source=rng.choice(["link", "counter"]), text_version="v1",
+                                                   recorded_at=when))
+            if optout:
+                data["marketing_consents"].append(dict(tenant_id=t, customer_id=cid, channel="whatsapp",
+                                                       status="revoked", source="counter", text_version="v1",
+                                                       recorded_at=(datetime.fromisoformat(when) + timedelta(days=90)).isoformat()))
         favs = rng.sample(POPULAR if rng.random() < 0.7 else names, 2)
         pref_wd = rng.choice([4, 5, 6, 4, 5, 6, 3, 0])  # sex/sáb/dom mais comuns
         # linha do tempo da persona
@@ -156,8 +172,10 @@ def gerar(hoje, rng):
                 unit += border[1] if border else 0
                 subtotal += unit
                 data["order_items"].append(dict(id=iid, order_id=oid, kind="pizza", name_snapshot=f"Pizza {size}",
-                                                size_snapshot=size, unit_price_cents=unit, qty=1,
-                                                addons=border[0] if border else ""))
+                                                size_snapshot=size, unit_price_cents=unit, qty=1))
+                if border:
+                    data["order_item_addons"].append(dict(order_item_id=iid, addon_id=uid("addon", border[0]),
+                                                          name_snapshot=border[0], price_cents=border[1]))
                 for f in fl:
                     data["order_item_flavors"].append(dict(order_item_id=iid, flavor_id=uid("flavor", f),
                                                            name_snapshot=f, fraction=round(1 / len(fl), 2)))
@@ -165,7 +183,7 @@ def gerar(hoje, rng):
                 pn, _, pp = rng.choice(PRODUCTS)
                 subtotal += pp
                 data["order_items"].append(dict(id=uid("item", seq, "b"), order_id=oid, kind="product",
-                                                name_snapshot=pn, size_snapshot="", unit_price_cents=pp, qty=1, addons=""))
+                                                name_snapshot=pn, size_snapshot="", unit_price_cents=pp, qty=1))
             fee = next(z[1] for z in ZONES if z[0] == zone) if otype == "delivery" else 0
             status = "cancelled" if rng.random() < 0.03 else "concluded"
             data["orders"].append(dict(id=oid, tenant_id=t, number=seq, customer_id=cid, channel=channel, type=otype,
@@ -177,8 +195,39 @@ def gerar(hoje, rng):
 
 
 # ---------------------------------------------------------------- motor (PRD §10)
+def gatilho(s):
+    """PRD §10.3 — G2 antes de G1; G1/G3 cobrem 25-59 / 10-59 dias para não haver buraco até o G4."""
+    iv, dd = s["intervalo"], s["dias"]
+    if iv and iv <= 21 and dd >= max(2 * iv, iv + 7) and dd < 60:
+        return "G2"
+    if s["n"] >= 2 and 25 <= dd <= 59:
+        return "G1"
+    if s["n"] == 1 and 10 <= dd <= 59:
+        return "G3"
+    if 60 <= dd <= 180:
+        return "G4"
+    return None
+
+
+def verificar_fronteiras():
+    """Casos na fronteira exata de cada regra (skill contera-dev, descoberta-prd §3.3)."""
+    casos = [  # (pedidos, dias, intervalo, esperado)
+        (2, 24, None, None), (2, 25, None, "G1"), (2, 59, None, "G1"), (2, 60, None, "G4"),
+        (2, 180, None, "G4"), (2, 181, None, None),
+        (1, 9, None, None), (1, 10, None, "G3"), (1, 59, None, "G3"), (1, 60, None, "G4"),
+        (5, 13, 7, None), (5, 14, 7, "G2"), (5, 28, 14, "G2"), (5, 27, 14, "G1"),
+        (5, 59, 21, "G2"), (5, 60, 21, "G4"), (5, 44, 22, "G1"),
+    ]
+    for n, dias, iv, esperado in casos:
+        obtido = gatilho(dict(n=n, dias=dias, intervalo=iv))
+        assert obtido == esperado, f"fronteira: pedidos={n} dias={dias} intervalo={iv} → {obtido}, esperado {esperado}"
+
+
 def motor(data, hoje):
     cust = {c["id"]: c for c in data["customers"]}
+    consent = {}
+    for r in sorted(data["marketing_consents"], key=lambda r: r["recorded_at"]):
+        consent[r["customer_id"]] = r["status"]
     orders = defaultdict(list)
     for o in data["orders"]:
         if o["status"] == "concluded":
@@ -215,22 +264,10 @@ def motor(data, hoje):
     for s in stats.values():
         s["vip"] = s["g180"] >= corte_vip and s["n180"] >= 5
 
-    def gatilho(c, s):
-        iv, dd = s["intervalo"], s["dias"]
-        if iv and iv <= 21 and dd >= max(2 * iv, iv + 7) and dd < 60:
-            return "G2"
-        if 25 <= dd <= 30 and s["n"] >= 2:
-            return "G1"
-        if s["n"] == 1 and 10 <= dd <= 30:
-            return "G3"
-        if 60 <= dd <= 180:
-            return "G4"
-        return None
-
     cards, bloqueados = defaultdict(list), Counter()
     for cid, s in stats.items():
         c = cust[cid]
-        g = gatilho(c, s)
+        g = gatilho(s)
         if not g and c["birth_date"]:
             b = date.fromisoformat(c["birth_date"])
             prox = b.replace(year=hoje.year)
@@ -238,7 +275,7 @@ def motor(data, hoje):
                 g = "G5"
         if not g:
             continue
-        if c["marketing_consent"] != "granted":
+        if consent.get(cid) != "granted":
             bloqueados[g] += 1
             continue
         cards[g].append((c, s))
@@ -251,7 +288,7 @@ def brl(cents):
 
 WD = ["segunda", "terça", "quarta", "quinta", "sexta", "sábado", "domingo"]
 TITULOS = {"G2": "{n} clientes frequentes saíram do ritmo",
-           "G1": "{n} clientes estão quase completando 30 dias sem pedir",
+           "G1": "{n} clientes passaram de 25 dias sem pedir",
            "G3": "{n} clientes pediram uma vez e não voltaram",
            "G4": "{n} clientes não pedem há mais de 60 dias",
            "G5": "{n} cliente(s) fazem aniversário nos próximos dias"}
@@ -271,7 +308,7 @@ def frase(c, s, g):
                              "Se quiser comemorar com pizza, é só pedir por aqui: forno-da-vila-demo.app")
     msg = f"Oi, {nome}! Faz um tempinho que você não pede com a gente."
     if s["favs"]:
-        msg += f" Vimos que a {s['favs'][0]} é uma das suas favoritas."
+        msg += f" Vimos que {s['favs'][0]} está entre as suas favoritas."
     msg += " Que tal hoje? Peça por aqui: forno-da-vila-demo.app"
     return " ".join(p), msg
 
@@ -280,13 +317,32 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--hoje", default=datetime.now(TZ).date().isoformat())
     ap.add_argument("--semente", type=int, default=42)
+    ap.add_argument("--verificar", action="store_true",
+                    help="compara a prévia com demo/gabarito_<hoje>.txt (semente 42) e sai com erro se divergir")
     ap.add_argument("--saida", default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "saida"))
     a = ap.parse_args()
     hoje = date.fromisoformat(a.hoje)
-    data = gerar(hoje, random.Random(a.semente))
-    os.makedirs(a.saida, exist_ok=True)
+    if a.verificar:
+        import contextlib, io
+        gab = os.path.join(os.path.dirname(os.path.abspath(__file__)), f"gabarito_{a.hoje}.txt")
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            executar(hoje, a.semente, a.saida)
+        esperado = open(gab, encoding="utf-8").read()
+        if buf.getvalue() != esperado:
+            print(f"DIVERGE do gabarito {os.path.basename(gab)}: regra mudou sem atualizar o PRD/gabarito?")
+            sys.exit(1)
+        print(f"OK: prévia idêntica ao gabarito {os.path.basename(gab)}")
+        return
+    executar(hoje, a.semente, a.saida)
+
+
+def executar(hoje, semente, saida):
+    verificar_fronteiras()
+    data = gerar(hoje, random.Random(semente))
+    os.makedirs(saida, exist_ok=True)
     for name, rows in data.items():
-        with open(os.path.join(a.saida, f"{name}.csv"), "w", newline="", encoding="utf-8") as fh:
+        with open(os.path.join(saida, f"{name}.csv"), "w", newline="", encoding="utf-8") as fh:
             w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
             w.writeheader()
             w.writerows(rows)
@@ -297,7 +353,7 @@ def main():
     fat30 = sum(o["total_cents"] for o in ult30)
     print(f"== {TENANT['name']} | hoje = {hoje.isoformat()} ==")
     print(f"Clientes: {len(data['customers'])} | Pedidos: {len(data['orders'])} "
-          f"({len(data['orders']) - len(conc)} cancelados) | Arquivos em {os.path.relpath(a.saida).replace(os.sep, '/')}")
+          f"({len(data['orders']) - len(conc)} cancelados)")
     print(f"Últimos 30 dias: {len(ult30)} pedidos ({len(ult30) / 30:.0f}/dia), {brl(fat30)}, "
           f"valor médio {brl(fat30 // max(1, len(ult30)))}")
 

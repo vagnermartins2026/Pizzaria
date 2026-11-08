@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 0.2 (assinatura, ERP completo, escala e módulos) |
+| Versão | 0.3 (auditoria: lacuna de gatilhos, IDs de módulo, bloqueio fiscal, papéis, LGPD) |
 | Data | 2026-11-08 |
 | Status | Aguardando aprovação do nome, dos preços e do roadmap |
 | Fonte | [`docs/briefing-original.md`](./briefing-original.md) · [`PLANO-DE-NEGOCIO.md`](./PLANO-DE-NEGOCIO.md) · [`PILOTO-DEMO.md`](./PILOTO-DEMO.md) |
@@ -11,10 +11,10 @@
 > **Como ler este documento.** As seções 1 a 3 trazem o porquê. A seção 4 lista o que foi
 > **decidido por padrão** (e pode mudar) e o que **ainda precisa de você**. As seções 5 a 11
 > trazem o quê: escopo, fluxos, requisitos e regras. As seções 12 a 14 trazem o como:
-> arquitetura e dados. A seção 15 é o plano do MVP.
+> arquitetura e dados. A seção 15 é o roadmap (releases R0 a R4).
 >
 > Convenções: `RF-xx` = requisito funcional, `RN-xx` = regra de negócio, `RNF-xx` =
-> requisito não funcional. **[MVP]**, **[V1.1]** e **[V2]** indicam em que versão cada item entra.
+> requisito não funcional. **[R1]** a **[R4]** indicam a release em que o item entra (seção 15).
 
 ---
 
@@ -58,7 +58,7 @@ o sistema atual pelo Fornalia e recupera clientes inativos usando apenas o que o
 ### 2.3 Princípios de produto (filtro para toda decisão)
 | # | Princípio | Implicação prática |
 |---|---|---|
-| P1 | Simplicidade acima de quantidade de funcionalidades | Uma função nova só entra no MVP se o piloto não funcionar sem ela |
+| P1 | Simplicidade acima de quantidade de funcionalidades | Uma função só entra numa release se aquela release não for vendável sem ela |
 | P2 | Ação acima de relatório | Nenhum número na tela sem uma frase explicando o que ele significa e qual ação fazer |
 | P3 | Automação com controle | O sistema sugere e prepara; **nenhuma mensagem sai sem um humano aprovar** |
 | P4 | Personalização baseada em fatos | A mensagem só cita o que está no histórico. Nada inventado, nenhuma promessa que a pizzaria não fez |
@@ -82,7 +82,7 @@ o sistema atual pelo Fornalia e recupera clientes inativos usando apenas o que o
 | **Atendente / caixa** | Rush das 19h às 22h, várias coisas ao mesmo tempo | Registrar e acompanhar pedidos sem errar; fechar o caixa sem diferença | Pedido perdido, pedido errado, caixa que não bate |
 | **Cozinha** | Mãos ocupadas, olha a tela ou a comanda impressa | Saber o que preparar e em que ordem | Pedido que chegou e ninguém viu |
 | **Cliente final** | Pede pelo celular, geralmente vindo do WhatsApp ou do Instagram | Pedir rápido, saber o preço com frete antes de fechar, acompanhar o pedido | Formulário longo; não saber quando a pizza chega |
-| **Entregador** [V2] | Na rua | Saber endereço, valor e forma de pagamento | Endereço errado; troco errado |
+| **Entregador** [R2] | Na rua | Saber endereço, valor e forma de pagamento | Endereço errado; troco errado |
 
 ---
 
@@ -96,16 +96,16 @@ dói trocar a decisão depois de construído.
 | # | Questão do briefing | Decisão padrão | Por quê | Custo de mudar depois |
 |---|---|---|---|---|
 | D1 | Delivery, retirada ou ambos? | **Ambos**, mais pedido de balcão/telefone lançado pela equipe | Cobre o dia a dia real; retirada não tem frete, então é barata de incluir | Baixo |
-| D2 | Regra de frete | **Por bairro** (tabela bairro → taxa + tempo extra), com CEP autopreenchendo o endereço | É o modelo mais comum em pizzaria, não precisa de mapa nem de API paga, e o dono entende | Médio: distância/raio entra na V1.1 sem refazer o pedido |
+| D2 | Regra de frete | **Por bairro** (tabela bairro → taxa + tempo extra), com CEP autopreenchendo o endereço | É o modelo mais comum em pizzaria, não precisa de mapa nem de API paga, e o dono entende | Médio: distância/raio entra na R2 sem refazer o pedido |
 | D3 | Status do pedido | **Novo → Em preparo → Pronto → Saiu para entrega / Aguardando retirada → Concluído**, mais **Cancelado** | Mínimo que a cozinha e o balcão precisam; ver seção 9 | Baixo |
 | D4 | Caixa | **Caixa simples:** abertura com troco, recebimentos por forma de pagamento, sangria/suprimento, fechamento com conferência. Sem conciliação bancária | A aba "Caixa" está na navegação principal do briefing; conciliação é ERP | Baixo |
-| D5 | Pagamento no link | **MVP: pagamento na entrega/retirada** (dinheiro com troco, cartão na maquininha, Pix na entrega). **V1.1: Pix online** via Mercado Pago | Pagamento online traz webhook, estorno e conciliação. Não é necessário para provar a tese do CRM | Médio |
+| D5 | Pagamento no link | Pagamento na entrega/retirada (dinheiro com troco, cartão na maquininha, Pix na entrega) **e Pix online via Mercado Pago já na R1** (planos Profissional/Premium ou módulo avulso) | Revisto na v0.2: Pix online é esperado pelo cliente final; webhook idempotente obrigatório | Médio |
 | D6 | Cliente acompanha o pedido? | **Sim**, por uma página de status (link recebido ao finalizar), sem login | Corta as ligações de "cadê minha pizza" e custa pouco | Baixo |
-| D7 | Canal das campanhas | **MVP: WhatsApp via link `wa.me`** com a mensagem preenchida; o atendente confere e envia no próprio WhatsApp. **V2: WhatsApp Business API** oficial para envio automático | Custo zero, sem credencial, sem risco de bloqueio do número, e atende o P3 (humano aprova) | Médio: a API oficial é paga por conversa, exige templates aprovados e opt-in formal |
+| D7 | Canal das campanhas | **R1: WhatsApp via link `wa.me`** com a mensagem preenchida; o atendente confere e envia no próprio WhatsApp. **R4: WhatsApp Business API** oficial para envio automático | Custo zero, sem credencial, sem risco de bloqueio do número, e atende o P3 (humano aprova) | Médio: a API oficial é paga por conversa, exige templates aprovados e opt-in formal |
 | D8 | Consentimento e descadastro | **Opt-in explícito** no checkout (caixa desmarcada) e no cadastro de balcão; opt-out a qualquer momento pelo painel ou por pedido do cliente; registro de quando, onde e como | LGPD: mensagem promocional exige base legal; consentimento é a mais segura | Alto se for ignorado: retroativo é impossível |
 | D9 | Limite de frequência | No máximo **1 contato promocional a cada 7 dias** e **4 a cada 30 dias** por cliente (configurável) | Evita a sensação de spam e protege o número de WhatsApp da pizzaria | Baixo |
-| D10 | Identificação do cliente | **Celular (formato E.164) como chave única por pizzaria**; mesclagem manual de duplicados [V1.1] | O telefone é o que o cliente sempre informa e é por onde a campanha chega | Alto: é a espinha do CRM |
-| D11 | Unidades, usuários e permissões | **Multi-pizzaria (SaaS) no modelo de dados desde o início**, 1 loja por pizzaria no MVP; papéis **Dono** e **Atendente** | Isolar por pizzaria desde o dia 1 custa pouco; adaptar depois custa uma reescrita | Alto: por isso já entra no MVP |
+| D10 | Identificação do cliente | **Celular (formato E.164) como chave única por pizzaria**; mesclagem manual de duplicados [R2] | O telefone é o que o cliente sempre informa e é por onde a campanha chega | Alto: é a espinha do CRM |
+| D11 | Unidades, usuários e permissões | **Multi-pizzaria (SaaS) no modelo de dados desde o início**, 1 loja por pizzaria na R1 (multi-loja na R4); papéis por release na seção 12.4 | Isolar por pizzaria desde o dia 1 custa pouco; adaptar depois custa uma reescrita | Alto: por isso já entra no MVP |
 | D12 | Indicadores para o dono | No máximo **4 números** no "Resumo de hoje", cada um com uma frase de leitura (seção 8, M7) | P2: ação acima de relatório | Baixo |
 
 ### 4.2 Decisões tomadas na v0.2 (respostas às perguntas Q1 a Q6)
@@ -154,14 +154,14 @@ Preços em [`PLANO-DE-NEGOCIO.md`](./PLANO-DE-NEGOCIO.md).
 | ID | Módulo | Inclui | Planos | Release |
 |---|---|---|---|---|
 | M01 | **Plataforma SaaS** | Cadastro self-service, teste grátis com loja demo, assinatura (cartão recorrente e Pix via Mercado Pago) com aviso de vencimento e cobrança, direitos por módulo, usuários e papéis, MFA, auditoria, painel master Contera, suporte in-app (chamados), central de ajuda, backup, LGPD | Todos | R1 |
-| M02 | Cardápio e configuração | Seção 8, M1 | Todos | R1 |
+| M02 | Cardápio e configuração | Seção 8, M02 | Todos | R1 |
 | M03 | Link de pedidos | Cardápio digital, construtor de pizza, frete, página de status; **Pix online** | Todos (Pix: P, Pr, +) | R1 |
 | M04 | Pedidos e operação | Fila em tempo real, balcão/telefone, status, comanda pelo navegador; agente de impressão ESC/POS automática na R2 | Todos | R1 |
-| M05 | PDV e caixa | Pagamentos mistos, troco, sangria/suprimento, **fechamento cego** (o operador conta sem ver o valor esperado), vários caixas | Todos | R1 |
-| M06 | Clientes e histórico | Seção 8, M4 | Todos | R1 |
+| M05 | PDV e caixa | Pagamentos mistos, troco, sangria/suprimento, **fechamento cego** (o operador conta sem ver o valor esperado); vários pontos de venda na R2 | Todos | R1 |
+| M06 | Clientes e histórico | Seção 8, M06 | Todos | R1 |
 | M07 | **CRM inteligente e campanhas** | Seções 10 e 11.6 | P, Pr, + | R1 |
-| M08 | Resumo do dia | Seção 8, M7 | Todos | R1 |
-| M12 | **Fiscal** | NFC-e e NF-e, contingência, cancelamento e inutilização, certificado A1 cifrado, campos da reforma tributária (CBS/IBS) | + (todos) | **R1** |
+| M08 | Resumo do dia | Seção 8, M08 | Todos | R1 |
+| M12 | **Fiscal** | NFC-e e NF-e, contingência, cancelamento e inutilização, certificado A1 cifrado, campos da reforma tributária (CBS/IBS) | Pr, + | **R1** |
 | M09 | Tela de cozinha (KDS) | Praças (forno, montagem, bebidas), tempos por etapa, alerta de atraso | P, Pr | R2 |
 | M10 | Delivery e entregadores | Despacho, agrupamento por rota, acerto com entregador, link de rastreio | P, Pr | R2 |
 | M11 | Cupons e fidelidade | Cupom por campanha, pontos ou cashback, indicação | P, Pr, + | R2 |
@@ -195,6 +195,9 @@ contador; o M13 exporta os dados para ele) e venda de produtos fora do food serv
 - **Oportunidades** é a central de ações. No topo fica o **Resumo de hoje** (M7). Logo abaixo,
   os **cartões agrupados por motivo**, do mais importante para o menos importante.
 - **Configurações** fica fora da navegação principal: é usada na implantação, não no dia a dia.
+- **Módulos de gestão** (Financeiro, Estoque, Compras, Fiscal, Salão, Entregas, Relatórios)
+  ficam num segundo nível, **Gestão**, e só aparecem se o módulo estiver ligado e o papel do
+  usuário puder vê-lo. A barra principal continua com 4 itens: o atendente nunca vê um menu de ERP.
 
 ### 6.2 Metas de experiência (critérios testáveis)
 | Meta | Critério |
@@ -209,7 +212,7 @@ contador; o M13 exporta os dados para ele) e venda de produtos fora do food serv
 - Linguagem do dono, nunca de analista (P6). Glossário da UI no apêndice A.
 - Botões grandes, pensados para celular e para tela de toque no balcão.
 - Ações destrutivas (cancelar pedido, fechar caixa) pedem confirmação e explicam o efeito.
-- Nenhum gráfico no MVP. Números aparecem sempre acompanhados de uma frase.
+- Nenhum gráfico na R1. Os gráficos do M18 (R3) também vêm sempre acompanhados de uma frase de leitura.
 - Selo discreto do fabricante ("by Contera") no rodapé do login e na tela Sobre. A marca principal é a da pizzaria.
 
 ---
@@ -254,9 +257,9 @@ chegou, tipo (entrega/retirada), bairro, total e forma de pagamento. Um pedido p
    com o rótulo "não fica na gaveta".
 
 ### 7.5 Oportunidade → campanha → nova venda (o coração do produto)
-1. **05:00 (horário de Brasília):** o motor recalcula as métricas dos clientes e gera as oportunidades do dia (seção 10).
+1. **De madrugada (entre 03:00 e 06:00, horário de Brasília, escalonado por loja; AD-12):** o motor recalcula as métricas dos clientes e gera as oportunidades do dia (seção 10).
 2. O dono abre **Oportunidades** e vê, por exemplo:
-   > **12 clientes estão quase completando 30 dias sem pedir.** Normalmente pediam a cada 2 a 3 semanas.
+   > **47 clientes passaram de 25 dias sem pedir.** Normalmente pediam a cada 2 a 5 semanas.
    > [Ver e enviar mensagens]
 3. Ao abrir o cartão, vê a lista ordenada por importância. Cada linha tem nome, motivo,
    contexto ("Costuma pedir Calabresa com Mussarela, geralmente às sextas") e a mensagem pronta.
@@ -269,9 +272,11 @@ chegou, tipo (entrega/retirada), bairro, total e forma de pagamento. Um pedido p
 
 ---
 
-## 8. Requisitos funcionais por módulo
+## 8. Requisitos funcionais por módulo (R1)
+Os IDs são os do catálogo da seção 5.2. Os módulos das releases R2 a R4 ganham sua seção de
+requisitos no início de cada release.
 
-### M1. Configuração da pizzaria
+### M02. Cardápio e configuração
 | ID | Requisito | Critério de aceite |
 |---|---|---|
 | RF-01 | Cadastrar **categorias** (Pizzas, Doces, Bebidas, ...) com ordem de exibição | A ordem definida é a do cardápio público |
@@ -289,7 +294,7 @@ chegou, tipo (entrega/retirada), bairro, total e forma de pagamento. Um pedido p
 | RF-13 | Dados da loja: nome, logo, cor de destaque, endereço, WhatsApp, slug do link | O slug é único na plataforma |
 | RF-14 | Regra de preço de pizza com vários sabores: **maior preço** (padrão) ou **média** | Ver RN-03 |
 
-### M2. Link de pedidos
+### M03. Link de pedidos
 | ID | Requisito | Critério de aceite |
 |---|---|---|
 | RF-20 | Cardápio público por slug, sem login, mobile-first | Abre em ≤ 2,5 s (LCP) em 4G |
@@ -303,7 +308,7 @@ chegou, tipo (entrega/retirada), bairro, total e forma de pagamento. Um pedido p
 | RF-28 | Página de status do pedido por link com token não adivinhável | Mostra a etapa atual; atualiza sozinha a cada ≤ 15 s |
 | RF-29 | Proteção contra pedido duplicado (duplo clique, rede ruim) | Ver RN-05 |
 
-### M3. Operação interna
+### M04. Pedidos e operação
 | ID | Requisito | Critério de aceite |
 |---|---|---|
 | RF-30 | Fila de pedidos em tempo real, agrupada por status | Pedido novo aparece em ≤ 5 s, com som |
@@ -315,16 +320,16 @@ chegou, tipo (entrega/retirada), bairro, total e forma de pagamento. Um pedido p
 | RF-36 | Detalhe do pedido: itens, observações, endereço, pagamento, troco, histórico de status | — |
 | RF-37 | Botão de WhatsApp para falar com o cliente sobre o pedido | Abre `wa.me` com "Olá {nome}, sobre seu pedido #{numero}..." |
 
-### M3b. Caixa
+### M05. PDV e caixa
 | ID | Requisito | Critério de aceite |
 |---|---|---|
-| RF-40 | Abrir caixa com troco inicial obrigatório | Só um caixa aberto por loja no MVP |
+| RF-40 | Abrir caixa com troco inicial obrigatório | Um caixa aberto por ponto de venda; vários pontos de venda por loja na R2 |
 | RF-41 | Registrar pagamento do pedido (forma, valor, troco) | Pagamento em mais de uma forma é permitido ("metade Pix, metade dinheiro") |
 | RF-42 | Sangria e suprimento com motivo | Registro imutável; correção só por lançamento inverso |
 | RF-43 | Fechar caixa com contagem obrigatória | Botão desabilitado enquanto a contagem estiver vazia (RN-22) |
 | RF-44 | Resumo do fechamento por forma de pagamento | Separa "na gaveta" de "fora da gaveta" |
 
-### M4. Clientes e histórico
+### M06. Clientes e histórico
 | ID | Requisito | Critério de aceite |
 |---|---|---|
 | RF-50 | Cliente criado ou atualizado automaticamente a cada pedido com celular | Nunca dois clientes com o mesmo celular na mesma pizzaria |
@@ -337,10 +342,10 @@ chegou, tipo (entrega/retirada), bairro, total e forma de pagamento. Um pedido p
 | RF-57 | Opt-out com um toque ("não quer mais receber") | Remove o cliente de todas as oportunidades de campanha |
 | RF-58 | Exportar/excluir os dados de um cliente a pedido dele (LGPD) | Exclusão = anonimização; o pedido continua no caixa e no histórico sem dados pessoais |
 
-### M5. Motor de oportunidades
+### M07a. Motor de oportunidades
 Ver seção 10 (é a especificação completa).
 
-### M6. Campanhas
+### M07b. Campanhas
 | ID | Requisito | Critério de aceite |
 |---|---|---|
 | RF-60 | Mensagem sugerida por modelo + dados do cliente | Só usa variáveis com valor; nunca exibe `{sabor_favorito}` vazio (RN-46) |
@@ -351,7 +356,7 @@ Ver seção 10 (é a especificação completa).
 | RF-65 | Resultado: contatados, voltaram a pedir, valor trazido | Por gatilho e no total; regra de atribuição RN-41 |
 | RF-66 | Editar modelos de mensagem em Configurações, com prévia | Variáveis documentadas na tela |
 
-### M7. Resumo de hoje
+### M08. Resumo de hoje
 | ID | Requisito | Critério de aceite |
 |---|---|---|
 | RF-70 | Até 4 indicadores com frase: **Pedidos hoje** (vs. mesmo dia da semana passada), **Vendas hoje**, **Valor médio do pedido**, **Resultado das mensagens (7 dias)** | Toda linha é uma frase completa, ex.: "Hoje: 48 pedidos, 6 a mais que na sexta passada" |
@@ -373,7 +378,7 @@ Ver seção 10 (é a especificação completa).
 
 | De → Para | Quem | Regra |
 |---|---|---|
-| Novo → Em preparo | Atendente/Dono | Pedido de balcão já nasce em Em preparo. Aceite automático do online é configurável [V1.1] |
+| Novo → Em preparo | Atendente/Dono | Pedido de balcão já nasce em Em preparo. Aceite automático do online é configurável [R2] |
 | Em preparo → Pronto | Atendente/Dono | — |
 | Pronto → Saiu para entrega | Atendente/Dono | Só pedidos de entrega |
 | Pronto → Aguardando retirada | Atendente/Dono | Só pedidos de retirada |
@@ -415,18 +420,22 @@ Consideram **apenas pedidos Concluídos** e a data no fuso `America/Sao_Paulo`.
 | **Frequente** | ≥ 4 pedidos nos últimos 90 dias |
 | **Recorrente** | Os demais clientes com ≥ 2 pedidos |
 
-### 10.3 Gatilhos do MVP
+### 10.3 Gatilhos da R1
 | # | Gatilho (texto do cartão) | Condição | Por que importa | Prioridade |
 |---|---|---|---|---|
-| G1 | "**{n} clientes estão quase completando 30 dias sem pedir**" | `dias_sem_pedir` entre 25 e 30, `pedidos_total ≥ 2` | Exemplo central do briefing; é o momento mais barato de reter | Alta |
+| G1 | "**{n} clientes passaram de 25 dias sem pedir**" | `dias_sem_pedir` entre 25 e 59, `pedidos_total ≥ 2` | Exemplo central do briefing ("perto de 30 dias"). Vai até 59 para **não haver buraco até o G4**: na v0.2 (25 a 30), quem passava da janela ficava invisível até 60 dias (37 clientes na base demo) | Alta |
 | G2 | "**{n} clientes frequentes saíram do ritmo**" | Tem `intervalo_habitual ≤ 21` e `dias_sem_pedir ≥ max(2 × intervalo, intervalo + 7)` e `< 60` | Perder um cliente frequente custa caro; o sinal vem antes do "30 dias" | Alta |
-| G3 | "**{n} clientes pediram uma vez e não voltaram**" | `pedidos_total = 1` e `dias_sem_pedir` entre 10 e 30 | A segunda compra é a que mais define se o cliente fica | Média |
+| G3 | "**{n} clientes pediram uma vez e não voltaram**" | `pedidos_total = 1` e `dias_sem_pedir` entre 10 e 59 (sem buraco até o G4) | A segunda compra é a que mais define se o cliente fica | Média |
 | G4 | "**{n} clientes não pedem há mais de 60 dias**" | `dias_sem_pedir` entre 60 e 180; no máximo 1 tentativa por ciclo de inatividade | Reconquista; conversão menor, por isso vem depois | Média |
 | G5 | "**{n} clientes fazem aniversário nos próximos dias**" | `data_nascimento` entre hoje e hoje + 3 dias; 1 vez por ano | Contato bem recebido, raramente visto como spam | Média |
-| G6 [V1.1] | "**Hoje é o dia de pedir de {n} clientes**" | Hoje = `dia_preferido` e não pediu nesta semana e `dias_sem_pedir ≥ 1,5 × intervalo` | Lembrete na hora certa | Baixa |
-| G7 [V1.1] | "**{n} clientes VIP merecem um agradecimento**" | VIP sem contato há 30 dias e sem gatilho de risco | Fidelização | Baixa |
+| G6 [R2] | "**Hoje é o dia de pedir de {n} clientes**" | Hoje = `dia_preferido` e não pediu nesta semana e `dias_sem_pedir ≥ 1,5 × intervalo` | Lembrete na hora certa | Baixa |
+| G7 [R2] | "**{n} clientes VIP merecem um agradecimento**" | VIP sem contato há 30 dias e sem gatilho de risco | Fidelização | Baixa |
 
-**VIP** não é um gatilho próprio no MVP: um cliente VIP sobe para o **topo** da lista de qualquer gatilho em que aparecer.
+**Cobertura sem buracos:** todo cliente com consentimento e 10 a 180 dias sem pedir cai em
+exatamente um gatilho. Os testes de fronteira (24/25, 59/60, 180/181 dias; 9/10 para compra
+única; `2 × intervalo` para G2) rodam a cada execução do gerador demo.
+
+**VIP** não é um gatilho próprio na R1: um cliente VIP sobe para o **topo** da lista de qualquer gatilho em que aparecer.
 
 ### 10.4 Elegibilidade (só depois disso o cliente entra numa oportunidade)
 Um cliente **só** é elegível se **todas** as condições forem verdadeiras:
@@ -468,10 +477,10 @@ entende por que vale pedir o consentimento.
 - Toda mensagem leva o **link de pedido da pizzaria**, para trazer a compra ao canal próprio
   (é o que permite medir a conversão).
 - Modelo G1, exemplo (o briefing pede o tom):
-  > Oi, {primeiro_nome}! Faz um tempinho que você não pede com a gente 😊 Vimos que a
-  > {sabor_favorito} é uma das suas favoritas. Que tal matar a vontade hoje? É só pedir por
+  > Oi, {primeiro_nome}! Faz um tempinho que você não pede com a gente 😊 Vimos que
+  > {sabor_favorito} está entre as suas favoritas. Que tal matar a vontade hoje? É só pedir por
   > aqui: {link_pedido} 🍕
-- [V2] Reescrita por IA: um modelo de linguagem gera variações **a partir apenas dos campos
+- [R4] Reescrita por IA: um modelo de linguagem gera variações **a partir apenas dos campos
   fornecidos**, e a saída passa por uma validação que rejeita sabores, preços ou promoções que
   não estejam nos dados de entrada.
 
@@ -518,7 +527,7 @@ entende por que vale pedir o consentimento.
 ### 11.5 Caixa
 | ID | Regra |
 |---|---|
-| RN-20 | Um caixa aberto por loja (MVP). Registrar pagamento exige caixa aberto; se não houver, o sistema oferece abrir |
+| RN-20 | Um caixa aberto por ponto de venda (vários pontos por loja na R2). Registrar pagamento exige caixa aberto; se não houver, o sistema oferece abrir |
 | RN-21 | **Dinheiro esperado na gaveta** = troco inicial + entradas em dinheiro (líquidas de troco) + suprimentos − sangrias − estornos em dinheiro. É **uma única função**, usada no fechamento, no resumo e em qualquer indicador. Cartão, Pix e vale **nunca** entram nessa conta |
 | RN-22 | No fechamento, a contagem é obrigatória. **"Não contado" é guardado como vazio (nulo), nunca como zero.** Zero é uma resposta; vazio é ausência de resposta |
 | RN-23 | Lançamentos de caixa (pagamento, sangria, suprimento, estorno) são **imutáveis**: não se editam nem se apagam. Erro se corrige com lançamento inverso |
@@ -542,6 +551,7 @@ entende por que vale pedir o consentimento.
 | RN-53 | Toda mensagem promocional inclui uma saída simples: "Não quer mais receber? É só responder SAIR." A equipe registra o opt-out no painel (com `wa.me` o sistema não lê a resposta) |
 | RN-54 | O cliente pode pedir cópia ou exclusão dos dados. Exclusão = **anonimização** (nome, telefone e endereço removidos), mantendo pedido e caixa para fins fiscais e contábeis |
 | RN-55 | Dados de uma pizzaria **nunca** são visíveis para outra (isolamento garantido no banco) |
+| RN-56 | **Papéis na LGPD:** a pizzaria é a **controladora** dos dados dos clientes dela; a Contera é **operadora**. O contrato de assinatura inclui o acordo de tratamento de dados, e o sistema fornece um modelo de política de privacidade que informa o uso do histórico de compras para ofertas personalizadas |
 
 ---
 
@@ -562,12 +572,12 @@ flowchart LR
     EF[Edge Functions<br/>place-order, import-customers]
     DB[(Postgres + RLS)]
     RT[Realtime<br/>pedidos]
-    CRON[pg_cron<br/>motor CRM 05:00 BRT]
+    CRON[pg_cron<br/>motor CRM 03-06h BRT]
     AUTH[Auth]
   end
   VIACEP[ViaCEP]
   WA[WhatsApp do atendente<br/>wa.me]
-  MP[Mercado Pago<br/>Pix - V1.1]
+  MP[Mercado Pago<br/>Pix online e assinatura]
 
   L -->|cardápio público, RPC só leitura| API
   L -->|envia pedido| EF
@@ -580,7 +590,7 @@ flowchart LR
   API --> DB
   CRON --> DB
   P -->|abre conversa| WA
-  EF -.->|V1.1| MP
+  EF -->|Pix, webhook idempotente| MP
 ```
 
 ### 12.2 Stack
@@ -589,8 +599,8 @@ flowchart LR
 | Front-end | **React + TypeScript + Vite + Tailwind + shadcn/ui** | Padrão Contera; compatível com Lovable e Claude Code |
 | Estado/dados | TanStack Query, React Hook Form + Zod | Validação igual no front e no servidor (mesmo esquema Zod) |
 | Back-end | **Supabase**: Postgres, Auth, RLS, RPC, Edge Functions (Deno), Realtime, Storage, pg_cron | Um único provedor; RLS isola as pizzarias no banco |
-| Pagamento online [V1.1] | Mercado Pago (Pix), com webhook assinado e idempotente | Padrão Contera; o Pix domina pagamentos no Brasil |
-| Mensagens | `wa.me` (MVP) → WhatsApp Business Cloud API (V2) | Ver D7 |
+| Pagamento online [R1] | Mercado Pago (Pix no link e assinatura da plataforma), com webhook assinado e idempotente | Padrão Contera; o Pix domina pagamentos no Brasil |
+| Mensagens | `wa.me` (R1) → WhatsApp Business Cloud API (R4) | Ver D7 |
 | Hospedagem do front | Vercel ou Cloudflare Pages | CDN; o cardápio público precisa ser rápido |
 | PWA | Manifest + service worker com **atualização forçada** a cada deploy | Evita o problema "publiquei e o app instalado continua velho" |
 
@@ -606,7 +616,7 @@ Function que monta as meta tags por pizzaria, porque uma SPA não faz isso sozin
 | AD-02 | Criar pedido via **Edge Function `place-order`** (ou RPC `SECURITY DEFINER` com validação interna), que recalcula tudo numa transação | Inserção direta pelo navegador: permitiria manipular preço |
 | AD-03 | Cardápio público por **RPC somente leitura** (`get_public_menu(slug)`) que devolve só itens ativos; o usuário anônimo não acessa tabelas | Liberar `SELECT` anônimo nas tabelas: vaza mais do que deve |
 | AD-04 | **Métricas do cliente materializadas** em `customer_stats`, atualizadas por gatilho ao concluir pedido + recálculo completo toda madrugada | Calcular ao abrir a tela: lento e com regras duplicadas |
-| AD-05 | **Motor de oportunidades em SQL** (função agendada no pg_cron às 05:00 BRT) com regras parametrizadas na tabela `opportunity_rules` | Serviço externo/ML: desnecessário para regras explicáveis; a explicabilidade é requisito (P6) |
+| AD-05 | **Motor de oportunidades em SQL** (função agendada no pg_cron, escalonada por loja entre 03:00 e 06:00 BRT; AD-12) com regras parametrizadas na tabela `opportunity_rules` | Serviço externo/ML: desnecessário para regras explicáveis; a explicabilidade é requisito (P6) |
 | AD-06 | Tabelas de movimento (`cash_movements`, `order_status_history`, `contact_log`, `audit_log`) **sem permissão de UPDATE/DELETE**; correção por lançamento inverso | Edição livre: destrói a confiança no caixa e no resultado das campanhas |
 | AD-07 | Realtime **somente** na tabela de pedidos, filtrado pela pizzaria | Realtime em tudo: custo e ruído |
 | AD-08 | Proteção do endpoint público: limite de requisições por IP e por celular; captcha (Cloudflare Turnstile) ativado se houver abuso | Sem proteção: pedidos falsos derrubam a confiança da cozinha |
@@ -616,10 +626,14 @@ Function que monta as meta tags por pizzaria, porque uma SPA não faz isso sozin
 |---|---|
 | **Dono** | Tudo da pizzaria, incluindo configurações, usuários, cancelar pedido já despachado, ver resultado de campanhas, exportar e anonimizar clientes |
 | **Atendente** | Pedidos, caixa, clientes (ver e editar contato), executar oportunidades. **Não** altera cardápio/preços/configurações nem exporta dados |
-| **Suporte da plataforma** | Acesso para suporte com cada acesso registrado em auditoria (detalhes dependem de Q1) |
+| **Gerente** (R1) | Como o Dono, exceto usuários, plano/assinatura e exportação de dados |
+| **Contador** (R2, com M13/M12) | Somente leitura de financeiro e fiscal + exportações contábeis. Papel-chave do canal de contadores |
+| **Cozinha, Entregador, Garçom** (R2/R3) | Só a tela do seu trabalho (KDS, entregas, mesas) |
+| **Suporte Contera** | Painel master; acesso a uma pizzaria só por "entrar como" com motivo, MFA e registro em auditoria |
 
 - **Login:** e-mail + senha; **verificação em duas etapas (MFA) obrigatória para o Dono**,
   opcional para Atendente. Atendente pode usar um aparelho fixo do balcão com sessão longa.
+  Usuário com acesso a mais de uma pizzaria (contador, rede) troca a pizzaria ativa, o que emite um novo token (AD-09).
 - **Auditoria:** cancelamentos, estornos, mudança de preço, fechamento de caixa,
   exportação/anonimização e mudanças de permissão ficam em `audit_log`.
 - Nenhuma chave secreta no front; segredos só nas Edge Functions.
@@ -635,14 +649,14 @@ pedidos/dia, **sem reescrita**.
 
 | Carga estimada com 100 lojas | Valor aproximado |
 |---|---|
-| Pedidos por noite (toda a plataforma) | 8 a 10 mil |
+| Pedidos por noite (toda a plataforma; até 100 por loja) | 8 a 10 mil |
 | Pico de criação de pedidos | 2 a 3 pedidos/s |
 | Acessos ao cardápio público por noite | ~100 mil (servidos pelo CDN, não pelo banco) |
 | Conexões em tempo real | 300 a 500 (equipes; o cliente final consulta por intervalo) |
 
 | ID | Decisão de escala |
 |---|---|
-| AD-09 | **Pizzaria no token de login** (claim `tenant_id` via *custom access token hook* do Supabase). A RLS compara a coluna com o claim, sem consulta extra por linha. Índices sempre começando por `tenant_id` |
+| AD-09 | **Pizzaria no token de login** (claim `tenant_id` via *custom access token hook* do Supabase). A RLS compara a coluna com o claim, sem consulta extra por linha. Índices sempre começando por `tenant_id`. O claim é validado contra `memberships` na emissão; trocar de pizzaria emite novo token |
 | AD-10 | **Cardápio público em cache no CDN** (JSON versionado, invalidado ao salvar o cardápio). Só o envio do pedido chega ao banco |
 | AD-11 | **Fila de jobs** no Postgres (status, tentativas, espera exponencial, fila de falhas) processada por workers. Tudo que fala com terceiros (fiscal, iFood, 99Food, Mercado Pago, bancos) é **assíncrono e idempotente**, nunca dentro do clique do usuário |
 | AD-12 | **Motor do CRM escalonado:** cada loja roda em um horário entre 03:00 e 06:00 (Brasília), com cálculo incremental. Nenhum job varre todas as lojas de uma vez |
@@ -671,6 +685,9 @@ para relatórios → workers dedicados. Tudo em Postgres padrão, sem aprisionam
   vencimento; após 10 dias, os módulos avulsos e as configurações ficam bloqueados; após 20
   dias, o sistema fica só para consulta e pagamento. **O corte nunca acontece durante o horário de
   funcionamento** e nunca derruba uma sessão de caixa aberta: sempre há a saída "regularizar agora".
+- **Operação crítica protegida:** pedidos, caixa e **fiscal** (mesmo sendo módulo avulso) não
+  entram no bloqueio dos 10 dias. Bloquear a NFC-e impede a pizzaria de vender legalmente;
+  esses módulos só param na etapa final (20 dias), com aviso de 48 h e fora do expediente.
 
 ### 12.7 Integrações externas
 | Integração | Como | Observação |
@@ -707,7 +724,7 @@ para relatórios → workers dedicados. Tudo em Postgres padrão, sem aprisionam
 | `customers` | phone_e164 (único por tenant), name, birth_date, anonymized_at | — |
 | `customer_addresses` | customer_id, cep, street, number, complement, neighborhood, reference | — |
 | `marketing_consents` | customer_id, channel, status (`granted`/`revoked`), source, text_version, recorded_by, recorded_at | Histórico: só inserção (RN-50) |
-| `orders` | number, customer_id?, channel (`link`/`counter`/`phone`), type (`delivery`/`pickup`/`dine_in`), status, subtotal/fee/discount/total_cents, address snapshot, payment_method, change_for_cents, idempotency_key (único), public_token, campaign_contact_id? | — |
+| `orders` | number, business_date (data de negócio, RN-02), customer_id?, channel (`link`/`counter`/`phone`/`marketplace`), type (`delivery`/`pickup`/`dine_in`), status, subtotal/fee/discount/total_cents, address snapshot, payment_method, change_for_cents, idempotency_key (único), public_token, campaign_contact_id? | — |
 | `order_items` | order_id, kind (`pizza`/`product`), name_snapshot, size_snapshot, unit_price_cents, qty, notes | — |
 | `order_item_flavors` | order_item_id, flavor_id, name_snapshot, fraction (0,5 / 0,33...) | Alimenta "sabor favorito" |
 | `order_item_addons` | order_item_id, addon_id, name_snapshot, price_cents | — |
@@ -737,15 +754,15 @@ Todas seguem as convenções acima (tenant, RLS, centavos, movimentos só com in
 |---|---|---|
 | RNF-01 | Desempenho do cardápio público | LCP ≤ 2,5 s em 4G, pacote JS inicial ≤ 200 KB gzip |
 | RNF-02 | Latência do pedido novo no painel | ≤ 5 s (p95) |
-| RNF-03 | Disponibilidade nos horários de pico (18h–23h) | 99,5% no mês |
+| RNF-03 | Disponibilidade nos horários de pico (18h–23h) | 99,9% no mês (mesma meta do AD-18) |
 | RNF-04 | Volume de referência | Lançamento: 100+ pizzarias e 300+ usuários. Meta de projeto sem reescrita: 1.000 pizzarias, 5.000 usuários, 150 mil pedidos/dia (seção 12.5) |
-| RNF-05 | Motor de oportunidades | Roda em ≤ 2 min para todas as pizzarias; falha gera alerta e não apaga as oportunidades do dia anterior |
+| RNF-05 | Motor de oportunidades | ≤ 10 s por loja dentro da janela 03:00–06:00; falha gera alerta, repete pela fila e não apaga as oportunidades do dia anterior |
 | RNF-06 | Isolamento | Teste automatizado provando que o usuário da pizzaria A não lê nem escreve dados da B, em toda tabela |
 | RNF-07 | Acessibilidade | Contraste AA, alvos de toque ≥ 44 px, operável por teclado no painel |
 | RNF-08 | Navegadores | Chrome/Safari móveis dos últimos 2 anos; painel em Chrome desktop |
 | RNF-09 | Backup | Backup diário gerenciado do Supabase + exportação lógica semanal; restauração testada antes do piloto |
 | RNF-10 | Observabilidade | Erros de front e de Edge Functions registrados; alerta se nenhum pedido online entrar por 2 h em horário de funcionamento com pedidos no dia anterior |
-| RNF-11 | Qualidade | Testes automatizados de: cálculo de preço (RN-03/04), idempotência (RN-05), transições de status, dinheiro esperado (RN-21), segmentos e gatilhos (seção 10), RLS (RNF-06) |
+| RNF-11 | Qualidade | Gabarito do gerador demo (`--verificar`) reproduzido pela implementação real; testes automatizados de: cálculo de preço (RN-03/04), idempotência (RN-05), transições de status, dinheiro esperado (RN-21), segmentos e gatilhos (seção 10), RLS (RNF-06) |
 
 ---
 
@@ -779,7 +796,7 @@ sistema principal. Ela manteria outro sistema para emitir nota e não migraria.
 | F4. PDV e caixa (M05) | Abrir, receber, sangria, fechamento cego | Fechamento bate em todos os cenários de teste, inclusive estorno |
 | F5. Fiscal (M12) | NFC-e em homologação e produção, contingência | Notas autorizadas no ambiente de homologação da SEFAZ para todos os cenários de pagamento |
 | F6. Clientes (M06) | Histórico, perfil em frases, importação, consentimento | Métricas corretas sobre a base demo |
-| F7. Motor do CRM | Seção 10, job escalonado | Para a base demo, cada cliente cai no cartão certo (a prévia já existe em `demo/gerar_dados_demo.py`) |
+| F7. Motor do CRM | Seção 10, job escalonado | O motor em SQL reproduz **exatamente** `demo/gabarito_2026-11-08.txt` sobre a base demo (mesmas contagens e mesmos clientes por cartão) |
 | F8. Campanhas + Resumo (M07, M08) | Cartões, envio `wa.me`, atribuição | Do cartão ao WhatsApp em ≤ 3 toques; conversão atribuída corretamente |
 | F9. Plataforma (M01) | Cadastro self-service, assinatura Mercado Pago, módulos, painel master, chamados | Uma pizzaria se cadastra, testa 14 dias, assina e tem módulos ligados/desligados sem suporte |
 | F10. Endurecimento | Teste de carga 10×, revisão de segurança, backup e restauração testados | Critérios do RNF atendidos com números |
@@ -804,10 +821,10 @@ cerca de 3 semanas de pedidos as primeiras oportunidades aparecem aqui").
 |---|---|---|
 | Pouco histórico no início, então o CRM parece vazio | Dono desiste antes de ver valor | Seção 15.2; operação antes do CRM; importação CSV |
 | Clientes sem consentimento, então ninguém é elegível | CRM sem ação | Caixa de opt-in bem escrita no link; frase para o balcão pedir; mostrar ao dono quantos clientes estão "bloqueados" (10.4) |
-| Envio 1 a 1 por `wa.me` cansa com listas grandes | Dono para de usar | Limite diário de 30 por cartão (10.5), modo sequência; API oficial na V2 quando houver demanda comprovada |
-| Excesso de mensagens leva a bloqueio do número ou incomoda o cliente | Dano à marca da pizzaria | Limites D9, opt-out fácil, nada de disparo automático no MVP |
+| Envio 1 a 1 por `wa.me` cansa com listas grandes | Dono para de usar | Limite diário de 30 por cartão (10.5), modo sequência; API oficial na R4 quando houver demanda comprovada |
+| Excesso de mensagens leva a bloqueio do número ou incomoda o cliente | Dano à marca da pizzaria | Limites D9, opt-out fácil, nada de disparo automático antes da R4 (e, lá, só com opt-in formal) |
 | Pedidos de marketplace ficam fora do CRM | Visão parcial do cliente | Estratégia: toda campanha leva o link próprio e migra o cliente para o canal direto |
-| Número compartilhado (família) ou cliente com 2 números | Métricas distorcidas | Aceitável no MVP; mesclagem na V1.1 |
+| Número compartilhado (família) ou cliente com 2 números | Métricas distorcidas | Aceitável na R1; mesclagem na R2 |
 | Pico de pedidos com internet instável no balcão | Pedido perdido | Idempotência (RN-05), alerta repetido, comanda impressa; modo offline fica para depois |
 | ERP completo atrasa a primeira venda | Caixa da empresa sem receita por muito tempo | Releases vendáveis (seção 15); R1 já substitui o sistema atual da pizzaria |
 | Complexidade fiscal (regras por estado, reforma tributária) | Nota rejeitada impede a venda | Emissor fiscal parceiro (AD-13), homologação por estado, contingência |

@@ -1,0 +1,33 @@
+== Pizzaria Forno da Vila (DEMO) | hoje = 2026-11-08 ==
+Clientes: 900 | Pedidos: 5631 (170 cancelados)
+Últimos 30 dias: 858 pedidos (29/dia), R$ 83.318,80, valor médio R$ 97,10
+
+== OPORTUNIDADES DE HOJE (prévia do motor, PRD §10) ==
+
+> 45 clientes frequentes saíram do ritmo (lista de hoje: os 30 mais importantes)  [+53 sem autorização para mensagens]
+   - [VIP] Sofia Moreira não pede há 38 dias. Antes pedia a cada ~8 dias. Favorita: Portuguesa.
+     Mensagem: "Oi, Sofia! Faz um tempinho que você não pede com a gente. Vimos que Portuguesa está entre as suas favoritas. Que tal hoje? Peça por aqui: forno-da-vila-demo.app"
+   - [VIP] Felipe Freitas não pede há 40 dias. Antes pedia a cada ~7 dias. Favorita: Calabresa.
+     Mensagem: "Oi, Felipe! Faz um tempinho que você não pede com a gente. Vimos que Calabresa está entre as suas favoritas. Que tal hoje? Peça por aqui: forno-da-vila-demo.app"
+
+> 47 clientes passaram de 25 dias sem pedir (lista de hoje: os 30 mais importantes)  [+42 sem autorização para mensagens]
+   - Rafael Gomes não pede há 38 dias. Antes pedia a cada ~20 dias. Favorita: Romeu e Julieta.
+     Mensagem: "Oi, Rafael! Faz um tempinho que você não pede com a gente. Vimos que Romeu e Julieta está entre as suas favoritas. Que tal hoje? Peça por aqui: forno-da-vila-demo.app"
+   - Pedro Souza não pede há 29 dias. Antes pedia a cada ~25 dias. Favorita: Quatro Queijos.
+     Mensagem: "Oi, Pedro! Faz um tempinho que você não pede com a gente. Vimos que Quatro Queijos está entre as suas favoritas. Que tal hoje? Peça por aqui: forno-da-vila-demo.app"
+
+> 25 clientes pediram uma vez e não voltaram  [+31 sem autorização para mensagens]
+   - Bruno Santos não pede há 22 dias.
+     Mensagem: "Oi, Bruno! Faz um tempinho que você não pede com a gente. Que tal hoje? Peça por aqui: forno-da-vila-demo.app"
+   - Sofia Araújo não pede há 12 dias.
+     Mensagem: "Oi, Sofia! Faz um tempinho que você não pede com a gente. Que tal hoje? Peça por aqui: forno-da-vila-demo.app"
+
+> 100 clientes não pedem há mais de 60 dias (lista de hoje: os 30 mais importantes)  [+119 sem autorização para mensagens]
+   - [VIP] Pedro Correia não pede há 60 dias. Antes pedia a cada ~7 dias. Favorita: Calabresa com Mussarela.
+     Mensagem: "Oi, Pedro! Faz um tempinho que você não pede com a gente. Vimos que Calabresa com Mussarela está entre as suas favoritas. Que tal hoje? Peça por aqui: forno-da-vila-demo.app"
+   - Aline Teixeira não pede há 63 dias. Antes pedia a cada ~7 dias. Favorita: Frango com Catupiry. Costuma pedir às domingos.
+     Mensagem: "Oi, Aline! Faz um tempinho que você não pede com a gente. Vimos que Frango com Catupiry está entre as suas favoritas. Que tal hoje? Peça por aqui: forno-da-vila-demo.app"
+
+> 1 cliente(s) fazem aniversário nos próximos dias  [+3 sem autorização para mensagens]
+   - José Lima não pede há 2 dias. Antes pedia a cada ~14 dias. Favorita: Calabresa com Mussarela.
+     Mensagem: "Feliz aniversário, José! A equipe do Forno da Vila deseja um dia incrível. Se quiser comemorar com pizza, é só pedir por aqui: forno-da-vila-demo.app"

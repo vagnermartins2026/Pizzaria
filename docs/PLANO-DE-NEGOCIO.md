@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 0.1 (proposta para aprovação) |
+| Versão | 0.2 (auditoria: fiscal no Premium, disponibilidade por release) |
 | Data | 2026-11-08 |
 | Documentos relacionados | [`PRD.md`](./PRD.md) (o produto) · [`PILOTO-DEMO.md`](./PILOTO-DEMO.md) (pizzaria fictícia) |
 
@@ -71,6 +71,7 @@ ou desligar um módulo não exige mudar código nem migrar dados.
 | Tela de cozinha (KDS) | — | **Sim** | **Sim** |
 | Gestão de entregadores e despacho | — | **Sim** | **Sim** |
 | Pix online no link | Módulo | **Sim** | **Sim** |
+| **Fiscal (NFC-e e NF-e)** | Módulo | Módulo | **Sim** |
 | Salão, mesas, comandas e app do garçom | — | Módulo | **Sim** |
 | **Financeiro completo + conciliação automática** | — | Módulo | **Sim** |
 | Estoque de insumos, ficha técnica e CMV | — | Módulo | **Sim** |
@@ -80,12 +81,22 @@ ou desligar um módulo não exige mudar código nem migrar dados.
 | Usuários incluídos | 3 | 8 | 20 |
 | Suporte | Chat e e-mail em horário comercial | Chat estendido até 23h | Prioritário, inclusive no horário de pico, com gerente de conta |
 
+### 4.1 Disponibilidade por release (o que vender e quando)
+Os planos dependem de módulos que chegam em releases diferentes (PRD, seção 15). Regra:
+**só se cobra preço cheio de um plano quando todos os itens dele estiverem liberados.**
+
+| Release | Essencial | Profissional | Premium |
+|---|---|---|---|
+| **R1** (mês 5) | Completo: preço cheio | Sem KDS, entregadores e fidelidade → **preço de lançamento R$ 249**, com os itens chegando sem custo na R2 | **Não vender** (falta financeiro, estoque, compras) |
+| **R2** (mês 8) | — | Completo: preço cheio | Vender como **pré-venda** com preço de lançamento (estoque e compras chegam na R3) |
+| **R3** (mês 11) | — | — | Completo, exceto a IA (R4): preço cheio, IA entra como bônus na R4 |
+
 ## 5. Módulos avulsos (ligam em qualquer plano compatível)
 
 | Módulo | Preço/mês sugerido | Observações |
 |---|---|---|
 | **CRM Inteligente + Campanhas** (para o Essencial) | R$ 129 | Já incluso no Profissional e no Premium |
-| **Fiscal: NFC-e e NF-e** | R$ 79 | O cliente fornece o certificado digital A1. Custo do emissor parceiro já embutido |
+| **Fiscal: NFC-e e NF-e** (Essencial e Profissional) | R$ 79 | Incluso no Premium. O cliente fornece o certificado digital A1. Custo do emissor parceiro já embutido. Nunca é bloqueado no expediente por atraso de pagamento (PRD 12.6) |
 | **Integração iFood** | R$ 79 | Pedidos do iFood caem direto no painel, na cozinha e no caixa |
 | **Integração 99Food** | R$ 59 | Mesma lógica; disponibilidade da API a confirmar com a 99 |
 | **Pacote Marketplaces** (iFood + 99Food + futuros) | R$ 119 | Mais barato que somar os dois |
@@ -102,14 +113,14 @@ ou desligar um módulo não exige mudar código nem migrar dados.
 |---|---|
 | Implantação (cadastro do cardápio, configuração, treinamento de 1 h) | R$ 390 no mensal; **grátis no anual** |
 | Pagamento anual | **2 meses grátis** (cerca de 17% de desconto) |
-| Teste grátis | 14 dias com o Profissional completo, já com a pizzaria demonstrativa carregada |
+| Teste grátis | 14 dias com o Profissional (no que estiver liberado), com a pizzaria demonstrativa carregada como exemplo, separada da conta real do cliente |
 | Fidelidade mínima | Nenhuma no mensal (reduz a objeção de compra) |
 | Reajuste | Anual, por IPCA |
 
 ## 6. Argumento de venda por módulo (a conta que o vendedor mostra)
 | Módulo | Conta simples |
 |---|---|
-| CRM Inteligente (R$ 129) | Valor médio do pedido ~R$ 95. **Basta recuperar 2 pedidos por mês** para pagar o módulo; a prévia com dados fictícios já mostra dezenas de clientes "sumindo" numa pizzaria de 30 pedidos/dia |
+| CRM Inteligente (R$ 129) | Valor médio do pedido ~R$ 97. **Basta recuperar 2 pedidos por mês** para pagar o módulo. Na pizzaria demo (29 pedidos/dia), o motor encontra 218 clientes com oportunidade num único dia; outros 248 ficam de fora só por falta de autorização |
 | Link próprio vs. marketplace | Cada pedido que migra do marketplace para o link próprio deixa de pagar a comissão do marketplace. Poucos pedidos por mês cobrem o plano |
 | Conciliação automática (R$ 149) | Encontra taxa de cartão cobrada a mais e recebível que não caiu, além de poupar horas de planilha por mês |
 | Estoque + CMV (R$ 99) | Um desperdício de insumo de 2% numa pizzaria de R$ 80 mil/mês é R$ 1.600 |
