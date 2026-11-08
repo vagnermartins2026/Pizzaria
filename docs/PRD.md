@@ -1,12 +1,12 @@
-# PRD: Sistema para Pizzarias com CRM Inteligente
+# PRD: Fornalia by Contera (ERP para pizzarias com CRM inteligente)
 
 | Campo | Valor |
 |---|---|
-| Versão | 0.1 (rascunho para validação) |
+| Versão | 0.2 (assinatura, ERP completo, escala e módulos) |
 | Data | 2026-11-08 |
-| Status | Aguardando validação das decisões da seção 4 |
-| Fonte | [`docs/briefing-original.md`](./briefing-original.md) |
-| Próximo passo | Validar as decisões em aberto da seção 4.2 e só depois iniciar a Fase 0 do plano (seção 15) |
+| Status | Aguardando aprovação do nome, dos preços e do roadmap |
+| Fonte | [`docs/briefing-original.md`](./briefing-original.md) · [`PLANO-DE-NEGOCIO.md`](./PLANO-DE-NEGOCIO.md) · [`PILOTO-DEMO.md`](./PILOTO-DEMO.md) |
+| Próximo passo | Aprovar o plano de negócio e iniciar a R0 (seção 15) |
 
 > **Como ler este documento.** As seções 1 a 3 trazem o porquê. A seção 4 lista o que foi
 > **decidido por padrão** (e pode mudar) e o que **ainda precisa de você**. As seções 5 a 11
@@ -33,9 +33,13 @@ O ciclo que o produto precisa fechar, e provar com números, é:
 PEDIDO → HISTÓRICO → INTELIGÊNCIA → OPORTUNIDADE → CAMPANHA → NOVO PEDIDO (atribuído)
 ```
 
-**Tese do MVP:** uma pizzaria pequena ou média, sem ninguém de marketing, recupera clientes
-inativos usando apenas o que o sistema sugere. O MVP serve para provar essa tese com 1 a 3
-pizzarias piloto.
+**Produto:** um **ERP vertical para pizzarias, entregue como SaaS por assinatura**, contratado
+por **plano + módulos** (seção 5 e [`PLANO-DE-NEGOCIO.md`](./PLANO-DE-NEGOCIO.md)), pronto
+para 100+ pizzarias desde o lançamento (seção 12.5). O CRM inteligente continua sendo o
+diferencial; o restante do ERP existe para que a pizzaria rode **tudo** num lugar só.
+
+**Tese da primeira release:** uma pizzaria pequena ou média, sem ninguém de marketing, troca
+o sistema atual pelo Fornalia e recupera clientes inativos usando apenas o que o sistema sugere.
 
 ---
 
@@ -63,7 +67,7 @@ pizzarias piloto.
 | P7 | Medir o resultado | Toda campanha registra o contato e mostra se o cliente voltou |
 
 ### 2.4 O que o produto NÃO é
-- Não é um ERP genérico: no MVP não tem estoque, fiscal, contas a pagar, DRE ou BI.
+- Não é um ERP genérico: é um ERP **vertical** para pizzarias. A profundidade fica nos módulos; a tela continua simples.
 - Não é um painel de dashboards para acompanhar todo dia.
 - Não é ferramenta de disparo em massa nem de spam.
 - Não é marketplace: cada pizzaria tem seu próprio link e sua própria marca.
@@ -104,34 +108,79 @@ dói trocar a decisão depois de construído.
 | D11 | Unidades, usuários e permissões | **Multi-pizzaria (SaaS) no modelo de dados desde o início**, 1 loja por pizzaria no MVP; papéis **Dono** e **Atendente** | Isolar por pizzaria desde o dia 1 custa pouco; adaptar depois custa uma reescrita | Alto: por isso já entra no MVP |
 | D12 | Indicadores para o dono | No máximo **4 números** no "Resumo de hoje", cada um com uma frase de leitura (seção 8, M7) | P2: ação acima de relatório | Baixo |
 
-### 4.2 Decisões que dependem de você (Q1 bloqueia a Fase 0; as demais, o piloto)
-| # | Pergunta | Por que importa | Sugestão |
+### 4.2 Decisões tomadas na v0.2 (respostas às perguntas Q1 a Q6)
+| # | Pergunta | Decisão | Efeito no PRD |
 |---|---|---|---|
-| Q1 | **Produto por assinatura (várias pizzarias assinam) ou sob medida (uma pizzaria específica)?** | Muda cadastro público, cobrança, painel master e suporte | Assinatura: o briefing fala em "sistema para pizzarias", no plural. O modelo de dados já é multi-pizzaria (D11) |
-| Q2 | Existe uma **pizzaria piloto** definida? Quantos pedidos por dia ela faz? Já tem lista de clientes (planilha, WhatsApp)? | O CRM só "pensa" com histórico. Sem piloto, não há como validar a tese | 1 a 3 pilotos de 30 a 150 pedidos/dia |
-| Q3 | **Preço** pretendido (mensalidade) e se há período de teste | Define a cobrança da assinatura (fora do MVP do piloto, mas precisa existir antes de vender em escala) | Piloto gratuito ou com desconto em troca de feedback |
-| Q4 | **Nome e identidade** do produto | Domínio, link público (`nome.app/sua-pizzaria`), marca | — |
-| Q5 | Integração com **iFood** e outros marketplaces está nos planos? | Pedido de marketplace normalmente não traz o telefone real do cliente, então não alimenta o CRM | Fora do MVP. A estratégia é levar o cliente para o link próprio |
-| Q6 | A pizzaria piloto tem **impressora térmica** (80 mm)? | Define se a comanda impressa é requisito do MVP | MVP com impressão pelo navegador; impressão automática na V1.1 |
+| Q1 | Assinatura ou sob medida? | **Assinatura (SaaS multi-pizzaria)**, contratada **por plano + módulos**, para **100+ pizzarias e 200 a 300+ usuários desde o início** | Plataforma SaaS completa na R1 (cadastro, cobrança, módulos, painel master, suporte); escalabilidade na seção 12.5 |
+| Q2 | Pizzaria piloto | **Não há.** O piloto é a pizzaria fictícia **Forno da Vila (DEMO)**, com dados gerados | [`PILOTO-DEMO.md`](./PILOTO-DEMO.md) e `demo/gerar_dados_demo.py` |
+| Q3 | Preço | Planos Essencial / Profissional / Premium + módulos avulsos | [`PLANO-DE-NEGOCIO.md`](./PLANO-DE-NEGOCIO.md) |
+| Q4 | Nome e marca | Recomendado **Fornalia, by Contera** (pendente de checagem no INPI e de domínio) | Plano de negócio, seção 2 |
+| Q5 | iFood | **Módulo pago opcional: iFood e 99Food** (pacote marketplaces) | Módulo M14 e seção 12.7 |
+| Q6 | Impressora térmica | Sem piloto físico. Impressão pelo navegador na R1; agente local para impressoras ESC/POS na R2 | M04 |
+| — | Escopo | **ERP completo para pizzarias**, premium, simples de usar | Seção 5 (catálogo de módulos e lacunas) |
+
+**Ajustes nas decisões da 4.1:** D5 passa a ser **Pix online já na R1** (planos Profissional e
+Premium); D11 está confirmada e ampliada (multi-pizzaria + multi-loja na R4).
 
 ---
 
-## 5. Escopo por versão
+## 5. Catálogo de módulos do ERP e releases
 
-| Módulo | MVP (piloto) | V1.1 (primeiras semanas após o piloto) | V2 (escala) |
-|---|---|---|---|
-| **M1. Configuração da pizzaria** | Cardápio (categorias, tamanhos, sabores com preço por tamanho, bordas/adicionais, bebidas), horários, bairros/taxas, formas de pagamento, tempo estimado, pausar pedidos | Fotos otimizadas, combos, disponibilidade por dia/horário, cupons | Múltiplas lojas e cardápios |
-| **M2. Link de pedidos** | Cardápio público mobile-first, montagem de pizza (meio a meio), carrinho, endereço com CEP, frete por bairro, revisão, envio, página de status | Pix online (Mercado Pago), frete por distância, cupom no link, "pedir de novo" | Agendamento de pedido, gorjeta, avaliação pós-entrega |
-| **M3. Operação interna** | Fila de pedidos em tempo real com alerta sonoro, pedido de balcão/telefone, mudança de status, cancelamento com motivo, comanda impressa pelo navegador | Impressão automática, tela de cozinha (KDS) | App/tela do entregador, rotas |
-| **M3b. Caixa** | Abrir, receber, sangria/suprimento, fechar com conferência | Mais de um caixa, relatório por operador | Integração com maquininha (TEF) |
-| **M4. Clientes e histórico** | Cadastro automático pelo pedido, ficha com histórico e preferências calculadas, consentimento, importação de clientes por CSV | Mesclar duplicados, etiquetas manuais | — |
-| **M5. Motor de oportunidades** | 5 gatilhos (seção 10.3), elegibilidade, priorização, expiração, explicação em linguagem simples | Gatilho "dia preferido", "VIP: reconhecimento" | Ajuste dos gatilhos pelo resultado (o que mais converte em cada loja) |
-| **M6. Campanhas** | Mensagem pronta e editável, envio 1 a 1 por `wa.me`, registro de contato, conversão atribuída | Cupom por campanha, campanha manual por sabor/produto | WhatsApp Business API, texto reescrito por IA com trava de fatos, testes A/B |
-| **M7. Resumo do dia** | 4 indicadores com frase de leitura e resultado das campanhas | Comparativo semanal simples | — |
-| **Plataforma** | Multi-pizzaria, login, papéis Dono/Atendente, auditoria das ações sensíveis, LGPD básico | Cobrança da assinatura (Mercado Pago), cadastro self-service da pizzaria, painel master | Backup off-site, relatórios para contador |
+### 5.1 Análise de lacunas: o que a v0.1 não tinha e um ERP completo precisa
+| Lacuna | Por que importa para uma pizzaria | Módulo |
+|---|---|---|
+| Plataforma SaaS (cadastro self-service, cobrança da assinatura, módulos, painel master, suporte) | Sem isso não há como vender para 100+ pizzarias | M01 |
+| **Fiscal (NFC-e/NF-e)** | A maioria das pizzarias **precisa emitir nota** na venda. Sem fiscal, o dono mantém outro sistema e não migra | M12 |
+| Financeiro com conciliação automática | Contas, fluxo de caixa, DRE, taxa de cartão cobrada a mais, recebível que não caiu | M13 |
+| Marketplaces (iFood, 99Food) | Grande parte dos pedidos chega por eles; redigitar gera erro | M14 |
+| Estoque de insumos, ficha técnica e CMV | Pizzaria vive de margem; sem CMV o dono não sabe quanto ganha por pizza | M15 |
+| Compras e fornecedores | Fecha o ciclo do estoque e do custo | M16 |
+| Salão, mesas e comandas | Muitas pizzarias têm consumo no local | M17 |
+| Tela de cozinha (KDS) | Organiza a produção no pico; substitui papel | M09 |
+| Entregadores e despacho | Agrupar entregas, acerto com motoboy, rastreio | M10 |
+| Fidelidade e cupons | Complementa o CRM: dá motivo para o cliente voltar | M11 |
+| Contingência offline | Internet cai no pico; o balcão não pode parar | M22 |
+| Multi-loja e franquia | Redes e donos com mais de uma unidade | M19 |
+| Relatórios avançados e engenharia de cardápio | Saber quais sabores dão lucro, não só volume | M18 |
+| IA (previsão de demanda, sugestão de compra, copiloto) | Diferencial premium e inovador | M21 |
+| WhatsApp oficial e robô de pedidos | Automação em escala, após comprovar o CRM | M20 |
+| API pública, TEF/maquininha, autoatendimento | Ecossistema e operação sem atrito | M23, M24 |
+| Equipe (permissões finas, escala, comissões) | Controle de quem faz o quê; comissão de garçom/entregador | M25 |
 
-**Fora de todas as versões previstas** (salvo nova decisão): emissão fiscal (NFC-e), estoque de
-insumos/ficha técnica, contas a pagar, integração com marketplaces e programa de pontos.
+### 5.2 Catálogo de módulos
+Planos: **E** = Essencial, **P** = Profissional, **Pr** = Premium, **+** = módulo avulso.
+Preços em [`PLANO-DE-NEGOCIO.md`](./PLANO-DE-NEGOCIO.md).
+
+| ID | Módulo | Inclui | Planos | Release |
+|---|---|---|---|---|
+| M01 | **Plataforma SaaS** | Cadastro self-service, teste grátis com loja demo, assinatura (cartão recorrente e Pix via Mercado Pago) com aviso de vencimento e cobrança, direitos por módulo, usuários e papéis, MFA, auditoria, painel master Contera, suporte in-app (chamados), central de ajuda, backup, LGPD | Todos | R1 |
+| M02 | Cardápio e configuração | Seção 8, M1 | Todos | R1 |
+| M03 | Link de pedidos | Cardápio digital, construtor de pizza, frete, página de status; **Pix online** | Todos (Pix: P, Pr, +) | R1 |
+| M04 | Pedidos e operação | Fila em tempo real, balcão/telefone, status, comanda pelo navegador; agente de impressão ESC/POS automática na R2 | Todos | R1 |
+| M05 | PDV e caixa | Pagamentos mistos, troco, sangria/suprimento, **fechamento cego** (o operador conta sem ver o valor esperado), vários caixas | Todos | R1 |
+| M06 | Clientes e histórico | Seção 8, M4 | Todos | R1 |
+| M07 | **CRM inteligente e campanhas** | Seções 10 e 11.6 | P, Pr, + | R1 |
+| M08 | Resumo do dia | Seção 8, M7 | Todos | R1 |
+| M12 | **Fiscal** | NFC-e e NF-e, contingência, cancelamento e inutilização, certificado A1 cifrado, campos da reforma tributária (CBS/IBS) | + (todos) | **R1** |
+| M09 | Tela de cozinha (KDS) | Praças (forno, montagem, bebidas), tempos por etapa, alerta de atraso | P, Pr | R2 |
+| M10 | Delivery e entregadores | Despacho, agrupamento por rota, acerto com entregador, link de rastreio | P, Pr | R2 |
+| M11 | Cupons e fidelidade | Cupom por campanha, pontos ou cashback, indicação | P, Pr, + | R2 |
+| M13 | **Financeiro + conciliação automática** | Contas a pagar/receber, fluxo de caixa, DRE gerencial, centros de custo, conciliação bancária (Open Finance ou OFX) e de cartões (taxas, recebíveis, chargebacks), exportação para o contador | Pr, + | R2 |
+| M14 | **Marketplaces** | iFood e 99Food: pedido entra direto na operação, status sincronizado; sincronização de cardápio na R3 | + | R2 |
+| M15 | Estoque, ficha técnica e CMV | Baixa automática por venda (inclusive por fração de sabor), inventário, perdas, estoque mínimo | Pr, + | R3 |
+| M16 | Compras e fornecedores | Pedido de compra, entrada por XML da NF-e, custo médio, sugestão de compra | Pr | R3 |
+| M17 | Salão e mesas | Mapa de mesas, comanda por mesa, app do garçom, divisão de conta, taxa de serviço, QR na mesa | Pr, + | R3 |
+| M18 | Relatórios e engenharia de cardápio | Curva ABC, margem por sabor, matriz popularidade × margem, vendas por hora | Pr | R3 |
+| M22 | Contingência offline | Pedidos e caixa funcionam sem internet e sincronizam depois, sem duplicar | Todos | R3 |
+| M19 | Multi-loja e franquia | Cardápio central, preço por loja, relatórios consolidados, transferência de estoque | + | R4 |
+| M20 | WhatsApp oficial e robô de pedidos | API oficial, notificações automáticas de status, campanhas com opt-in formal | + | R4 |
+| M21 | IA | Previsão de demanda (massa, insumos, equipe), sugestão de compra, copiloto em linguagem natural, texto de campanha com trava de fatos | Pr | R4 |
+| M23 | API pública e integrações | API e webhooks documentados, TEF/maquininha integrada | Pr, + | R4 |
+| M24 | Autoatendimento | Totem e pedido pela mesa com pagamento | + | R4 |
+| M25 | Equipe | Permissões finas, escala, comissões | P, Pr | R4 |
+
+**Fora do escopo do produto:** folha de pagamento e contabilidade completa (atribuições do
+contador; o M13 exporta os dados para ele) e venda de produtos fora do food service.
 
 ---
 
@@ -577,6 +626,66 @@ Function que monta as meta tags por pizzaria, porque uma SPA não faz isso sozin
 
 ---
 
+### 12.5 Escalabilidade (requisito: 100+ pizzarias e 200 a 300+ usuários desde o início)
+**Leitura honesta da carga:** 100 pizzarias e 300 usuários é um volume **modesto** para Postgres.
+O risco não é o volume, é o **desenho**: RLS mal escrito, cardápio público batendo no banco a
+cada acesso, jobs de todas as lojas rodando ao mesmo tempo e integrações síncronas.
+**Meta de projeto: 10 vezes o pedido**, ou seja 1.000 pizzarias, 5.000 usuários e 150 mil
+pedidos/dia, **sem reescrita**.
+
+| Carga estimada com 100 lojas | Valor aproximado |
+|---|---|
+| Pedidos por noite (toda a plataforma) | 8 a 10 mil |
+| Pico de criação de pedidos | 2 a 3 pedidos/s |
+| Acessos ao cardápio público por noite | ~100 mil (servidos pelo CDN, não pelo banco) |
+| Conexões em tempo real | 300 a 500 (equipes; o cliente final consulta por intervalo) |
+
+| ID | Decisão de escala |
+|---|---|
+| AD-09 | **Pizzaria no token de login** (claim `tenant_id` via *custom access token hook* do Supabase). A RLS compara a coluna com o claim, sem consulta extra por linha. Índices sempre começando por `tenant_id` |
+| AD-10 | **Cardápio público em cache no CDN** (JSON versionado, invalidado ao salvar o cardápio). Só o envio do pedido chega ao banco |
+| AD-11 | **Fila de jobs** no Postgres (status, tentativas, espera exponencial, fila de falhas) processada por workers. Tudo que fala com terceiros (fiscal, iFood, 99Food, Mercado Pago, bancos) é **assíncrono e idempotente**, nunca dentro do clique do usuário |
+| AD-12 | **Motor do CRM escalonado:** cada loja roda em um horário entre 03:00 e 06:00 (Brasília), com cálculo incremental. Nenhum job varre todas as lojas de uma vez |
+| AD-13 | **Integrações por adaptadores** (`MarketplaceAdapter`, `FiscalProvider`, `PaymentProvider`, `BankFeedProvider`): trocar de fornecedor sem mexer no núcleo |
+| AD-14 | **Direitos por módulo** (seção 12.6) checados na interface, no servidor e nos jobs |
+| AD-15 | Tempo real com um canal por loja; a página de status do cliente final usa consulta periódica. Conexões crescem com o número de equipes, não com o público |
+| AD-16 | Crescimento de dados: índices `(tenant_id, data)`; particionamento mensal de pedidos, itens e auditoria quando passarem de ~50 milhões de linhas; arquivamento após 24 meses |
+| AD-17 | Ambientes de desenvolvimento, homologação e produção; migrações versionadas no CI; padrão expandir → migrar → contrair (deploy sem parada); liberação gradual por loja (feature flags) |
+| AD-18 | Observabilidade por loja: erros de front e servidor, latência, fila de jobs, saúde de cada integração; meta de 99,9% de disponibilidade no pico; página de status pública |
+| AD-19 | Proteção contra "vizinho barulhento": limites por loja (requisições, jobs, exportações); relatórios pesados vão para uma réplica de leitura quando necessário |
+
+**Caminho de crescimento:** Supabase Pro com mais capacidade de máquina → réplica de leitura
+para relatórios → workers dedicados. Tudo em Postgres padrão, sem aprisionamento ao fornecedor.
+**Antes do lançamento:** teste de carga com 10 vezes o volume previsto.
+
+### 12.6 Direitos por módulo (planos e módulos sem mexer no código)
+- Tabelas: `plans`, `modules`, `plan_modules`, `subscriptions` (pizzaria, plano, status, ciclo),
+  `tenant_modules` (pizzaria, módulo, origem: plano/avulso/cortesia, status, validade) e
+  limites (usuários, lojas).
+- **Três camadas de checagem:** (1) interface: módulo desligado some do menu e aparece
+  como "Conheça este módulo", uma oferta discreta; (2) servidor/banco: função
+  `has_module(tenant, código)` exigida nas RPCs, Edge Functions e políticas das tabelas do
+  módulo; (3) jobs não processam módulo desligado.
+- **Desligar um módulo nunca apaga dados:** eles ficam somente leitura por 90 dias, e religar devolve tudo.
+- **Inadimplência sem derrubar o expediente:** aviso 5 dias e 1 dia antes e no dia do
+  vencimento; após 10 dias, os módulos avulsos e as configurações ficam bloqueados; após 20
+  dias, o sistema fica só para consulta e pagamento. **O corte nunca acontece durante o horário de
+  funcionamento** e nunca derruba uma sessão de caixa aberta: sempre há a saída "regularizar agora".
+
+### 12.7 Integrações externas
+| Integração | Como | Observação |
+|---|---|---|
+| **iFood** | API oficial de parceiros do iFood (pedidos, status, depois cardápio) | Exige cadastro e homologação da Contera como integradora. O cliente do iFood geralmente chega **sem telefone real**: é marcado como "cliente de marketplace" e não entra nas campanhas |
+| **99Food** | API de parceiros da 99 | **Disponibilidade e condições a confirmar** antes de vender o módulo |
+| Fiscal | Emissor via API de parceiro (avaliar, por exemplo, Focus NFe, PlugNotas, NFe.io) | O certificado A1 do cliente fica cifrado; a emissão é assíncrona, com contingência |
+| Pagamentos | Mercado Pago: Pix online no link e assinatura da plataforma | Webhook com assinatura verificada e idempotente |
+| Conciliação | Open Finance via agregador (avaliar, por exemplo, Pluggy, Belvo) ou importação OFX; cartões via arquivos e APIs das credenciadoras | — |
+| WhatsApp | `wa.me` (R1) → API oficial Cloud (R4) | — |
+| Impressão | Navegador (R1) → agente local ESC/POS (R2) | — |
+| CEP | ViaCEP, com BrasilAPI de reserva | — |
+
+---
+
 ## 13. Modelo de dados (entidades principais)
 
 > Convenções: toda tabela de negócio tem `id uuid`, `tenant_id uuid` (com RLS),
@@ -612,6 +721,14 @@ Function que monta as meta tags por pizzaria, porque uma SPA não faz isso sozin
 | `contact_log` | opportunity_id?, customer_id, template_id, channel, by_user, at, undone_at? | Sem conteúdo da mensagem (RN-43) |
 | `audit_log` | actor, action, entity, entity_id, diff jsonb, at | Só inserção |
 
+**Plataforma (R0/R1):** `plans`, `modules`, `plan_modules`, `subscriptions`, `subscription_invoices`,
+`tenant_modules`, `jobs`, `integration_accounts` (credenciais cifradas por pizzaria),
+`support_tickets`, `fiscal_documents`. **Módulos R2–R4:** `drivers`, `deliveries`,
+`loyalty_ledger`, `coupons`, `bank_accounts`, `bank_transactions`, `payables`, `receivables`,
+`card_receivables`, `marketplace_orders`, `ingredients`, `recipes` (ficha técnica),
+`stock_movements`, `suppliers`, `purchase_orders`, `tables`, `table_sessions`, `stores`.
+Todas seguem as convenções acima (tenant, RLS, centavos, movimentos só com inserção).
+
 ---
 
 ## 14. Requisitos não funcionais
@@ -621,7 +738,7 @@ Function que monta as meta tags por pizzaria, porque uma SPA não faz isso sozin
 | RNF-01 | Desempenho do cardápio público | LCP ≤ 2,5 s em 4G, pacote JS inicial ≤ 200 KB gzip |
 | RNF-02 | Latência do pedido novo no painel | ≤ 5 s (p95) |
 | RNF-03 | Disponibilidade nos horários de pico (18h–23h) | 99,5% no mês |
-| RNF-04 | Volume de referência | 300 pedidos/dia por pizzaria e 200 pizzarias sem mudança de arquitetura |
+| RNF-04 | Volume de referência | Lançamento: 100+ pizzarias e 300+ usuários. Meta de projeto sem reescrita: 1.000 pizzarias, 5.000 usuários, 150 mil pedidos/dia (seção 12.5) |
 | RNF-05 | Motor de oportunidades | Roda em ≤ 2 min para todas as pizzarias; falha gera alerta e não apaga as oportunidades do dia anterior |
 | RNF-06 | Isolamento | Teste automatizado provando que o usuário da pizzaria A não lê nem escreve dados da B, em toda tabela |
 | RNF-07 | Acessibilidade | Contraste AA, alvos de toque ≥ 44 px, operável por teclado no painel |
@@ -632,48 +749,52 @@ Function que monta as meta tags por pizzaria, porque uma SPA não faz isso sozin
 
 ---
 
-## 15. Plano do MVP
+## 15. Roadmap e plano de entrega
 
-### 15.1 Fases
-Estimativa para **1 desenvolvedor em tempo integral** com apoio de IA. É uma ordem de
-grandeza para planejar, não um compromisso; será refinada ao fim da Fase 0.
+### 15.1 Premissas
+- Equipe: **2 desenvolvedores full-stack** + 1 pessoa de produto/design em meio período, com
+  apoio de IA. Com 1 desenvolvedor, os prazos praticamente dobram.
+- As estimativas são ordem de grandeza e serão refinadas ao fim da R0.
+- **Um ERP completo e premium se constrói em releases.** Cada release fica vendável sozinha; a
+  seguinte amplia sem quebrar a anterior.
 
-| Fase | Entrega | Pronto quando... | Estimativa |
+### 15.2 Releases
+| Release | Período | Módulos | Resultado |
 |---|---|---|---|
-| **0. Fundação** | Repositório, Supabase, Auth, `tenants`/`memberships`, RLS base, layout do painel, CI com testes | Duas pizzarias de teste isoladas, com teste de RLS passando | 1 semana |
-| **1. Cardápio (M1)** | Configuração completa da pizzaria | Uma pizzaria real cadastra o cardápio inteiro sozinha em ≤ 1 h | 1,5 semana |
-| **2. Link de pedidos (M2)** | Cardápio público, construtor de pizza, carrinho, endereço/frete, envio, status | Pedido feito pelo celular chega ao banco com preço recalculado; testes de RN-03/04/05 passando | 2 semanas |
-| **3. Operação (M3)** | Fila em tempo real, alerta, status, balcão, cancelamento, comanda | Simulação de rush: 30 pedidos em 20 min sem perda nem duplicidade | 1,5 semana |
-| **4. Caixa (M3b)** | Abrir, receber, sangria/suprimento, fechar | Fechamento bate com os pagamentos lançados em cenários de teste (inclusive estorno) | 1 semana |
-| **5. Clientes (M4)** | Cadastro automático, ficha, frases de perfil, importação CSV, consentimento, opt-out | Histórico e métricas corretos num conjunto de pedidos de teste conhecido | 1 semana |
-| **6. Motor (M5)** | `customer_stats`, segmentos, gatilhos G1–G5, elegibilidade, expiração, job diário | Para uma base de teste com respostas conhecidas, cada cliente cai no cartão certo | 1,5 semana |
-| **7. Campanhas + Resumo (M6, M7)** | Cartões, mensagens, envio `wa.me` em sequência, atribuição, Resumo de hoje | Do cartão ao WhatsApp em ≤ 3 toques; conversão atribuída corretamente (RN-41/42) | 1,5 semana |
-| **8. Piloto** | Implantação na(s) pizzaria(s) piloto, treinamento de 30 min, acompanhamento | Ver critérios de sucesso em 15.3 | 4 a 6 semanas de uso real |
+| **R0. Fundação** | semanas 1 a 3 | Repositório, ambientes, banco com RLS por claim (AD-09), tabelas de módulos (12.6), design system premium, CI com testes, **pizzaria demo carregada** | Duas pizzarias isoladas comprovadas por teste; a demo abre no painel |
+| **R1. Núcleo comercial** | meses 1 a 5 | M01 a M08 + **M12 Fiscal** | **Primeira venda**: uma pizzaria troca o sistema atual pelo Fornalia (pedidos, caixa, nota fiscal e CRM) |
+| **R2. Gestão** | meses 6 a 8 | M09, M10, M11, M13, M14, impressão automática | Profissional e Premium completos para delivery; iFood/99Food |
+| **R3. Controle** | meses 9 a 11 | M15, M16, M17, M18, M22 | Custo, margem, salão e operação sem internet |
+| **R4. Escala e IA** | meses 12 a 15 | M19, M20, M21, M23, M24, M25 | Redes, automação oficial de WhatsApp, inteligência artificial |
 
-**Total de construção: cerca de 11 semanas**, mais o piloto. As Fases 1 a 4 entregam um
-sistema de pedidos utilizável. **Sugestão:** colocar a pizzaria piloto para usar pedidos e caixa
-ao fim da Fase 4, enquanto as Fases 5 a 7 são construídas. Assim o histórico real já está
-sendo acumulado quando o motor ficar pronto.
+**Por que o Fiscal entrou na R1:** sem NFC-e, a pizzaria não consegue usar o Fornalia como
+sistema principal. Ela manteria outro sistema para emitir nota e não migraria.
 
-### 15.2 Problema de partida a frio do CRM
-O CRM só tem o que dizer quando existe histórico. Mitigações, todas no MVP:
-1. **Importar clientes** (RF-55) com a data da última compra, se a pizzaria tiver. Isso já
-   alimenta G4 (inativos) e G5 (aniversário) no primeiro dia.
-2. **Colocar a operação no ar antes do CRM** (ver sugestão em 15.1): cada semana de uso
-   alimenta o histórico.
-3. **Estado vazio honesto:** "Ainda estamos conhecendo seus clientes. Em cerca de 3 semanas
-   de pedidos as primeiras oportunidades aparecem aqui. Enquanto isso: 41 clientes
-   importados não compram há mais de 60 dias. Quer começar por eles?"
-
-### 15.3 Critérios de sucesso do piloto
-| Métrica | Como medir | Meta inicial (rever com dados reais) |
+### 15.3 Fases da R1
+| Fase | Entrega | Pronto quando... |
 |---|---|---|
-| Uso operacional | % dos pedidos do dia registrados no sistema | ≥ 90% após 2 semanas |
-| Identificação | % dos pedidos com cliente identificado (celular) | ≥ 90% no link; ≥ 60% no balcão |
-| Consentimento | % dos clientes ativos com opt-in | Medir a linha de base; meta ≥ 50% |
-| Uso do CRM | Semanas em que o dono enviou pelo menos 1 campanha | ≥ 3 de cada 4 semanas |
-| Resultado | Pedidos atribuídos a campanhas / contatos feitos | Medir a linha de base no piloto; é o número que vende o produto |
-| Usabilidade | Teste com o dono: entender uma oportunidade e enviar | Sem ajuda, na primeira vez |
+| F1. Cardápio (M02) | Configuração completa | Uma pessoa cadastra um cardápio inteiro em ≤ 1 h |
+| F2. Link de pedidos + Pix (M03) | Cardápio público, construtor, frete, status, Pix online | Pedido pelo celular com preço recalculado no servidor; Pix confirmado por webhook idempotente |
+| F3. Operação (M04) | Fila em tempo real, alerta, status, balcão, comanda | Simulação de rush: 30 pedidos em 20 min sem perda nem duplicidade |
+| F4. PDV e caixa (M05) | Abrir, receber, sangria, fechamento cego | Fechamento bate em todos os cenários de teste, inclusive estorno |
+| F5. Fiscal (M12) | NFC-e em homologação e produção, contingência | Notas autorizadas no ambiente de homologação da SEFAZ para todos os cenários de pagamento |
+| F6. Clientes (M06) | Histórico, perfil em frases, importação, consentimento | Métricas corretas sobre a base demo |
+| F7. Motor do CRM | Seção 10, job escalonado | Para a base demo, cada cliente cai no cartão certo (a prévia já existe em `demo/gerar_dados_demo.py`) |
+| F8. Campanhas + Resumo (M07, M08) | Cartões, envio `wa.me`, atribuição | Do cartão ao WhatsApp em ≤ 3 toques; conversão atribuída corretamente |
+| F9. Plataforma (M01) | Cadastro self-service, assinatura Mercado Pago, módulos, painel master, chamados | Uma pizzaria se cadastra, testa 14 dias, assina e tem módulos ligados/desligados sem suporte |
+| F10. Endurecimento | Teste de carga 10×, revisão de segurança, backup e restauração testados | Critérios do RNF atendidos com números |
+
+### 15.4 Piloto e beta
+1. **Piloto interno:** a pizzaria fictícia [Forno da Vila (DEMO)](./PILOTO-DEMO.md) é usada
+   em todas as fases e em toda demonstração.
+2. **Beta fechado** ao fim da F8: 3 a 10 pizzarias reais com desconto (plano de negócio, seção 8).
+3. Critérios de sucesso do beta: ≥ 90% dos pedidos registrados no sistema; ≥ 90% dos pedidos
+   do link com cliente identificado; o dono envia campanhas em ≥ 3 de cada 4 semanas;
+   pedidos atribuídos ao CRM medidos e publicados como caso de sucesso.
+
+### 15.5 Partida a frio do CRM em clientes reais
+Importação de clientes (RF-55), operação no ar antes do CRM e estado vazio honesto ("em
+cerca de 3 semanas de pedidos as primeiras oportunidades aparecem aqui").
 
 ---
 
@@ -688,16 +809,18 @@ O CRM só tem o que dizer quando existe histórico. Mitigações, todas no MVP:
 | Pedidos de marketplace ficam fora do CRM | Visão parcial do cliente | Estratégia: toda campanha leva o link próprio e migra o cliente para o canal direto |
 | Número compartilhado (família) ou cliente com 2 números | Métricas distorcidas | Aceitável no MVP; mesclagem na V1.1 |
 | Pico de pedidos com internet instável no balcão | Pedido perdido | Idempotência (RN-05), alerta repetido, comanda impressa; modo offline fica para depois |
-| Escopo crescer para ERP | Atraso e perda do diferencial | Princípios da seção 2.3 e tabela de escopo da seção 5 como filtro em toda mudança |
+| ERP completo atrasa a primeira venda | Caixa da empresa sem receita por muito tempo | Releases vendáveis (seção 15); R1 já substitui o sistema atual da pizzaria |
+| Complexidade fiscal (regras por estado, reforma tributária) | Nota rejeitada impede a venda | Emissor fiscal parceiro (AD-13), homologação por estado, contingência |
+| Dependência de APIs de terceiros (iFood, 99Food, bancos) | Módulo para de funcionar sem aviso | Adaptadores, fila com repetição, monitor de saúde por integração, contrato de parceiro |
+| Interface ficar complexa com tantos módulos | Perde o diferencial "simples de usar" | Menu mostra só os módulos ligados; princípios da seção 2.3; teste de usabilidade a cada release |
 | Concorrência com sistemas de pedido já estabelecidos | Difícil vender só "cardápio digital" | Posicionar pelo CRM com resultado medido (RN-41), não pelo cardápio |
 
 ---
 
 ## 17. Próximos passos
-1. **Você** responde Q1 a Q6 (seção 4.2) e confirma ou ajusta as decisões D1 a D12.
-2. Atualizo este PRD para a v0.2 com as respostas.
-3. Fase 0: esquema do banco (DDL), políticas RLS e testes de isolamento. A partir daí, o
-   desenvolvimento segue fase a fase, com o critério de "pronto" da tabela 15.1.
+1. **Você** aprova o nome, os preços e os planos ([`PLANO-DE-NEGOCIO.md`](./PLANO-DE-NEGOCIO.md)) e o roadmap da seção 15.
+2. R0: esquema do banco (DDL), RLS por claim, tabelas de módulos, carregador da pizzaria demo e testes de isolamento.
+3. R1 fase a fase, cada uma com o critério de "pronto" da tabela 15.3.
 
 ---
 
@@ -723,6 +846,6 @@ O CRM só tem o que dizer quando existe histórico. Mitigações, todas no MVP:
 | §7 Interface | 6 |
 | §8 Ciclo de crescimento | 1, 7.5 |
 | §9–10 O que não ser / diretrizes | 2.3, 2.4 |
-| §11 Módulos | 5, 8 |
+| §11 Módulos | 5 (catálogo completo), 8 |
 | §12 Questões em aberto | 4.1, 4.2 |
 | §13 Critério de sucesso | 6.2, 15.3 |
