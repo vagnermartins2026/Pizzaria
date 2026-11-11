@@ -261,14 +261,17 @@ def motor(data, hoje):
         fl = Counter()
         orders_with = Counter()
         for o in os_:
+            if (hoje - date.fromisoformat(o["business_date"])).days > 365:  # favoritos: últimos 12 meses
+                continue
             seen = set()
             for f in flav_by_order[o["id"]]:
                 fl[f["name_snapshot"]] += f["fraction"]
                 seen.add(f["name_snapshot"])
             orders_with.update(seen)
-        favs = [n for n, _ in fl.most_common(2) if orders_with[n] >= 2]
+        ranking = sorted(fl, key=lambda n: (-round(fl[n], 4), n))  # empate: ordem alfabética (igual ao SQL)
+        favs = [n for n in ranking[:2] if orders_with[n] >= 2]
         wd = Counter(d.weekday() for d in ds)
-        top_wd, top_n = wd.most_common(1)[0]
+        top_wd, top_n = sorted(wd.items(), key=lambda kv: (-kv[1], kv[0]))[0]  # empate: segunda primeiro
         g180 = sum(o["total_cents"] for o in os_ if (hoje - date.fromisoformat(o["business_date"])).days <= 180)
         stats[cid] = dict(n=len(ds), last=ds[-1], dias=(hoje - ds[-1]).days,
                           intervalo=statistics.median(gaps) if len(last12) >= 3 else None,
@@ -281,7 +284,7 @@ def motor(data, hoje):
     for s in stats.values():
         s["vip"] = s["g180"] >= corte_vip and s["n180"] >= 5
 
-    cards, bloqueados, esperado = defaultdict(list), Counter(), []
+    cards, bloqueados, esperado, mensagens = defaultdict(list), Counter(), [], []
     for cid, s in stats.items():
         c = cust[cid]
         g = gatilho(s)
@@ -291,11 +294,15 @@ def motor(data, hoje):
             continue
         elegivel = consent.get(cid) == "granted"
         esperado.append((cid, g, "sim" if elegivel else "nao"))
+        if elegivel:
+            chave, texto, url = renderizar(g, c, s, data["tenants"][0])
+            mensagens.append((cid, chave, texto, url))
         if not elegivel:
             bloqueados[g] += 1
             continue
         cards[g].append((c, s))
     motor.esperado = sorted(esperado)  # gabarito por cliente (comparado com o motor em SQL)
+    motor.mensagens = sorted(mensagens)
     return stats, cards, bloqueados
 
 
@@ -304,6 +311,33 @@ def brl(cents):
 
 
 WD = ["segunda", "terça", "quarta", "quinta", "sexta", "sábado", "domingo"]
+
+# Modelos padrão da plataforma — os MESMOS textos de db/crm/04_campanhas.sql (o gabarito de mensagens confere).
+# Escolhe-se a 1ª variante cujas variáveis TODAS têm valor (RN-46: nunca mostrar campo vazio nem inventar).
+MODELOS = {
+    "G1": ["Oi, {primeiro_nome}! Faz um tempinho que você não pede com a gente 😊 Vimos que {sabor_favorito} está entre as suas favoritas. Que tal matar a vontade hoje? É só pedir por aqui: {link_pedido} 🍕",
+           "Oi, {primeiro_nome}! Faz um tempinho que você não pede com a gente 😊 Que tal uma pizza hoje? É só pedir por aqui: {link_pedido} 🍕"],
+    "G2": ["Oi, {primeiro_nome}! Sentimos sua falta por aqui 😊 Que tal uma pizza de {sabor_favorito} hoje? Peça por aqui: {link_pedido} 🍕",
+           "Oi, {primeiro_nome}! Sentimos sua falta por aqui 😊 Que tal uma pizza hoje? Peça por aqui: {link_pedido} 🍕"],
+    "G3": ["Oi, {primeiro_nome}! Obrigado por ter pedido com a gente 😊 Que tal repetir a experiência? Peça por aqui: {link_pedido} 🍕"],
+    "G4": ["Oi, {primeiro_nome}! Faz tempo que a gente não se vê 😊 Que tal matar a saudade com uma pizza de {sabor_favorito}? Peça por aqui: {link_pedido} 🍕",
+           "Oi, {primeiro_nome}! Faz tempo que a gente não se vê 😊 Que tal matar a saudade com uma pizza hoje? Peça por aqui: {link_pedido} 🍕"],
+    "G5": ["Feliz aniversário, {primeiro_nome}! 🎉 A equipe {pizzaria} deseja um dia incrível. Se quiser comemorar com pizza, é só pedir por aqui: {link_pedido} 🍕"],
+}
+SAIR = "\n\nNão quer mais receber nossas mensagens? Responda SAIR."
+
+
+def renderizar(g, c, s, loja):
+    from urllib.parse import quote
+    import re as _re
+    vars_ = {"primeiro_nome": c["name"].split()[0], "pizzaria": loja["name"],
+             "sabor_favorito": s["favs"][0] if s["favs"] else "", "link_pedido": "https://fornalia.app/" + loja["slug"]}
+    vars_ = {k: v.replace("{", "").replace("}", "") for k, v in vars_.items()}  # valor nunca vira variável
+    for i, corpo in enumerate(MODELOS[g], start=1):
+        if all(vars_.get(v) for v in _re.findall(r"\{(\w+)\}", corpo)):
+            texto = _re.sub(r"\{(\w+)\}", lambda m: vars_[m.group(1)], corpo) + SAIR
+            return f"{g}.{i}", texto, "https://wa.me/" + c["phone_e164"].lstrip("+") + "?text=" + quote(texto, safe="")
+    raise ValueError(f"nenhum modelo de {g} serve para {c['id']}")
 TITULOS = {"G2": "{n} clientes frequentes saíram do ritmo",
            "G1": "{n} clientes passaram de 25 dias sem pedir",
            "G3": "{n} clientes pediram uma vez e não voltaram",
@@ -312,22 +346,14 @@ TITULOS = {"G2": "{n} clientes frequentes saíram do ritmo",
 
 
 def frase(c, s, g):
-    nome = c["name"].split()[0]
     p = [f"{'[VIP] ' if s['vip'] else ''}{c['name']} não pede há {s['dias']} dias."]
     if s["intervalo"]:
         p.append(f"Antes pedia a cada ~{round(s['intervalo'])} dias.")
     if s["favs"]:
         p.append(f"Favorita: {s['favs'][0]}.")
     if s["dia_pref"] is not None:
-        p.append(f"Costuma pedir às {WD[s['dia_pref']]}s.")
-    if g == "G5":
-        return " ".join(p), (f"Feliz aniversário, {nome}! A equipe do Forno da Vila deseja um dia incrível. "
-                             "Se quiser comemorar com pizza, é só pedir por aqui: forno-da-vila-demo.app")
-    msg = f"Oi, {nome}! Faz um tempinho que você não pede com a gente."
-    if s["favs"]:
-        msg += f" Vimos que {s['favs'][0]} está entre as suas favoritas."
-    msg += " Que tal hoje? Peça por aqui: forno-da-vila-demo.app"
-    return " ".join(p), msg
+        p.append(f"Costuma pedir {'aos' if s['dia_pref'] >= 5 else 'às'} {WD[s['dia_pref']]}s.")
+    return " ".join(p), renderizar(g, c, s, TENANT)[1].split("\n")[0]
 
 
 def main():
@@ -379,6 +405,10 @@ def executar(hoje, semente, saida):
         w = csv.writer(fh, lineterminator="\n")
         w.writerow(["customer_id", "gatilho", "elegivel"])
         w.writerows(motor.esperado)
+    with open(os.path.join(saida, "mensagens_esperadas.csv"), "w", newline="", encoding="utf-8") as fh:
+        w = csv.writer(fh, lineterminator="\n")
+        w.writerow(["customer_id", "modelo", "texto", "whatsapp_url"])
+        w.writerows(motor.mensagens)
     print("\n== OPORTUNIDADES DE HOJE (prévia do motor, PRD §10) ==")
     for g in ["G2", "G1", "G3", "G4", "G5"]:
         todos = sorted(cards.get(g, []), key=lambda cs: (not cs[1]["vip"], -cs[1]["g180"]))

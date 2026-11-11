@@ -5,6 +5,9 @@
 --   crm_fatos_pedido(store_id, customer_id, order_id, business_date, total_cents)   -- só pedidos CONCLUÍDOS
 --   crm_fatos_cliente(store_id, customer_id, nome, birth_date, consentimento)       -- 'granted' / outro / null
 --   crm_fatos_em_andamento(store_id, customer_id)                                    -- pedido aberto agora
+--   crm_fatos_sabor(store_id, order_id, sabor, fracao)                               -- sabores dos pedidos
+--   crm_fatos_loja(store_id, nome, link_pedido)                                      -- para as mensagens
+-- (crm_fatos_cliente também traz `telefone` em E.164.) Visões com security_invoker = true: respeitam a RLS.
 -- Gabarito: demo/gabarito_oportunidades_2026-11-08.csv (o resultado precisa ser idêntico — db/crm/testar_motor.sh).
 -- =====================================================================================================
 
@@ -73,6 +76,10 @@ CREATE TABLE IF NOT EXISTS public.crm_customer_stats (
   computed_at           timestamptz NOT NULL DEFAULT now(),
   PRIMARY KEY (store_id, customer_id)
 );
+
+ALTER TABLE public.crm_customer_stats ADD COLUMN IF NOT EXISTS sabores_favoritos text[] NOT NULL DEFAULT '{}';
+ALTER TABLE public.crm_customer_stats ADD COLUMN IF NOT EXISTS dia_preferido smallint
+  CHECK (dia_preferido BETWEEN 0 AND 6);                     -- 0 = segunda … 6 = domingo; só com ≥ 4 pedidos e ≥ 50%
 
 -- ---------- oportunidades e contatos ----------
 CREATE TABLE IF NOT EXISTS public.crm_oportunidades (
@@ -183,6 +190,34 @@ BEGIN
       pedidos_180d = EXCLUDED.pedidos_180d, valor_medio_cents = EXCLUDED.valor_medio_cents,
       is_vip = EXCLUDED.is_vip, calculado_para = EXCLUDED.calculado_para, computed_at = EXCLUDED.computed_at;
   GET DIAGNOSTICS v_stats = ROW_COUNT;
+
+  -- 2b) Preferências: 2 sabores mais pedidos nos últimos 12 meses (meio a meio = 0,5; empate em ordem alfabética),
+  --     cada um presente em ≥ 2 pedidos; dia da semana com ≥ 50% dos pedidos (≥ 4 pedidos; empate: segunda primeiro).
+  WITH fs AS (
+    SELECT f.customer_id, s.sabor, round(sum(s.fracao), 4) AS pontos, count(DISTINCT s.order_id) AS n_ped
+    FROM public.crm_fatos_sabor s
+    JOIN public.crm_fatos_pedido f ON f.store_id = s.store_id AND f.order_id = s.order_id
+    WHERE s.store_id = p_store AND f.business_date <= p_hoje AND p_hoje - f.business_date <= 365
+    GROUP BY f.customer_id, s.sabor
+  ), rk AS (
+    SELECT fs.*, row_number() OVER (PARTITION BY customer_id ORDER BY pontos DESC, sabor COLLATE "C") AS rn FROM fs
+  ), fav AS (
+    SELECT customer_id, COALESCE(array_agg(sabor ORDER BY rn) FILTER (WHERE n_ped >= 2), '{}') AS favs
+    FROM rk WHERE rn <= 2 GROUP BY customer_id
+  ), wd AS (
+    SELECT customer_id, extract(isodow FROM business_date)::int - 1 AS dia, count(*) AS c,
+           sum(count(*)) OVER (PARTITION BY customer_id) AS tot
+    FROM public.crm_fatos_pedido WHERE store_id = p_store AND business_date <= p_hoje GROUP BY 1, 2
+  ), wd1 AS (
+    SELECT DISTINCT ON (customer_id) customer_id, dia, c, tot FROM wd ORDER BY customer_id, c DESC, dia
+  )
+  UPDATE public.crm_customer_stats st
+     SET sabores_favoritos = COALESCE(x.favs, '{}'),
+         dia_preferido = CASE WHEN x.tot >= 4 AND x.c::numeric / x.tot >= 0.5 THEN x.dia END
+    FROM (SELECT s2.customer_id, fav.favs, wd1.dia, wd1.c, wd1.tot FROM public.crm_customer_stats s2
+            LEFT JOIN fav ON fav.customer_id = s2.customer_id LEFT JOIN wd1 ON wd1.customer_id = s2.customer_id
+           WHERE s2.store_id = p_store) x
+   WHERE st.store_id = p_store AND st.customer_id = x.customer_id;
 
   -- 3) Oportunidades do dia: um cartão por cliente; quem já tem oportunidade viva de outro dia não entra.
   WITH base AS (
