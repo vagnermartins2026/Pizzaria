@@ -28,7 +28,8 @@
 | 6 | Imagem de compartilhamento, ícones, manifest, llms.txt | Claude | ✅ |
 | 7 | 18 testes automáticos dentro do build | Claude | ✅ |
 | 8 | Acessibilidade (axe, WCAG AA) sem violações em 8 páginas × celular e computador | Claude | ✅ |
-| 9 | Build automático no GitHub (Actions) | Claude | ✅ |
+| 9 | Build automático no GitHub (Actions), aprovado na 1ª execução | Claude | ✅ |
+| 9b | Passo a passo de publicação e DNS | Claude | ✅ [`PUBLICAR-SITE.md`](./PUBLICAR-SITE.md) |
 | 10 | Aprovar nome, INPI, registrar domínios, @ do Instagram | Dono | ⏳ backlog 1 a 4 |
 | 11 | Contato, empresa, preços, oferta das fundadoras | Dono | ⏳ backlog 5 a 8 |
 | 12 | Publicar a prévia na Cloudflare | Claude, após autorização | ⏳ backlog 9 |
