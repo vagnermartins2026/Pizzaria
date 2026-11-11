@@ -1,4 +1,4 @@
-# Cardápio, pedido, entrega e horário em SQL (Fornalia)
+# Cardápio, pedido, entrega e horário em SQL (Pizzalia)
 
 Escrito antes da base remixada e independente dela (usa só `store_id`). Prefixos próprios (`cardapio_*`, `pedido*`,
 `loja_*`) para não colidir com `products`, `loja_pedidos` e `sales` do MayFlower.

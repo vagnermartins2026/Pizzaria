@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # Prova do motor do CRM em SQL contra o gabarito da pizzaria demo.
 # Uso: PGHOST=... PGPORT=... PGUSER=... db/crm/testar_motor.sh [--sabotar]
-#   Cria um banco DESCARTÁVEL (fornalia_teste_crm), carrega a demo, roda os testes de fronteira/cenários e compara,
+#   Cria um banco DESCARTÁVEL (pizzalia_teste_crm), carrega a demo, roda os testes de fronteira/cenários e compara,
 #   cliente a cliente, as oportunidades do motor com demo/gabarito_oportunidades_2026-11-08.csv.
 #   --sabotar: volta a regra antiga do G1 (25 a 30 dias) e EXIGE que a prova falhe (prova de que o teste acusa).
 # Nunca aponte para um banco de verdade: o script apaga e recria o banco de teste.
 set -euo pipefail
 RAIZ="$(cd "$(dirname "$0")/../.." && pwd)"
-DB=fornalia_teste_crm
+DB=pizzalia_teste_crm
 HOJE=2026-11-08
 SAIDA="$RAIZ/demo/saida"
 GAB="$RAIZ/demo/gabarito_oportunidades_$HOJE.csv"

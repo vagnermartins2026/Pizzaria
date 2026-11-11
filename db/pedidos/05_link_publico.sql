@@ -1,11 +1,11 @@
 -- =====================================================================================================
--- Fornalia · Apoio do link público (Edge Function supabase/functions/link-pedido): endereço da loja, limite de
+-- Pizzalia · Apoio do link público (Edge Function supabase/functions/link-pedido): endereço da loja, limite de
 -- tentativas e acompanhamento do pedido sem dados pessoais. Tudo SÓ do servidor (service_role). Idempotente.
 -- =====================================================================================================
 
 CREATE TABLE IF NOT EXISTS public.loja_links (
   store_id   uuid PRIMARY KEY,
-  slug       text NOT NULL UNIQUE CHECK (slug ~ '^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$'),   -- fornalia.app/<slug>
+  slug       text NOT NULL UNIQUE CHECK (slug ~ '^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$'),   -- pizzalia.app/<slug>
   nome       text NOT NULL CHECK (length(btrim(nome)) BETWEEN 2 AND 60),                   -- nome que o cliente vê
   whatsapp   text CHECK (whatsapp IS NULL OR whatsapp ~ '^\+55[1-9][0-9]{9,10}$'),
   ativo      boolean NOT NULL DEFAULT true,

@@ -1,8 +1,8 @@
-# Pacote de segurança (Fornalia)
+# Pacote de segurança (Pizzalia)
 
 Regras de acesso (RLS) e permissões para `db/crm` e `db/pedidos`, prontas para ligar no dia do remix.
 
-**Pré-requisito (contrato da base):** `public.current_store_id()` (loja ativa do usuário) e `public.fornalia_papel()`
+**Pré-requisito (contrato da base):** `public.current_store_id()` (loja ativa do usuário) e `public.pizzalia_papel()`
 (`dono`, `gerente`, `atendente`, `cozinha`, `entregador`, `suporte`). Sem elas o pacote se recusa a rodar.
 
 | Regra | Como |

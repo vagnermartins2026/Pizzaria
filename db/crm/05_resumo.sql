@@ -1,5 +1,5 @@
 -- =====================================================================================================
--- Fornalia · Resumo de hoje (PRD M08, RF-70, RF-71): até 4 números, cada um com uma frase de leitura, e até 3 itens
+-- Pizzalia · Resumo de hoje (PRD M08, RF-70, RF-71): até 4 números, cada um com uma frase de leitura, e até 3 itens
 -- de "o que merece atenção". Lê pedidos (db/pedidos) e CRM; é SECURITY INVOKER: a RLS decide o que cada um vê.
 -- =====================================================================================================
 

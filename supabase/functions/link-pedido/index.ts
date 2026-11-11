@@ -1,7 +1,7 @@
-// Fornalia · Edge Function do link público de pedidos. Só liga o núcleo (nucleo.ts) ao Supabase.
+// Pizzalia · Edge Function do link público de pedidos. Só liga o núcleo (nucleo.ts) ao Supabase.
 // Segredos (nomes, nunca valores no código): SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY (automáticos no Supabase),
 // TURNSTILE_SECRET (opcional: liga a verificação anti-robô), LINK_ORIGENS (sites permitidos, separados por vírgula),
-// LINK_BASE (ex.: https://fornalia.app). Publicar com verify_jwt = false: o link é público; a proteção é feita aqui.
+// LINK_BASE (ex.: https://pizzalia.app). Publicar com verify_jwt = false: o link é público; a proteção é feita aqui.
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { type Banco, criarTratador, ErroBanco } from "./nucleo.ts";
 
@@ -28,7 +28,7 @@ const segredoTurnstile = Deno.env.get("TURNSTILE_SECRET") ?? "";
 Deno.serve(criarTratador({
   banco,
   origens: (Deno.env.get("LINK_ORIGENS") ?? "").split(",").map((s) => s.trim()).filter(Boolean),
-  linkBase: Deno.env.get("LINK_BASE") ?? "https://fornalia.app",
+  linkBase: Deno.env.get("LINK_BASE") ?? "https://pizzalia.app",
   turnstileObrigatorio: segredoTurnstile !== "",
   verificarTurnstile: async (token, ip) => {
     const r = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {

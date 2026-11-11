@@ -1,4 +1,4 @@
-# PRD: Fornalia by Contera (ERP para pizzarias com CRM inteligente)
+# PRD: Pizzalia by Contera (ERP para pizzarias com CRM inteligente)
 
 | Campo | Valor |
 |---|---|
@@ -39,7 +39,7 @@ para 100+ pizzarias desde o lançamento (seção 12.5). O CRM inteligente contin
 diferencial; o restante do ERP existe para que a pizzaria rode **tudo** num lugar só.
 
 **Tese da primeira release:** uma pizzaria pequena ou média, sem ninguém de marketing, troca
-o sistema atual pelo Fornalia e recupera clientes inativos usando apenas o que o sistema sugere.
+o sistema atual pelo Pizzalia e recupera clientes inativos usando apenas o que o sistema sugere.
 
 ---
 
@@ -114,7 +114,7 @@ dói trocar a decisão depois de construído.
 | Q1 | Assinatura ou sob medida? | **Assinatura (SaaS multi-pizzaria)**, contratada **por plano + módulos**, para **100+ pizzarias e 200 a 300+ usuários desde o início** | Plataforma SaaS completa na R1 (cadastro, cobrança, módulos, painel master, suporte); escalabilidade na seção 12.5 |
 | Q2 | Pizzaria piloto | **Não há.** O piloto é a pizzaria fictícia **Forno da Vila (DEMO)**, com dados gerados | [`PILOTO-DEMO.md`](./PILOTO-DEMO.md) e `demo/gerar_dados_demo.py` |
 | Q3 | Preço | Planos Essencial / Profissional / Premium + módulos avulsos | [`PLANO-DE-NEGOCIO.md`](./PLANO-DE-NEGOCIO.md) |
-| Q4 | Nome e marca | Recomendado **Fornalia, by Contera** (pendente de checagem no INPI e de domínio) | Plano de negócio, seção 2 |
+| Q4 | Nome e marca | Recomendado **Pizzalia, by Contera** (pendente de checagem no INPI e de domínio) | Plano de negócio, seção 2 |
 | Q5 | iFood | **Módulo pago opcional: iFood e 99Food** (pacote marketplaces) | Módulo M14 e seção 12.7 |
 | Q6 | Impressora térmica | Sem piloto físico. Impressão pelo navegador na R1; agente local para impressoras ESC/POS na R2 | M04 |
 | — | Escopo | **ERP completo para pizzarias**, premium, simples de usar | Seção 5 (catálogo de módulos e lacunas) |
@@ -779,12 +779,12 @@ Todas seguem as convenções acima (tenant, RLS, centavos, movimentos só com in
 | Release | Período | Módulos | Resultado |
 |---|---|---|---|
 | **R0. Fundação** | semanas 1 a 3 | Repositório, ambientes, banco com RLS por claim (AD-09), tabelas de módulos (12.6), design system premium, CI com testes, **pizzaria demo carregada** | Duas pizzarias isoladas comprovadas por teste; a demo abre no painel |
-| **R1. Núcleo comercial** | meses 1 a 5 | M01 a M08 + **M12 Fiscal** | **Primeira venda**: uma pizzaria troca o sistema atual pelo Fornalia (pedidos, caixa, nota fiscal e CRM) |
+| **R1. Núcleo comercial** | meses 1 a 5 | M01 a M08 + **M12 Fiscal** | **Primeira venda**: uma pizzaria troca o sistema atual pelo Pizzalia (pedidos, caixa, nota fiscal e CRM) |
 | **R2. Gestão** | meses 6 a 8 | M09, M10, M11, M13, M14, impressão automática | Profissional e Premium completos para delivery; iFood/99Food |
 | **R3. Controle** | meses 9 a 11 | M15, M16, M17, M18, M22 | Custo, margem, salão e operação sem internet |
 | **R4. Escala e IA** | meses 12 a 15 | M19, M20, M21, M23, M24, M25 | Redes, automação oficial de WhatsApp, inteligência artificial |
 
-**Por que o Fiscal entrou na R1:** sem NFC-e, a pizzaria não consegue usar o Fornalia como
+**Por que o Fiscal entrou na R1:** sem NFC-e, a pizzaria não consegue usar o Pizzalia como
 sistema principal. Ela manteria outro sistema para emitir nota e não migraria.
 
 ### 15.3 Fases da R1

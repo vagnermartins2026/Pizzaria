@@ -1,5 +1,5 @@
 -- =====================================================================================================
--- Fornalia · Campanhas (PRD M07b, §10.7, RN-40 a RN-46, RN-53): modelos de mensagem, texto personalizado sem campo
+-- Pizzalia · Campanhas (PRD M07b, §10.7, RN-40 a RN-46, RN-53): modelos de mensagem, texto personalizado sem campo
 -- vazio, link do WhatsApp (wa.me) com a mensagem pronta, registro de envio, "não enviei" em até 10 min e descarte.
 -- Gabarito: demo/gabarito_mensagens_2026-11-08.csv (texto e link idênticos, cliente a cliente).
 -- As RPCs conferem a loja por public.current_store_id() — contrato da base (o pacote de segurança, db/seguranca).

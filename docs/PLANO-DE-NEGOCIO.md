@@ -1,4 +1,4 @@
-# Plano de negócio: Fornalia by Contera
+# Plano de negócio: Pizzalia by Contera
 
 | Campo | Valor |
 |---|---|
@@ -24,12 +24,14 @@ Na comunicação com o dono da pizzaria, use "sistema de gestão" mais do que "E
 que ele usa. "ERP" fica para material com contador, investidor ou rede de franquias.
 
 ## 2. Nome e marca
-**Recomendado: Fornalia, by Contera.**
-- *Forno* + sufixo *-alia* (sonoridade italiana de festa e abundância). Curto, fácil de falar,
-  e funciona como domínio e como link de cardápio (`fornalia.app/sua-pizzaria`).
-- É um nome inventado, então tem mais chance de registro do que um nome genérico.
-- Assinatura de marca: **"Fornalia, by Contera"**. A Contera é a fabricante (selo discreto no
-  sistema); a Fornalia é o produto. Isso permite lançar depois outras verticais
+**Aprovado pelo dono (11/11/2026): Pizzalia, by Contera.** Substitui a recomendação anterior
+("Fornalia"), porque o domínio `fornalia.com.br` já tinha sido registrado por outra pessoa.
+- *Pizza* + sufixo *-lia* (sonoridade italiana). Curto, fácil de falar e diz na hora para quem é,
+  e funciona como domínio e como link de cardápio (`pizzalia.app/sua-pizzaria`).
+- É um nome inventado, então tem mais chance de registro do que um nome genérico. O registro dos
+  domínios e da marca está no backlog do dono (sessão do site, itens D1 a D3).
+- Assinatura de marca: **"Pizzalia, by Contera"**. A Contera é a fabricante (selo discreto no
+  sistema); a Pizzalia é o produto. Isso permite lançar depois outras verticais
   (hamburgueria, açaí) com a mesma base.
 
 | Alternativa | Prós | Contras |

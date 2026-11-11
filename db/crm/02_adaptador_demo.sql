@@ -23,4 +23,4 @@ CREATE OR REPLACE VIEW public.crm_fatos_sabor WITH (security_invoker = true) AS
   JOIN public.demo_orders o ON o.id = i.order_id AND o.status = 'concluded';
 
 CREATE OR REPLACE VIEW public.crm_fatos_loja WITH (security_invoker = true) AS
-  SELECT id::uuid AS store_id, name AS nome, 'https://fornalia.app/' || slug AS link_pedido FROM public.demo_tenants;
+  SELECT id::uuid AS store_id, name AS nome, 'https://pizzalia.app/' || slug AS link_pedido FROM public.demo_tenants;

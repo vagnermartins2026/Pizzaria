@@ -1,13 +1,13 @@
 // Teste de ponta a ponta: o núcleo do link chamando as funções SQL de verdade num Postgres local DESCARTÁVEL.
-// Só roda com FORNALIA_PG_DB definido (db/testar_tudo.sh prepara o banco e o socket); sem ele, é pulado.
+// Só roda com PIZZALIA_PG_DB definido (db/testar_tudo.sh prepara o banco e o socket); sem ele, é pulado.
 import { assertEquals } from "jsr:@std/assert@1";
 import postgres from "npm:postgres@3.4.5";
 import { type Banco, criarTratador, ErroBanco } from "./nucleo.ts";
 
-const BANCO_PG = Deno.env.get("FORNALIA_PG_DB");
+const BANCO_PG = Deno.env.get("PIZZALIA_PG_DB");
 Deno.test({ name: "link de ponta a ponta contra o SQL real", ignore: !BANCO_PG, sanitizeResources: false, sanitizeOps: false, fn: async () => {
-  const sql = postgres({ path: `${Deno.env.get("FORNALIA_PG_SOCKET")}/.s.PGSQL.${Deno.env.get("FORNALIA_PG_PORT") ?? "5432"}`,
-    database: BANCO_PG, username: Deno.env.get("FORNALIA_PG_USER") ?? "postgres", max: 4, onnotice: () => {} });
+  const sql = postgres({ path: `${Deno.env.get("PIZZALIA_PG_SOCKET")}/.s.PGSQL.${Deno.env.get("PIZZALIA_PG_PORT") ?? "5432"}`,
+    database: BANCO_PG, username: Deno.env.get("PIZZALIA_PG_USER") ?? "postgres", max: 4, onnotice: () => {} });
   const chamar = async (q: PromiseLike<readonly unknown[]>) => {
     try { return ((await q)[0] as Record<string, unknown>).r; }
     catch (e) { const x = e as { message: string; detail?: string }; throw new ErroBanco(x.message, x.detail); }
@@ -20,7 +20,7 @@ Deno.test({ name: "link de ponta a ponta contra o SQL real", ignore: !BANCO_PG, 
     criarPedido: (id, p, k) => chamar(sql`SELECT public.pedido_criar(${id}, ${sql.json(p as never)}, ${k}) AS r`) as never,
     acompanhar: (t) => chamar(sql`SELECT public.pedido_acompanhar(${t}) AS r`),
   };
-  const h = criarTratador({ banco, origens: [], linkBase: "https://fornalia.app", turnstileObrigatorio: false, verificarTurnstile: async () => true });
+  const h = criarTratador({ banco, origens: [], linkBase: "https://pizzalia.app", turnstileObrigatorio: false, verificarTurnstile: async () => true });
   const L = "33333333-3333-4333-8333-333333333333", ITEM = "44444444-4444-4444-8444-444444444444";
   await sql`INSERT INTO public.loja_links (store_id, slug, nome) VALUES (${L}, 'pizzaria-ponta', 'Pizzaria Ponta')`;
   await sql`INSERT INTO public.cardapio_itens (id, store_id, nome, preco_cents) VALUES (${ITEM}, ${L}, 'Refri', 1400)`;

@@ -3,7 +3,7 @@
 # Uso: PGHOST=... PGPORT=... PGUSER=... db/pedidos/testar_pedidos.sh [--sabotar]
 #   --sabotar: troca "sabor mais caro" por "mais barato" e EXIGE que a prova falhe.
 set -euo pipefail
-RAIZ="$(cd "$(dirname "$0")/../.." && pwd)"; DB=fornalia_teste_pedidos; HOJE=2026-11-08; SAIDA="$RAIZ/demo/saida"
+RAIZ="$(cd "$(dirname "$0")/../.." && pwd)"; DB=pizzalia_teste_pedidos; HOJE=2026-11-08; SAIDA="$RAIZ/demo/saida"
 PSQL=(psql -X -q -v ON_ERROR_STOP=1 -d "$DB")
 python3 "$RAIZ/demo/gerar_dados_demo.py" --hoje "$HOJE" --verificar >/dev/null
 dropdb --if-exists --force "$DB"; createdb "$DB"

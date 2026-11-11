@@ -2,7 +2,7 @@
 # Prova do pacote de segurança num banco DESCARTÁVEL, com os papéis do Supabase (anon, authenticated, service_role).
 # Simula o pior caso do Supabase: antes do pacote, anon e authenticated recebem TODOS os privilégios nas tabelas.
 set -euo pipefail
-RAIZ="$(cd "$(dirname "$0")/../.." && pwd)"; DB=fornalia_teste_seguranca
+RAIZ="$(cd "$(dirname "$0")/../.." && pwd)"; DB=pizzalia_teste_seguranca
 PSQL=(psql -X -q -v ON_ERROR_STOP=1 -d "$DB")
 QUIETO=(env PGOPTIONS="-c client_min_messages=warning")   # preparação sem avisos de "não existe, pulando"
 dropdb --if-exists --force "$DB"; createdb "$DB"
@@ -22,8 +22,8 @@ CREATE TABLE demo_customers (id text, tenant_id text, name text, phone_e164 text
 CREATE TABLE demo_marketing_consents (customer_id text, status text, recorded_at text);
 -- contrato da base (no Supabase vem da base remixada; aqui, da sessão simulada)
 CREATE FUNCTION public.current_store_id() RETURNS uuid LANGUAGE sql STABLE AS $f$ SELECT nullif(current_setting('app.store_id', true), '')::uuid $f$;
-CREATE FUNCTION public.fornalia_papel() RETURNS text LANGUAGE sql STABLE AS $f$ SELECT nullif(current_setting('app.papel', true), '') $f$;
-GRANT EXECUTE ON FUNCTION public.current_store_id(), public.fornalia_papel() TO authenticated;
+CREATE FUNCTION public.pizzalia_papel() RETURNS text LANGUAGE sql STABLE AS $f$ SELECT nullif(current_setting('app.papel', true), '') $f$;
+GRANT EXECUTE ON FUNCTION public.current_store_id(), public.pizzalia_papel() TO authenticated;
 SQL
 for f in db/pedidos/01_cardapio_pedido.sql db/pedidos/02_entrega_horario.sql db/pedidos/05_link_publico.sql db/crm/01_motor_crm.sql db/crm/04_campanhas.sql \
          db/crm/05_resumo.sql db/crm/02_adaptador_demo.sql; do "${QUIETO[@]}" "${PSQL[@]}" -f "$RAIZ/$f" >/dev/null; done

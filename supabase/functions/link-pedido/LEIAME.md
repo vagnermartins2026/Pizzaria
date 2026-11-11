@@ -13,7 +13,7 @@ O "porteiro" entre o cliente final e o banco (PRD AD-02, AD-08, AD-10). O navega
 `integracao_test.ts` (ponta a ponta contra o SQL real; roda pelo `db/testar_tudo.sh`). SQL de apoio: `db/pedidos/05_link_publico.sql`.
 
 **Publicar (no dia do remix):** `verify_jwt = false` (o link é público; a proteção é feita aqui). Segredos por NOME:
-`TURNSTILE_SECRET` (liga a verificação anti-robô), `LINK_ORIGENS` (sites permitidos), `LINK_BASE` (ex.: `https://fornalia.app`).
+`TURNSTILE_SECRET` (liga a verificação anti-robô), `LINK_ORIGENS` (sites permitidos), `LINK_BASE` (ex.: `https://pizzalia.app`).
 `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` já existem no Supabase.
 
 **Prova (11/11/2026, Deno 2.9):** 9 de 9 testes, incluindo o de ponta a ponta. Sabotagem (deixar o navegador escolher o

@@ -45,7 +45,7 @@ BEGIN
     RAISE EXCEPTION 'favorito de c1 (Atum só em 1 pedido não conta)'; END IF;
 
   r := public.crm_mensagem(o1);
-  IF r->>'modelo' <> 'G1.1' OR r->>'texto' NOT LIKE 'Oi, Ana! %Calabresa está entre as suas favoritas%https://fornalia.app/teste%Responda SAIR.'
+  IF r->>'modelo' <> 'G1.1' OR r->>'texto' NOT LIKE 'Oi, Ana! %Calabresa está entre as suas favoritas%https://pizzalia.app/teste%Responda SAIR.'
      OR r->>'whatsapp_url' NOT LIKE 'https://wa.me/5519900000001?text=Oi%2C%20Ana%21%20%' THEN RAISE EXCEPTION 'mensagem c1: %', r; END IF;
   r := public.crm_mensagem(o2);
   IF r->>'modelo' <> 'G1.2' OR r->>'texto' LIKE '%{%' THEN RAISE EXCEPTION 'sem favorito usa a variante 2: %', r; END IF;
@@ -57,7 +57,7 @@ BEGIN
   INSERT INTO public.crm_modelos (store_id, gatilho, variante, corpo) VALUES
     (T, 'G1', 1, 'Olá {primeiro_nome}, use o cupom {cupom}! {link_pedido}'), (T, 'G1', 2, 'Olá {primeiro_nome}, saudade! {link_pedido}');
   r := public.crm_mensagem(o1);
-  IF r->>'modelo' <> 'G1.2' OR r->>'texto' NOT LIKE 'Olá Ana, saudade! https://fornalia.app/teste%' THEN RAISE EXCEPTION 'modelo da loja: %', r; END IF;
+  IF r->>'modelo' <> 'G1.2' OR r->>'texto' NOT LIKE 'Olá Ana, saudade! https://pizzalia.app/teste%' THEN RAISE EXCEPTION 'modelo da loja: %', r; END IF;
   UPDATE public.crm_modelos SET ativo = false WHERE store_id = T;
 
   -- Resumo de hoje (antes de qualquer envio): 3 mensagens prontas, 1 sem autorização

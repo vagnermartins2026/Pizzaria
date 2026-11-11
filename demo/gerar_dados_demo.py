@@ -331,7 +331,7 @@ def renderizar(g, c, s, loja):
     from urllib.parse import quote
     import re as _re
     vars_ = {"primeiro_nome": c["name"].split()[0], "pizzaria": loja["name"],
-             "sabor_favorito": s["favs"][0] if s["favs"] else "", "link_pedido": "https://fornalia.app/" + loja["slug"]}
+             "sabor_favorito": s["favs"][0] if s["favs"] else "", "link_pedido": "https://pizzalia.app/" + loja["slug"]}
     vars_ = {k: v.replace("{", "").replace("}", "") for k, v in vars_.items()}  # valor nunca vira variável
     for i, corpo in enumerate(MODELOS[g], start=1):
         if all(vars_.get(v) for v in _re.findall(r"\{(\w+)\}", corpo)):

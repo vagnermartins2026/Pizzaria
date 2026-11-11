@@ -1,5 +1,5 @@
 -- =====================================================================================================
--- Fornalia · Motor de oportunidades do CRM (PRD §10, §11.6) — núcleo independente da base remixada.
+-- Pizzalia · Motor de oportunidades do CRM (PRD §10, §11.6) — núcleo independente da base remixada.
 -- Idempotente (pode rodar de novo). Só aditivo: nenhum DROP de dado, nenhuma policy de DELETE.
 -- Lê os pedidos por três "visões de contrato" que cada base implementa (ver 02_adaptador_*.sql):
 --   crm_fatos_pedido(store_id, customer_id, order_id, business_date, total_cents)   -- só pedidos CONCLUÍDOS

@@ -1,5 +1,5 @@
 -- =====================================================================================================
--- Fornalia · Cardápio de pizzaria e criação de pedido (PRD M02, M03, M04; RN-01 a RN-07, RN-30 a RN-33, §9).
+-- Pizzalia · Cardápio de pizzaria e criação de pedido (PRD M02, M03, M04; RN-01 a RN-07, RN-30 a RN-33, §9).
 -- Independente da base remixada: só usa store_id (a loja). Prefixos próprios (cardapio_*, pedido*) para não
 -- colidir com products / loja_pedidos / sales do MayFlower. Idempotente, só aditivo. Dinheiro em centavos.
 -- Entrega, horário, pausa e pedido mínimo: 02_entrega_horario.sql (substitui pedido_validar_operacao).

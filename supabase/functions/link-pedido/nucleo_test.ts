@@ -18,7 +18,7 @@ function montar(over: Partial<Banco> = {}, opc: { turnstile?: boolean; ok?: bool
     acompanhar: async (t) => (t === "b".repeat(64) ? { numero: 7, etapa: "Saiu para entrega" } : null),
     ...over,
   };
-  const h = criarTratador({ banco, origens: ["https://fornalia.app"], linkBase: "https://fornalia.app",
+  const h = criarTratador({ banco, origens: ["https://pizzalia.app"], linkBase: "https://pizzalia.app",
     turnstileObrigatorio: opc.turnstile ?? false, verificarTurnstile: async () => opc.ok ?? false });
   return { h, chamadas };
 }
@@ -33,7 +33,7 @@ Deno.test("cria o pedido: canal forçado para link, preço do navegador descarta
   assertEquals(r.status, 201);
   const b = await r.json();
   assertEquals(b.numero, 7); assertEquals(b.total, "R$ 61,90");
-  assertEquals(b.acompanhar, "https://fornalia.app/teste/pedido/" + "a".repeat(64));
+  assertEquals(b.acompanhar, "https://pizzalia.app/teste/pedido/" + "a".repeat(64));
   const enviado = (chamadas.criar[0] as { p: Record<string, unknown>; k: string });
   assertEquals(enviado.p.canal, "link"); assertEquals(enviado.k, CHAVE);
   assertEquals(JSON.stringify(enviado.p).includes("preco_unitario_cents"), false);
@@ -88,10 +88,10 @@ Deno.test("erros do banco viram mensagens claras", async () => {
 
 Deno.test("cardápio com cache e ETag; status com cache curto", async () => {
   const { h } = montar();
-  const r = await h(new Request("https://x/functions/v1/link-pedido/cardapio?loja=teste", { headers: { origin: "https://fornalia.app" } }));
+  const r = await h(new Request("https://x/functions/v1/link-pedido/cardapio?loja=teste", { headers: { origin: "https://pizzalia.app" } }));
   assertEquals(r.status, 200);
   assert(r.headers.get("cache-control")!.includes("s-maxage=300"));
-  assertEquals(r.headers.get("access-control-allow-origin"), "https://fornalia.app");
+  assertEquals(r.headers.get("access-control-allow-origin"), "https://pizzalia.app");
   const etag = r.headers.get("etag")!;
   const r2 = await h(new Request("https://x/functions/v1/link-pedido/cardapio?loja=teste", { headers: { "if-none-match": etag } }));
   assertEquals(r2.status, 304);

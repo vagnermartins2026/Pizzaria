@@ -1,4 +1,4 @@
-// Fornalia · "porteiro" do link público de pedidos (PRD AD-02, AD-08, AD-10, M03).
+// Pizzalia · "porteiro" do link público de pedidos (PRD AD-02, AD-08, AD-10, M03).
 // Lógica pura e testável: o acesso ao banco e a verificação do Turnstile chegam por injeção (ver index.ts).
 // Rotas (sob /functions/v1/link-pedido):
 //   GET  /cardapio?loja=<slug>     cardápio público, com cache de CDN e ETag
@@ -22,7 +22,7 @@ export interface Banco {
 export interface Dependencias {
   banco: Banco;
   origens: string[];                       // sites que podem chamar (CORS)
-  linkBase: string;                        // ex.: https://fornalia.app
+  linkBase: string;                        // ex.: https://pizzalia.app
   turnstileObrigatorio: boolean;
   verificarTurnstile: (token: string, ip: string) => Promise<boolean>;
   registrarErro?: (contexto: string, erro: unknown) => void;

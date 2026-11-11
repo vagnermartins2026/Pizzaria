@@ -1,5 +1,5 @@
 -- =====================================================================================================
--- Fornalia · Entrega por bairro, horário de funcionamento, pausa e pedido mínimo (PRD RF-07 a RF-12, RN-08 a RN-10).
+-- Pizzalia · Entrega por bairro, horário de funcionamento, pausa e pedido mínimo (PRD RF-07 a RF-12, RN-08 a RN-10).
 -- Substitui pedido_validar_operacao() de 01_cardapio_pedido.sql. Idempotente, só aditivo.
 -- Regras: horário/pausa valem só para o LINK (balcão e telefone seguem funcionando); bairro e mínimo valem para
 -- toda ENTREGA; o mínimo é sobre o subtotal dos itens, sem frete. Fuso: America/Sao_Paulo.

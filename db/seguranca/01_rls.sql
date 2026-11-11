@@ -1,21 +1,21 @@
 -- =====================================================================================================
--- Fornalia · Pacote de segurança (RLS, permissões e RPCs da equipe) para db/crm e db/pedidos.
+-- Pizzalia · Pacote de segurança (RLS, permissões e RPCs da equipe) para db/crm e db/pedidos.
 -- Aplicar DEPOIS do adaptador da base, que precisa oferecer o contrato:
 --   public.current_store_id() → uuid da loja ativa do usuário logado
---   public.fornalia_papel()   → 'dono' | 'gerente' | 'atendente' | 'cozinha' | 'entregador' | 'suporte' | NULL
+--   public.pizzalia_papel()   → 'dono' | 'gerente' | 'atendente' | 'cozinha' | 'entregador' | 'suporte' | NULL
 -- Regras: cada loja só vê o que é seu; cardápio e configuração só dono/gerente alteram; pedido só nasce por RPC;
 -- status muda pela equipe (o banco guarda as transições); nada de DELETE em movimento; anônimo não acessa nada
 -- direto (o link público passa pela Edge Function com service_role). Idempotente.
 -- =====================================================================================================
 DO $$ BEGIN
-  IF to_regprocedure('public.current_store_id()') IS NULL OR to_regprocedure('public.fornalia_papel()') IS NULL THEN
-    RAISE EXCEPTION 'Contrato ausente: aplique antes o adaptador da base (current_store_id e fornalia_papel)';
+  IF to_regprocedure('public.current_store_id()') IS NULL OR to_regprocedure('public.pizzalia_papel()') IS NULL THEN
+    RAISE EXCEPTION 'Contrato ausente: aplique antes o adaptador da base (current_store_id e pizzalia_papel)';
   END IF;
 END $$;
 
 -- ---------- helpers de política (avaliados uma vez por consulta: (select ...)) ----------
-CREATE OR REPLACE FUNCTION public.fornalia_pode_configurar() RETURNS boolean LANGUAGE sql STABLE AS $$
-  SELECT public.fornalia_papel() IN ('dono', 'gerente')
+CREATE OR REPLACE FUNCTION public.pizzalia_pode_configurar() RETURNS boolean LANGUAGE sql STABLE AS $$
+  SELECT public.pizzalia_papel() IN ('dono', 'gerente')
 $$;
 
 -- ---------- tabelas com store_id: leitura da própria loja; escrita só dono/gerente ----------
@@ -32,16 +32,16 @@ BEGIN
     EXECUTE format('CREATE POLICY %I ON public.%I FOR SELECT TO authenticated USING (store_id = (select public.current_store_id())%s)',
                    t || '_ler', t, CASE WHEN t = 'crm_modelos' THEN ' OR store_id IS NULL' ELSE '' END);
     EXECUTE format('DROP POLICY IF EXISTS %I ON public.%I', t || '_incluir', t);
-    EXECUTE format('CREATE POLICY %I ON public.%I FOR INSERT TO authenticated WITH CHECK (store_id = (select public.current_store_id()) AND (select public.fornalia_pode_configurar()))', t || '_incluir', t);
+    EXECUTE format('CREATE POLICY %I ON public.%I FOR INSERT TO authenticated WITH CHECK (store_id = (select public.current_store_id()) AND (select public.pizzalia_pode_configurar()))', t || '_incluir', t);
     EXECUTE format('DROP POLICY IF EXISTS %I ON public.%I', t || '_alterar', t);
-    EXECUTE format('CREATE POLICY %I ON public.%I FOR UPDATE TO authenticated USING (store_id = (select public.current_store_id()) AND (select public.fornalia_pode_configurar())) WITH CHECK (store_id = (select public.current_store_id()))', t || '_alterar', t);
+    EXECUTE format('CREATE POLICY %I ON public.%I FOR UPDATE TO authenticated USING (store_id = (select public.current_store_id()) AND (select public.pizzalia_pode_configurar())) WITH CHECK (store_id = (select public.current_store_id()))', t || '_alterar', t);
   END LOOP;
 END $$;
 -- horário é configuração de linha: dono/gerente podem apagar um turno (não é movimento).
 GRANT DELETE ON public.loja_horarios TO authenticated;
 DROP POLICY IF EXISTS loja_horarios_apagar ON public.loja_horarios;
 CREATE POLICY loja_horarios_apagar ON public.loja_horarios FOR DELETE TO authenticated
-  USING (store_id = (select public.current_store_id()) AND (select public.fornalia_pode_configurar()));
+  USING (store_id = (select public.current_store_id()) AND (select public.pizzalia_pode_configurar()));
 
 -- ---------- preços por tamanho (sem store_id próprio: herdam do sabor / adicional) ----------
 DO $$
@@ -55,7 +55,7 @@ BEGIN
     EXECUTE format('DROP POLICY IF EXISTS %I ON public.%I', t || '_ler', t);
     EXECUTE format('CREATE POLICY %I ON public.%I FOR SELECT TO authenticated USING (EXISTS (SELECT 1 FROM public.%I p WHERE p.id = %I AND p.store_id = (select public.current_store_id())))', t || '_ler', t, pai, col);
     EXECUTE format('DROP POLICY IF EXISTS %I ON public.%I', t || '_escrever', t);
-    EXECUTE format('CREATE POLICY %I ON public.%I FOR ALL TO authenticated USING ((select public.fornalia_pode_configurar()) AND EXISTS (SELECT 1 FROM public.%I p WHERE p.id = %I AND p.store_id = (select public.current_store_id()))) WITH CHECK ((select public.fornalia_pode_configurar()) AND EXISTS (SELECT 1 FROM public.%I p WHERE p.id = %I AND p.store_id = (select public.current_store_id())))', t || '_escrever', t, pai, col, pai, col);
+    EXECUTE format('CREATE POLICY %I ON public.%I FOR ALL TO authenticated USING ((select public.pizzalia_pode_configurar()) AND EXISTS (SELECT 1 FROM public.%I p WHERE p.id = %I AND p.store_id = (select public.current_store_id()))) WITH CHECK ((select public.pizzalia_pode_configurar()) AND EXISTS (SELECT 1 FROM public.%I p WHERE p.id = %I AND p.store_id = (select public.current_store_id())))', t || '_escrever', t, pai, col, pai, col);
   END LOOP;
 END $$;
 
@@ -89,7 +89,7 @@ REVOKE ALL ON public.link_tentativas FROM anon, authenticated;
 GRANT UPDATE (status, cancelamento_motivo, customer_id) ON public.pedidos TO authenticated;
 DROP POLICY IF EXISTS pedidos_status ON public.pedidos;
 CREATE POLICY pedidos_status ON public.pedidos FOR UPDATE TO authenticated
-  USING (store_id = (select public.current_store_id()) AND (select public.fornalia_papel()) IS NOT NULL)
+  USING (store_id = (select public.current_store_id()) AND (select public.pizzalia_papel()) IS NOT NULL)
   WITH CHECK (store_id = (select public.current_store_id()));
 
 -- Os gatilhos gravam o histórico mesmo quando quem muda o status não pode inserir no histórico.
@@ -99,7 +99,7 @@ ALTER FUNCTION public.pedido_guardar_status() SECURITY DEFINER SET search_path =
 CREATE OR REPLACE FUNCTION public.pedido_cancelamento_papel() RETURNS trigger LANGUAGE plpgsql AS $$
 BEGIN
   IF NEW.status = 'cancelado' AND OLD.status = 'saiu_entrega' AND current_user = 'authenticated'
-     AND public.fornalia_papel() IS DISTINCT FROM 'dono' THEN
+     AND public.pizzalia_papel() IS DISTINCT FROM 'dono' THEN
     RAISE EXCEPTION 'SO_O_DONO_CANCELA_APOS_SAIDA';
   END IF;
   RETURN NEW;
@@ -114,7 +114,7 @@ CREATE OR REPLACE FUNCTION public.pedido_criar_balcao(p_pedido jsonb, p_idempote
 LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
 DECLARE v_store uuid := public.current_store_id();
 BEGIN
-  IF v_store IS NULL OR public.fornalia_papel() IS NULL THEN RAISE EXCEPTION 'SEM_ACESSO'; END IF;
+  IF v_store IS NULL OR public.pizzalia_papel() IS NULL THEN RAISE EXCEPTION 'SEM_ACESSO'; END IF;
   IF COALESCE(p_pedido->>'canal', '') NOT IN ('balcao', 'telefone') THEN RAISE EXCEPTION 'CANAL_INVALIDO: use balcao ou telefone'; END IF;
   RETURN public.pedido_criar(v_store, p_pedido, p_idempotency_key);
 END $$;
@@ -125,7 +125,7 @@ CREATE OR REPLACE FUNCTION public.loja_ajustar_operacao(p_pausado boolean, p_mot
 LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
 DECLARE v_store uuid := public.current_store_id();
 BEGIN
-  IF v_store IS NULL OR public.fornalia_papel() IS NULL THEN RAISE EXCEPTION 'SEM_ACESSO'; END IF;
+  IF v_store IS NULL OR public.pizzalia_papel() IS NULL THEN RAISE EXCEPTION 'SEM_ACESSO'; END IF;
   INSERT INTO public.loja_config_pedido (store_id, pausado, pausado_motivo, tempo_preparo_min)
   VALUES (v_store, p_pausado, left(p_motivo, 120), COALESCE(p_tempo_preparo_min, 40))
   ON CONFLICT (store_id) DO UPDATE SET pausado = EXCLUDED.pausado, pausado_motivo = EXCLUDED.pausado_motivo,
@@ -138,7 +138,7 @@ DECLARE f regprocedure;
 BEGIN
   FOR f IN SELECT p.oid::regprocedure FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace
             WHERE n.nspname = 'public' AND p.prokind = 'f'
-              AND p.proname ~ '^(cardapio_|pedido_|loja_|link_|crm_|fone_e164_br$|brl$|url_codificar$|normalizar_bairro$|resumo_hoje$|auth_uid_ou_nulo$|fornalia_pode_configurar$)' LOOP
+              AND p.proname ~ '^(cardapio_|pedido_|loja_|link_|crm_|fone_e164_br$|brl$|url_codificar$|normalizar_bairro$|resumo_hoje$|auth_uid_ou_nulo$|pizzalia_pode_configurar$)' LOOP
     EXECUTE format('REVOKE ALL ON FUNCTION %s FROM PUBLIC', f);
     IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'anon') THEN EXECUTE format('REVOKE ALL ON FUNCTION %s FROM anon', f); END IF;
     IF f::text !~ '^(pedido_criar\(|crm_calcular\(|pedido_validar_operacao\(|pedido_acompanhar\(|link_)' THEN
