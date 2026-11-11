@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { EMPRESA, MARCA, TEXTO_DO_CTA, destinoDoCta, linkWhatsApp } from "@/config/marca";
+import { type Origem, lerOrigem } from "@/config/origem";
 
 export const Seta = () => (
   <svg aria-hidden viewBox="0 0 16 16" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1">
@@ -8,8 +10,12 @@ export const Seta = () => (
 );
 
 /** O botão principal. Vai para /fundadores no pré-lançamento e para o cadastro do sistema depois (config/marca.ts). */
-export function CtaPrincipal({ children = TEXTO_DO_CTA, className = "", claro = false }: { children?: React.ReactNode; className?: string; claro?: boolean }) {
-  const { href, externo } = destinoDoCta();
+export function CtaPrincipal({ children = TEXTO_DO_CTA, className = "", claro = false, plano }: { children?: React.ReactNode; className?: string; claro?: boolean; plano?: string }) {
+  // A origem (UTM, indicação) só existe no navegador: no HTML pré-renderizado o link sai sem ela e o
+  // React completa ao carregar a página.
+  const [origem, setOrigem] = useState<Origem>({});
+  useEffect(() => setOrigem(lerOrigem()), []);
+  const { href, externo } = destinoDoCta(plano, origem);
   const estilo = `group inline-flex h-12 items-center justify-center gap-2 rounded-full px-7 text-base font-medium transition-[transform,box-shadow] duration-300 hover:-translate-y-px ${
     claro ? "bg-white text-tomate-escuro" : "bg-tomate text-white shadow-[0_10px_30px_-12px_rgba(194,54,28,.6)]"
   } ${className}`;
@@ -46,6 +52,7 @@ export function Cabecalho({ simples = false }: { simples?: boolean }) {
               <a href="/#como-funciona" className="hover:text-tomate-escuro">Como funciona</a>
               <a href="/#planos" className="hover:text-tomate-escuro">Planos</a>
               <a href="/#perguntas" className="hover:text-tomate-escuro">Perguntas</a>
+              <Link to="/guias" className="hover:text-tomate-escuro">Guias</Link>
             </div>
           )}
           <CtaPrincipal className="!h-9 !px-4 !text-sm" />
@@ -77,6 +84,7 @@ export function Rodape() {
           <p className="font-medium text-white">Transparência</p>
           <Link to="/termos" className="mt-3 block underline-offset-4 hover:underline">Termos de Uso</Link>
           <Link to="/privacidade" className="mt-1 block underline-offset-4 hover:underline">Política de Privacidade</Link>
+          <Link to="/guias" className="mt-1 block underline-offset-4 hover:underline">Guias para donos de pizzaria</Link>
         </div>
       </div>
       <div className="border-t border-white/10">

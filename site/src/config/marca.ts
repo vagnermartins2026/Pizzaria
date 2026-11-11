@@ -1,14 +1,15 @@
 /**
  * FONTE ÚNICA da marca, do endereço e da fase de lançamento.
  *
- * Trocou o nome ou o domínio? Mude AQUI e também em: index.html (title, og:*), public/robots.txt e
- * public/sitemap.xml (são arquivos estáticos, não leem este arquivo). O texto do site acompanha sozinho.
+ * Trocou o nome ou o domínio? Mude AQUI e também em index.html (og:site_name, theme-color) e public/robots.txt
+ * (arquivos estáticos). Títulos, descrições, canonical e sitemap saem daqui no build (scripts/prerender.mjs).
  *
  * Checagem de domínio feita em 11/11/2026 nos registros públicos (RDAP do Registro.br, Verisign e Google):
  *   pizzalia.com.br  livre · pizzalia.app livre · pizzalia.com registrado por terceiro
  *   fornalia.com.br  REGISTRADO por terceiro (nome do plano original) · fornalia.app livre
  * Disponibilidade muda a qualquer hora: só vale depois de registrado. Ver docs/MARCA-E-DOMINIO.md.
  */
+import type { Origem } from "./origem";
 export const MARCA = {
   nome: "Pizzalia",
   /** Selo do fabricante. A marca que aparece para o cliente final é sempre a da pizzaria. */
@@ -56,11 +57,21 @@ export function linkWhatsApp(mensagem = `Olá! Vim pelo site da ${MARCA.nome} e 
   return `https://wa.me/${EMPRESA.whatsapp}?text=${encodeURIComponent(mensagem)}`;
 }
 
-/** Para onde vai o botão principal, conforme a fase. */
-export function destinoDoCta(): { href: string; externo: boolean } {
-  return LANCAMENTO.fase === "aberto"
-    ? { href: `${MARCA.app}/cadastro`, externo: true }
-    : { href: "/fundadores", externo: false };
+/**
+ * Para onde vai o botão principal, conforme a fase.
+ *  - aberto: `${MARCA.app}/cadastro?plano=…&origem=site&utm_…&indicacao=…` (contrato em site/LEIAME.md)
+ *  - pré-lançamento: `/fundadores?plano=…` (a página já abre com o plano escolhido)
+ */
+export function destinoDoCta(plano?: string, origem: Origem = {}, fase = LANCAMENTO.fase): { href: string; externo: boolean } {
+  const p = new URLSearchParams();
+  if (plano) p.set("plano", plano);
+  if (fase === "aberto") {
+    p.set("origem", "site");
+    for (const [k, v] of Object.entries(origem)) if (v) p.set(k, v);
+    return { href: `${MARCA.app}/cadastro?${p}`, externo: true };
+  }
+  const q = p.toString();
+  return { href: q ? `/fundadores?${q}` : "/fundadores", externo: false };
 }
 
 export const TEXTO_DO_CTA = LANCAMENTO.fase === "aberto" ? `Testar ${LANCAMENTO.diasDeTeste} dias grátis` : "Quero ser fundador";

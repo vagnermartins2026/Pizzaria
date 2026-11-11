@@ -1,0 +1,14 @@
+{
+  "name": "Pizzalia",
+  "short_name": "Pizzalia",
+  "description": "Sistema de gestão para pizzarias, com CRM que traz o cliente de volta.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#FFF8EF",
+  "theme_color": "#C2361C",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

@@ -1,0 +1,28 @@
+name: Site
+
+on:
+  push:
+    paths: ["site/**", "docs/PLANO-DE-NEGOCIO.md", ".github/workflows/site.yml"]
+  pull_request:
+    paths: ["site/**", "docs/PLANO-DE-NEGOCIO.md", ".github/workflows/site.yml"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: npm ci
+      # O build roda os testes (preços x plano de negócio, botões, contas dos guias, links) e pré-renderiza as páginas.
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-dist
+          path: site/dist

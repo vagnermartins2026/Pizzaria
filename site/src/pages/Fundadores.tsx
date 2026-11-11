@@ -1,7 +1,10 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { Cabecalho, Rodape, Sobretitulo } from "@/components/Base";
 import { EMPRESA, LANCAMENTO, MARCA, linkWhatsApp } from "@/config/marca";
+import { descreverOrigem, lerOrigem } from "@/config/origem";
+import { PLANOS } from "@/config/planos";
+import { usePagina } from "@/config/paginas";
 
 /**
  * Pré-cadastro das pizzarias fundadoras (fase "pre-lancamento" em config/marca.ts).
@@ -9,12 +12,20 @@ import { EMPRESA, LANCAMENTO, MARCA, linkWhatsApp } from "@/config/marca";
  * Quando o sistema abrir o cadastro (fase "aberto"), os botões do site passam a ir direto para `${MARCA.app}/cadastro`
  * e esta página vira a lista de espera ou sai do ar.
  */
-type Dados = { nome: string; pizzaria: string; cidade: string; whatsapp: string; pedidos: string; canais: string[] };
+export type Dados = { nome: string; pizzaria: string; cidade: string; whatsapp: string; pedidos: string; plano: string; canais: string[] };
 
 const CANAIS = ["WhatsApp", "Telefone", "Balcão", "iFood ou outro marketplace", "Site ou link próprio"];
 const FAIXAS = ["Até 20", "20 a 50", "50 a 100", "Mais de 100"];
 
-function montarMensagem(d: Dados) {
+/** WhatsApp brasileiro: DDD + 8 ou 9 dígitos, com ou sem máscara e com ou sem +55. */
+export function whatsappValido(texto: string): boolean {
+  let n = texto.replace(/\D/g, "");
+  if (n.length >= 12 && n.startsWith("55")) n = n.slice(2);
+  return (n.length === 10 || n.length === 11) && !n.startsWith("0");
+}
+
+export function montarMensagem(d: Dados, origem = "") {
+  const plano = PLANOS.find((p) => p.id === d.plano)?.nome;
   return [
     `Olá! Quero ser uma das pizzarias fundadoras da ${MARCA.nome}.`,
     "",
@@ -24,21 +35,26 @@ function montarMensagem(d: Dados) {
     `WhatsApp: ${d.whatsapp}`,
     `Pedidos por dia: ${d.pedidos || "não informei"}`,
     `Hoje recebo pedidos por: ${d.canais.length ? d.canais.join(", ") : "não informei"}`,
+    `Plano de interesse: ${plano ?? "ainda não sei"}`,
+    ...(origem ? [`Cheguei por: ${origem}`] : []),
   ].join("\n");
 }
 
 export default function Fundadores() {
-  const [d, setD] = useState<Dados>({ nome: "", pizzaria: "", cidade: "", whatsapp: "", pedidos: "", canais: [] });
+  usePagina("/fundadores");
+  const [busca] = useSearchParams();
+  const planoDoLink = PLANOS.some((p) => p.id === busca.get("plano")) ? busca.get("plano")! : "";
+  const [d, setD] = useState<Dados>({ nome: "", pizzaria: "", cidade: "", whatsapp: "", pedidos: "", plano: planoDoLink, canais: [] });
+  useEffect(() => setD((atual) => ({ ...atual, plano: planoDoLink || atual.plano })), [planoDoLink]);
   const [erro, setErro] = useState("");
   const muda = (campo: keyof Dados) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setD({ ...d, [campo]: e.target.value });
 
   function enviar(e: React.FormEvent) {
     e.preventDefault();
-    const digitos = d.whatsapp.replace(/\D/g, "");
     if (!d.nome.trim() || !d.pizzaria.trim() || !d.cidade.trim()) return setErro("Preencha seu nome, o nome da pizzaria e a cidade.");
-    if (digitos.length < 10 || digitos.length > 11) return setErro("Confira o WhatsApp: DDD + número, ex.: (19) 99999-9999.");
+    if (!whatsappValido(d.whatsapp)) return setErro("Confira o WhatsApp: DDD + número, ex.: (19) 99999-9999.");
     setErro("");
-    window.open(linkWhatsApp(montarMensagem(d)), "_blank", "noopener,noreferrer");
+    window.open(linkWhatsApp(montarMensagem(d, descreverOrigem(lerOrigem()))), "_blank", "noopener,noreferrer");
   }
 
   const campo = "mt-1.5 block h-12 w-full rounded-xl border border-farinha bg-white px-4 text-base text-carvao outline-none focus:border-tomate";
@@ -77,6 +93,12 @@ export default function Fundadores() {
                   {FAIXAS.map((f) => <option key={f}>{f}</option>)}
                 </select>
               </label>
+              <label className="text-sm sm:col-span-2">Plano de interesse
+                <select className={campo} value={d.plano} onChange={muda("plano")}>
+                  <option value="">Ainda não sei</option>
+                  {PLANOS.map((p) => <option key={p.id} value={p.id}>{p.nome}</option>)}
+                </select>
+              </label>
             </div>
             <fieldset className="mt-6">
               <legend className="text-sm">Hoje você recebe pedidos por</legend>
@@ -94,7 +116,7 @@ export default function Fundadores() {
               </div>
             </fieldset>
             {erro && <p role="alert" className="mt-5 rounded-xl bg-tomate/10 px-4 py-3 text-sm text-tomate-escuro">{erro}</p>}
-            <button type="submit" className="mt-7 inline-flex h-12 w-full items-center justify-center rounded-full bg-[#1FA855] px-7 text-base font-medium text-white hover:opacity-95">
+            <button type="submit" className="mt-7 inline-flex h-12 w-full items-center justify-center rounded-full bg-[#13803F] px-7 text-base font-medium text-white hover:opacity-95">
               Enviar pelo WhatsApp
             </button>
             <p className="mt-4 text-xs leading-relaxed">

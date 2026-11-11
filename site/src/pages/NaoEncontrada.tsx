@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { usePagina } from "@/config/paginas";
 import { Cabecalho } from "@/components/Base";
 
 export default function NaoEncontrada() {
+  usePagina(useLocation().pathname);
   return (
     <main className="min-h-dvh">
       <Cabecalho simples />

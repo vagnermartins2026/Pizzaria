@@ -1,0 +1,27 @@
+# Pizzalia
+
+> Sistema de gestão para pizzarias, vendido por assinatura (SaaS), com um CRM que mostra todo dia quais clientes pararam de pedir e deixa a mensagem de WhatsApp pronta para trazê-los de volta. Fabricado pela Contera. Em pré-lançamento: o sistema está em construção e as 10 primeiras pizzarias fundadoras terão 50% de desconto por 6 meses.
+
+## O que faz (primeira versão)
+- Link de pedidos próprio da pizzaria (cardápio digital, pizza meio a meio, frete por bairro, Pix online), sem comissão por pedido
+- Pedidos do link, do balcão e do telefone num painel só, com status até a entrega
+- PDV e caixa com fechamento cego
+- Clientes com histórico de pedidos
+- CRM: lista diária de clientes que saíram do ritmo, passaram de 25 dias sem pedir, pediram uma vez e não voltaram, ou fazem aniversário; mensagem pronta no WhatsApp, enviada pelo próprio dono, só para quem autorizou (LGPD), no máximo uma por semana
+- Nota fiscal NFC-e e NF-e (plano Premium ou módulo)
+
+## Próximas etapas
+Tela da cozinha, entregadores, fidelidade, financeiro com conciliação, integração iFood e 99Food, estoque e custo por pizza, salão e mesas, várias lojas, WhatsApp oficial e previsão de demanda com IA.
+
+## Planos previstos (por loja, por mês)
+- Essencial: R$ 149
+- Profissional: R$ 299 (recomendado; R$ 249 na abertura)
+- Premium: R$ 549 (em pré-venda)
+Sem fidelidade no mensal. Anual com 2 meses grátis. Preços podem mudar até a abertura.
+
+## Páginas
+- [Página inicial](https://www.pizzalia.com.br/)
+- [Pizzarias fundadoras](https://www.pizzalia.com.br/fundadores)
+- [Guias para donos de pizzaria](https://www.pizzalia.com.br/guias)
+- [Termos de Uso](https://www.pizzalia.com.br/termos)
+- [Política de Privacidade](https://www.pizzalia.com.br/privacidade)

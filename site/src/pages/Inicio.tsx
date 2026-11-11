@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Cabecalho, CtaPrincipal, EspacoMidia, Ideia, Rodape, Sobretitulo, Titulo } from "@/components/Base";
 import { BalaoWhatsApp, Celular, TelaOportunidades } from "@/components/TelaOportunidades";
@@ -6,6 +5,8 @@ import { Calculadora } from "@/components/Calculadora";
 import { FAQS } from "@/config/faq";
 import { EMPRESA, LANCAMENTO, MARCA, linkWhatsApp } from "@/config/marca";
 import { MODULOS, PLANOS, reais } from "@/config/planos";
+import { usePagina } from "@/config/paginas";
+import { ListaDeGuias } from "./Guias";
 
 /**
  * Página inicial do site da plataforma. Estrutura herdada do site da Minha Maleta (mesma lógica de venda:
@@ -78,43 +79,41 @@ const Selo = ({ v, destaque }: { v: "sim" | "parcial" | "nao"; destaque: boolean
   </span>
 );
 
-function useJsonLd() {
-  useEffect(() => {
-    const s = document.createElement("script");
-    s.type = "application/ld+json";
-    s.text = JSON.stringify({
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "SoftwareApplication",
-          name: MARCA.nome,
-          applicationCategory: "BusinessApplication",
-          operatingSystem: "Web",
-          description: MARCA.descricaoCurta,
-          offers: PLANOS.map((p) => ({ "@type": "Offer", name: `Plano ${p.nome}`, price: (p.centavos / 100).toFixed(2), priceCurrency: "BRL" })),
-        },
-        {
-          "@type": "FAQPage",
-          mainEntity: FAQS.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
-        },
-      ],
-    });
-    document.head.appendChild(s);
-    const link = document.createElement("link");
-    link.rel = "canonical";
-    link.href = `${MARCA.site}/`;
-    document.head.appendChild(link);
-    return () => { s.remove(); link.remove(); };
-  }, []);
-}
+/** Dados estruturados da página inicial: vão no HTML (o pré-renderizador grava) para o Google ler sem JavaScript. */
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      name: MARCA.nome,
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
+      description: MARCA.descricaoCurta,
+      offers: PLANOS.map((p) => ({ "@type": "Offer", name: `Plano ${p.nome}`, price: (p.centavos / 100).toFixed(2), priceCurrency: "BRL" })),
+    },
+    {
+      "@type": "Organization",
+      name: MARCA.nome,
+      url: `${MARCA.site}/`,
+      logo: `${MARCA.site}/icon-512.png`,
+      email: EMPRESA.email,
+      address: { "@type": "PostalAddress", addressLocality: EMPRESA.cidade.split("/")[0], addressRegion: EMPRESA.cidade.split("/")[1], addressCountry: "BR" },
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: FAQS.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+    },
+  ],
+};
 
 export default function Inicio() {
-  useJsonLd();
+  usePagina("/");
   const espacos = new URLSearchParams(useLocation().search).has("espacos");
   const preLancamento = LANCAMENTO.fase === "pre-lancamento";
 
   return (
     <main className="min-h-dvh overflow-x-clip">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }} />
       <Cabecalho />
 
       {/* ───────── Topo ───────── */}
@@ -251,7 +250,7 @@ export default function Inicio() {
           <ol className="mt-14 grid gap-px overflow-hidden rounded-3xl bg-farinha sm:grid-cols-2 lg:grid-cols-3">
             {FUNCOES.map((f, i) => (
               <li key={f.titulo} className="bg-white p-7 md:p-8">
-                <span aria-hidden className="font-titulo text-xl font-semibold tabular-nums text-brasa">{String(i + 1).padStart(2, "0")}</span>
+                <span aria-hidden className="font-titulo text-xl font-semibold tabular-nums text-tomate">{String(i + 1).padStart(2, "0")}</span>
                 <h3 className="mt-3 text-[1.45rem] font-semibold leading-tight tracking-[-0.025em]">{f.titulo}</h3>
                 <p className="mt-3 text-[15.5px] leading-relaxed">{f.texto}</p>
               </li>
@@ -355,7 +354,7 @@ export default function Inicio() {
         <section className="bg-tomate">
           <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 md:grid-cols-[1.3fr_0.7fr] md:py-20">
             <div>
-              <Sobretitulo className="text-brasa-clara">Pizzarias fundadoras</Sobretitulo>
+              <Sobretitulo className="text-white">Pizzarias fundadoras</Sobretitulo>
               <h2 className="text-[2rem] font-semibold leading-[1.06] tracking-[-0.03em] !text-white sm:text-[2.7rem]">
                 {LANCAMENTO.vagasFundadores} pizzarias vão usar primeiro. E ajudar a decidir o que vem antes.
               </h2>
@@ -412,7 +411,9 @@ export default function Inicio() {
                     <li key={t} className="flex gap-3"><span aria-hidden className={p.destaque ? "text-brasa" : "text-manjericao"}>✓</span>{t}</li>
                   ))}
                 </ul>
-                <CtaPrincipal claro={p.destaque} className="mt-8 w-full" />
+                <CtaPrincipal claro={p.destaque} plano={p.id} className="mt-8 w-full">
+                  {LANCAMENTO.fase === "aberto" ? `Testar o ${p.nome}` : `Quero o ${p.nome}`}
+                </CtaPrincipal>
               </article>
             ))}
           </div>
@@ -454,6 +455,17 @@ export default function Inicio() {
               </details>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ───────── Guias: é por links assim que o Google acha as páginas novas ───────── */}
+      <section aria-label="Guias para donos de pizzaria">
+        <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
+          <Sobretitulo>Guias para donos de pizzaria</Sobretitulo>
+          <Titulo className="mb-8 text-[2rem] sm:text-4xl">
+            Contas de verdade, <Ideia>em reais.</Ideia>
+          </Titulo>
+          <ListaDeGuias />
         </div>
       </section>
 

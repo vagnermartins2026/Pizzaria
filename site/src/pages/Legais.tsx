@@ -1,12 +1,14 @@
 import { Cabecalho, Rodape } from "@/components/Base";
 import { EMPRESA, MARCA } from "@/config/marca";
+import { usePagina } from "@/config/paginas";
 
 /**
  * RASCUNHOS de Termos de Uso e Política de Privacidade para a fase de pré-lançamento.
  * Precisam de revisão jurídica e da razão social/CNPJ (config/marca.ts → EMPRESA) antes de o sistema abrir o
  * cadastro e a cobrança. Base: o que o PRD decidiu (seções 11.7 e 12.4) e o modelo da Minha Maleta.
  */
-function Documento({ titulo, children }: { titulo: string; children: React.ReactNode }) {
+function Documento({ titulo, caminho, children }: { titulo: string; caminho: string; children: React.ReactNode }) {
+  usePagina(caminho);
   const quem = EMPRESA.razaoSocial ? `${EMPRESA.razaoSocial}${EMPRESA.cnpj ? `, CNPJ ${EMPRESA.cnpj}` : ""}` : `a empresa responsável pela ${MARCA.nome} (dados a publicar)`;
   return (
     <main className="min-h-dvh">
@@ -24,7 +26,7 @@ function Documento({ titulo, children }: { titulo: string; children: React.React
 
 export function Termos() {
   return (
-    <Documento titulo="Termos de Uso">
+    <Documento titulo="Termos de Uso" caminho="/termos">
       <p>Estes termos valem para o site {MARCA.dominio}. Os termos completos do sistema (assinatura, cobrança, cancelamento e suporte) serão publicados antes da abertura do cadastro.</p>
       <h2>1. O que é a {MARCA.nome}</h2>
       <p>Um sistema de gestão para pizzarias, contratado por assinatura mensal ou anual, por loja. O sistema está em construção; as funções e os preços mostrados no site são os previstos e podem mudar até a abertura.</p>
@@ -40,7 +42,7 @@ export function Termos() {
 
 export function Privacidade() {
   return (
-    <Documento titulo="Política de Privacidade">
+    <Documento titulo="Política de Privacidade" caminho="/privacidade">
       <h2>1. Neste site</h2>
       <p>O site não tem cadastro nem formulário que grava dados. O formulário de fundadoras só monta uma mensagem que abre no seu WhatsApp; o que você enviar por lá é tratado como uma conversa comercial, para responder ao seu pedido, e não é repassado a terceiros.</p>
       <p>Não usamos cookies de publicidade. Se passarmos a medir visitas, este texto será atualizado antes.</p>

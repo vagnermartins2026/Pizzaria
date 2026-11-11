@@ -56,5 +56,5 @@ pode mudar a qualquer hora: só vale depois de registrar.
   (o código SQL não usa o nome da marca).
 - [ ] Apontar o DNS: `www` para a hospedagem do site e `app` para o sistema.
 
-Se a escolha for outro nome, mude `site/src/config/marca.ts`, o `site/index.html`, o
-`site/public/robots.txt` e o `site/public/sitemap.xml`: o resto do site acompanha.
+Se a escolha for outro nome, mude `site/src/config/marca.ts`, o `site/index.html` e o
+`site/public/robots.txt`: o resto do site acompanha (o sitemap é gerado no build).

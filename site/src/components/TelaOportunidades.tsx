@@ -45,7 +45,7 @@ export function TelaOportunidades() {
               {c.vip && <span className="mr-1 rounded bg-brasa/25 px-1 font-semibold text-tomate-escuro">VIP</span>}
               {c.exemplo}
             </p>
-            <div className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#1FA855] px-2.5 py-1 text-[10px] font-medium text-white">
+            <div className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#13803F] px-2.5 py-1 text-[10px] font-medium text-white">
               Abrir WhatsApp com a mensagem
             </div>
           </div>
