@@ -9,14 +9,14 @@ Ordem = prioridade. Os itens 1 a 4 destravam a publicação do site.
 | # | Ação | Por que importa | Como fazer | Tempo |
 |---|---|---|---|---|
 | 1 | [x] ~~Aprovar o nome~~ | **Aprovado em 11/11/2026: Pizzalia.** | — | — |
-| 2 | [ ] **Pesquisar o nome no INPI** | Evita ter que trocar de marca depois de lançar | busca.inpi.gov.br → Marcas → "Pizzalia", classes 9 e 42 | 10 min |
+| 2 | [ ] **Pesquisar o nome no INPI** | Evita ter que trocar de marca depois de lançar. O Claude tentou em 11/11/2026, mas o site do INPI recusa conexão de fora do Brasil | busca.inpi.gov.br → Marca → Pesquisa básica → "Pizzalia" (radical e exata); olhar as classes 9 e 42 e qualquer marca de software parecida | 10 min |
 | 3 | [ ] **Registrar os domínios** `pizzalia.com.br` e `pizzalia.app` (**URGENTE**: livres na última checagem, 11/11/2026) | Alguém pode registrar antes (o `fornalia.com.br` já foi). Envolve pagamento no seu login, por isso é seu | registro.br (o `.com.br` sai cerca de R$ 40/ano); o `.app` em qualquer registrador, incluindo a Cloudflare | 15 min |
 | 4 | [ ] **Criar o @ no Instagram** | Mesmo motivo do domínio; não deu para checar automaticamente | Criar `@pizzalia` ou a variação livre mais próxima | 5 min |
 | 5 | [ ] **Confirmar o WhatsApp e o e-mail comerciais** | O site usa `(19) 98214-7840` e `comercial@contera.com`, copiados da Minha Maleta, e o repositório é **público** | Responder "confirmo" ou mandar os contatos certos | 1 min |
 | 6 | [ ] **Dizer qual empresa assina o produto** (razão social e CNPJ) | Exigido no rodapé, nos Termos e na Privacidade (Decreto 7.962/2013) | Responder com a empresa (ex.: a mesma da Minha Maleta, VHM LABS LTDA?) | 1 min |
 | 7 | [ ] **Validar os preços** (R$ 149 / 299 / 549 + módulos) | Os preços do site são os do plano de negócio, ainda sem pesquisa de concorrentes | Conferir 3 a 5 concorrentes e responder "mantém" ou os novos valores | 30 min |
 | 8 | [x] ~~Confirmar a oferta das fundadoras~~ | **Decidido em 11/11/2026: sem oferta de fundadoras.** O site virou lista de espera, sem desconto nem vaga limitada | — | — |
-| 9 | [ ] **Autorizar a publicação de uma prévia** | Hoje o site só roda aqui; com a prévia você abre no celular | Responder "pode publicar a prévia": o Claude publica na sua Cloudflare (endereço `*.pages.dev`, sem domínio ainda; [`PUBLICAR-SITE.md`](./PUBLICAR-SITE.md), seção 1) | 1 min |
+| 9 | [x] ~~Autorizar a publicação de uma prévia~~ | **Publicada em 11/11/2026:** https://pizzalia.pages.dev (sem indexação no Google). Atualiza sozinha a cada push na branch do site | — | — |
 | 10 | [ ] **Logo definitiva** | O ícone atual (fatia de pizza) é provisório | Mandar a logo, ou pedir propostas (skill de marketing, ou designer) | — |
 | 11 | [ ] **Revisão jurídica** de Termos e Privacidade | Hoje são rascunhos de pré-lançamento | Mandar para o jurídico antes de abrir o cadastro e a cobrança | — |
 | 12 | [ ] **Decidir se quer medir visitas** (Google Analytics, Meta Pixel ou nenhum) | Medição com cookies exige aviso de cookies e muda a Política de Privacidade | Responder qual ferramenta (ou "nenhuma por enquanto") | 1 min |

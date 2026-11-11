@@ -4,7 +4,20 @@ Para quando os itens 1 a 7 e 9 do [backlog do dono](./BACKLOG-DO-DONO.md) estive
 Com a autorização (item 9), o Claude faz a parte da Cloudflare; a parte do Registro.br é do dono,
 porque exige o login dele.
 
-## 1. Prévia na Cloudflare Pages (sem domínio)
+## 1. Prévia na Cloudflare Pages (sem domínio): ✅ feita em 11/11/2026
+**No ar em https://pizzalia.pages.dev.** Projeto `pizzalia` na sua conta Cloudflare, ligado ao repositório
+`Pizzaria`. Configuração atual:
+
+| Campo | Valor |
+|---|---|
+| Branch de produção | `claude/sweet-faraday-9fvbeh` (trocar para `main` quando o site for para a `main`) |
+| Diretório raiz / build / saída | `site` / `npm run build` / `dist` |
+| Variáveis | `NODE_VERSION=20`, `VITE_SITE=https://pizzalia.pages.dev`, `VITE_PREVIA=1` (prévia fora do Google) |
+
+Quando o domínio próprio estiver apontado (seção 2), **apagar** `VITE_SITE` e `VITE_PREVIA` em
+Pages → pizzalia → Settings → Variables: o site passa a usar `https://www.pizzalia.com.br` e a ser indexado.
+
+Como foi criado (para refazer do zero, se precisar):
 1. Cloudflare → **Workers & Pages** → **Create** → **Pages** → **Connect to Git** → repositório `Pizzaria`.
 2. Configuração do build:
    | Campo | Valor |

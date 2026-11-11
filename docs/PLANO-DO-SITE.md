@@ -11,7 +11,7 @@
 ```
 [1. Rascunho]  ✅ feito
 [2. Pronto para publicar]  ✅ feito, falta só o que é do dono (itens 1 a 7 e 9 do backlog)
-[3. Prévia no ar (*.pages.dev)]  ⏳ espera autorização (backlog 9)
+[3. Prévia no ar]  ✅ https://pizzalia.pages.dev
 [4. No domínio próprio]  ⏳ espera nome, domínio e DNS (backlog 1, 3, 13)
 [5. Pré-lançamento: lista de espera recebendo pizzarias]  ⏳ depende da etapa 4
 [6. Abertura: botões levam ao cadastro do sistema]  ⏳ depende do sistema (M01/F9 do PRD)
@@ -34,7 +34,7 @@
 | 10 | Aprovar nome | Dono | ✅ Pizzalia, 11/11/2026 |
 | 10b | INPI, registrar domínios, @ do Instagram | Dono | ⏳ backlog 2 a 4 |
 | 11 | Contato, empresa e preços | Dono | ⏳ backlog 5 a 7 |
-| 12 | Publicar a prévia na Cloudflare | Claude, após autorização | ⏳ backlog 9 |
+| 12 | Publicar a prévia na Cloudflare | Claude | ✅ https://pizzalia.pages.dev, ligada ao GitHub |
 | 13 | Apontar DNS de `www` e `app` | Dono, com passo a passo do Claude | ⏳ backlog 13 |
 | 14 | Logo, fotos, revisão jurídica, medição de visitas | Dono | ⏳ backlog 10 a 12, 14 |
 | 15 | Trocar "Fornalia" por "Pizzalia" nos documentos | Claude | ✅ |

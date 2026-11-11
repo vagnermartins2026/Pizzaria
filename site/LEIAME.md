@@ -73,5 +73,5 @@ app, como a Minha Maleta faz com a `Landing.tsx`. Até lá, site e sistema ficam
 
 ## Publicar
 É um site estático. Na Cloudflare Pages: diretório raiz `site`, comando `npm run build`, saída `dist`,
-Node 20. A Cloudflare serve `lista-de-espera/index.html` em `/lista-de-espera` e o `404.html` para endereço
+Node 20. A Cloudflare serve `lista-de-espera.html` em `/lista-de-espera` (sem barra no fim, igual ao canonical) e o `404.html` para endereço
 inexistente. O GitHub Actions (`.github/workflows/site.yml`) roda o mesmo build a cada mudança no site.

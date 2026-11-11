@@ -35,7 +35,9 @@ function paginaHtml(caminho) {
 }
 
 for (const { caminho } of PAGINAS) {
-  const arquivo = caminho === "/" ? join(dist, "index.html") : join(dist, caminho, "index.html");
+  // "/guias" → dist/guias.html: a Cloudflare Pages serve em /guias, sem barra no fim (com "guias/index.html"
+  // ela redireciona para "/guias/", e o endereço deixaria de bater com o canonical e o sitemap).
+  const arquivo = caminho === "/" ? join(dist, "index.html") : join(dist, `${caminho.slice(1)}.html`);
   mkdirSync(dirname(arquivo), { recursive: true });
   writeFileSync(arquivo, paginaHtml(caminho));
 }
