@@ -43,6 +43,20 @@ exibidos, e não o total; (2) o aniversário usava o texto da campanha de inativ
 "Vimos que a Frango com Catupiry…" soava errada; (4) **lacuna de regra:** clientes entre 31 e 59
 dias sem pedir não caíam em nenhum gatilho: eram 50 clientes com autorização invisíveis na base demo (37 com 2 ou mais pedidos e 13 de compra única).
 
+## Gestão da pizzaria demo (`demo/gerar_gestao_demo.py`)
+Sobre os MESMOS pedidos (o gabarito do CRM não muda), gera 18 tabelas: fornecedores, insumos, ficha técnica, compras,
+estoque (entradas, saídas, inventário com perdas), caixa (sessões, pagamentos em dinheiro, sangrias, fechamentos com
+diferença em 24 de 179 dias), contas a pagar (fixas, compras, entregadores, DAS), contas a receber (cartão e vale com
+taxa e prazo), extrato bancário (com 2 lançamentos para conciliar), entregadores e entregas, mesas e comandas do salão
+e notas fiscais de EXEMPLO. A DRE de cada mês é o gabarito (`demo/gabarito_gestao_2026-11-08.txt`): CMV perto de 30%,
+taxas de cartão perto de 1%, margem de 18% a 25% nos meses cheios.
+
+O que as travas do gerador já pegaram: estoque que ficaria negativo num pico de fim de semana (a regra de compra
+ganhou margem); cartão contado como dinheiro na gaveta; o 1º mês cobrando despesas fixas inteiras com 3 semanas de
+venda.
+
+Carregador e usuário de teste: `db/seed/LEIAME.md`.
+
 ## Regras de segurança dos dados de demonstração
 1. Todo registro leva `is_demo = true` e a pizzaria demo tem um `tenant_id` próprio. **Nunca**
    misture dados demo com uma pizzaria real.
