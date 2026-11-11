@@ -32,3 +32,19 @@ SELECT count(*) AS itens, count(*) FILTER (WHERE kind = 'pizza') AS pizzas,
 FROM gabarito_preco \gset
 \echo 'gabarito de preço: ' :itens ' itens (' :pizzas ' pizzas), divergentes: ' :divergentes
 SELECT CASE WHEN :divergentes > 0 THEN 1/0 END AS ok \g /dev/null
+
+-- Etapa B (se instalada): bairros da demo e gabarito de frete — a taxa de cada pedido de entrega da demo precisa
+-- ser a do bairro do cliente.
+SELECT to_regclass('public.loja_bairros') IS NOT NULL AS tem_entrega \gset
+\if :tem_entrega
+INSERT INTO public.loja_bairros (id, store_id, nome, taxa_cents, minutos_extra)
+  SELECT id::uuid, tenant_id::uuid, neighborhood, fee_cents::bigint, extra_minutes::int FROM public.demo_delivery_zones
+  ON CONFLICT DO NOTHING;
+SELECT count(*) AS entregas,
+       count(*) FILTER (WHERE (public.loja_taxa_bairro(o.tenant_id::uuid, a.neighborhood)).taxa_cents
+                              IS DISTINCT FROM o.delivery_fee_cents::bigint) AS frete_divergente
+  FROM public.demo_orders o JOIN public.demo_customer_addresses a ON a.customer_id = o.customer_id
+ WHERE o.type = 'delivery' \gset
+\echo 'gabarito de frete: ' :entregas ' entregas, divergentes: ' :frete_divergente
+SELECT CASE WHEN :frete_divergente > 0 THEN 1/0 END AS ok \g /dev/null
+\endif

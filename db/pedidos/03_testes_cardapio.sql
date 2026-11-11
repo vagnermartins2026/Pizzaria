@@ -21,6 +21,10 @@ BEGIN
     (bcat, L, gb, 'Borda Catupiry', 1200), (bche, L, gb, 'Borda Cheddar', 1200);
   INSERT INTO public.cardapio_adicional_precos VALUES (bcat, familia, 1500);
   INSERT INTO public.cardapio_itens (id, store_id, nome, preco_cents) VALUES (refri, L, 'Refrigerante 2L', 1400);
+  IF to_regclass('public.loja_horarios') IS NOT NULL THEN       -- com a etapa B instalada: loja aberta 24 h
+    EXECUTE 'INSERT INTO public.loja_horarios (store_id, dia_semana, abre, fecha)
+             SELECT $1, d, ''00:00'', ''24:00'' FROM generate_series(0, 6) d' USING L;
+  END IF;
 
   -- RN-03: maior preço (padrão) e média arredondada para cima
   r := public.cardapio_preco_item(L, jsonb_build_object('tipo','pizza','tamanho_id',grande,'sabores',jsonb_build_array(sa,sb)));
