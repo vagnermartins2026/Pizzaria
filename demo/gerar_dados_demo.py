@@ -209,6 +209,19 @@ def gatilho(s):
     return None
 
 
+def dias_ate_aniversario(nasc, hoje):
+    """Dias até o próximo aniversário (0 = hoje). Atravessa a virada do ano; 29/02 vira 28/02 em ano comum."""
+    def no_ano(a):
+        try:
+            return nasc.replace(year=a)
+        except ValueError:
+            return date(a, 2, 28)
+    prox = no_ano(hoje.year)
+    if prox < hoje:
+        prox = no_ano(hoje.year + 1)
+    return (prox - hoje).days
+
+
 def verificar_fronteiras():
     """Casos na fronteira exata de cada regra (skill contera-dev, descoberta-prd §3.3)."""
     casos = [  # (pedidos, dias, intervalo, esperado)
@@ -218,6 +231,10 @@ def verificar_fronteiras():
         (5, 13, 7, None), (5, 14, 7, "G2"), (5, 28, 14, "G2"), (5, 27, 14, "G1"),
         (5, 59, 21, "G2"), (5, 60, 21, "G4"), (5, 44, 22, "G1"),
     ]
+    assert dias_ate_aniversario(date(1990, 1, 1), date(2026, 12, 30)) == 2, "aniversário na virada do ano"
+    assert dias_ate_aniversario(date(1990, 11, 8), date(2026, 11, 8)) == 0
+    assert dias_ate_aniversario(date(1990, 11, 7), date(2026, 11, 8)) == 364
+    assert dias_ate_aniversario(date(1992, 2, 29), date(2027, 2, 27)) == 1
     for n, dias, iv, esperado in casos:
         obtido = gatilho(dict(n=n, dias=dias, intervalo=iv))
         assert obtido == esperado, f"fronteira: pedidos={n} dias={dias} intervalo={iv} → {obtido}, esperado {esperado}"
@@ -264,21 +281,21 @@ def motor(data, hoje):
     for s in stats.values():
         s["vip"] = s["g180"] >= corte_vip and s["n180"] >= 5
 
-    cards, bloqueados = defaultdict(list), Counter()
+    cards, bloqueados, esperado = defaultdict(list), Counter(), []
     for cid, s in stats.items():
         c = cust[cid]
         g = gatilho(s)
-        if not g and c["birth_date"]:
-            b = date.fromisoformat(c["birth_date"])
-            prox = b.replace(year=hoje.year)
-            if 0 <= (prox - hoje).days <= 3:
-                g = "G5"
+        if not g and c["birth_date"] and dias_ate_aniversario(date.fromisoformat(c["birth_date"]), hoje) <= 3:
+            g = "G5"
         if not g:
             continue
-        if consent.get(cid) != "granted":
+        elegivel = consent.get(cid) == "granted"
+        esperado.append((cid, g, "sim" if elegivel else "nao"))
+        if not elegivel:
             bloqueados[g] += 1
             continue
         cards[g].append((c, s))
+    motor.esperado = sorted(esperado)  # gabarito por cliente (comparado com o motor em SQL)
     return stats, cards, bloqueados
 
 
@@ -358,6 +375,10 @@ def executar(hoje, semente, saida):
           f"valor médio {brl(fat30 // max(1, len(ult30)))}")
 
     stats, cards, bloq = motor(data, hoje)
+    with open(os.path.join(saida, "oportunidades_esperadas.csv"), "w", newline="", encoding="utf-8") as fh:
+        w = csv.writer(fh, lineterminator="\n")
+        w.writerow(["customer_id", "gatilho", "elegivel"])
+        w.writerows(motor.esperado)
     print("\n== OPORTUNIDADES DE HOJE (prévia do motor, PRD §10) ==")
     for g in ["G2", "G1", "G3", "G4", "G5"]:
         todos = sorted(cards.get(g, []), key=lambda cs: (not cs[1]["vip"], -cs[1]["g180"]))
