@@ -7,6 +7,7 @@ O que o Claude faz sozinho está em [`PLANO-DO-SITE.md`](./PLANO-DO-SITE.md).
 ## Resposta rápida do que falta (copie, ajuste e mande)
 ```
 D1 registrei · D2 sem marca parecida · D3 criei @pizzalia · D8 L5 encarregado: <nome e e-mail> · jurídico revisou
+D14 pode fazer o remix (quando a assinatura da MayFlower estiver pronta)
 ```
 
 ---
@@ -61,12 +62,35 @@ D1 registrei · D2 sem marca parecida · D3 criei @pizzalia · D8 L5 encarregado
 - **Como conferir:** o jurídico devolve os textos aprovados; eu publico junto com o cadastro do sistema.
 - **Resposta rápida:** `D8 L5 encarregado: <nome e e-mail>` e, depois, `jurídico revisou`
 
+### D14 · Liberar a base do sistema (o remix da MayFlower)
+- **O que é e por que importa:** o sistema da pizzaria vai ser construído em cima da base da MayFlower, já com
+  cadastro e assinatura (`db/crm/LEIAME.md`). Enquanto essa base não existir para a pizzaria, a construção do sistema
+  (cardápio, pedidos, caixa, CRM nas telas, cadastro de assinantes) não pode começar. É o que mais pesa para o sistema ficar 100%.
+- **Recomendação:** esperar a outra sessão terminar a conversão da MayFlower para assinatura e então fazer **uma cópia
+  (remix)** para a Pizzalia. Assim a pizzaria herda o cadastro e a cobrança prontos.
+- **Alternativas:**
+
+  | Opção | Prós | Contras | Impacto |
+  |---|---|---|---|
+  | **A. Remix da MayFlower depois da assinatura pronta** (recomendada) | Herda cadastro, cobrança e segurança já testados | Depende da outra frente terminar | Menos retrabalho |
+  | B. Remix agora | Começa já | Herda a MayFlower sem a assinatura; refazer depois | Retrabalho |
+  | C. Começar do zero (PRD, fase R0) | Feito sob medida | Mais longo; não aproveita nada | Meses a mais |
+- **Passo a passo:**
+  1. Quando a outra sessão disser que a assinatura da MayFlower está pronta, abra o projeto da MayFlower no **Lovable**.
+  2. Nas configurações do projeto, clique em **Remix** e dê o nome `pizzalia`.
+  3. Ligue o projeto novo ao **GitHub** (o Lovable cria o repositório) e me diga o nome do repositório.
+  4. Se preferir, responda "pode fazer o remix": eu faço pelo conector do Lovable.
+- **Como conferir:** o repositório novo aparece na sua conta do GitHub.
+- **Depois:** eu começo a construção pelo roteiro de `docs/STATUS-GERAL.md`: ligo o motor do CRM, carrego a pizzaria demo,
+  adapto o cadastro (`CADASTRO-DO-SISTEMA.md`) e sigo as fases do PRD.
+- **Resposta rápida:** `D14 remix pronto: <repositório>` ou `D14 pode fazer o remix`
+
 ### Depois (não precisa responder agora)
 | # | O quê | Quando |
 |---|---|---|
 | D11 | Apontar o DNS no Registro.br (1 passo, com o meu guia) | Depois do D1 |
 | D12 | Depoimentos dos primeiros clientes, com autorização por escrito | Depois que os primeiros clientes usarem |
-| D13 | Sistema com cadastro e assinatura funcionando. O que ele precisa fazer: [`CADASTRO-DO-SISTEMA.md`](./CADASTRO-DO-SISTEMA.md) (com prompt pronto) | Outra frente (sessão do sistema) |
+| D13 | Sistema com cadastro e assinatura funcionando (depende do D14). O que ele precisa fazer: [`CADASTRO-DO-SISTEMA.md`](./CADASTRO-DO-SISTEMA.md) (com prompt pronto) | Outra frente (sessão do sistema) |
 
 ## Já resolvido
 | O quê | Quando |
