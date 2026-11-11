@@ -158,7 +158,8 @@ primeiro pedido no sistema e **pedidos recuperados pelo CRM** (o número que mai
 5. Conteúdo e anúncios regionais primeiro (Campinas e região), depois expansão.
 
 ## 9. Decisões pendentes deste plano
-- [ ] Aprovar o nome (após checagem no INPI e de domínio).
+- [ ] Aprovar o nome (após checagem no INPI e de domínio). **11/11/2026:** `fornalia.com.br` já
+  está registrado por terceiro; nova recomendação **Pizzalia** em [`MARCA-E-DOMINIO.md`](./MARCA-E-DOMINIO.md).
 - [ ] Validar os preços com a pesquisa de concorrentes (faixas da seção 4).
 - [ ] Definir o percentual de comissão do canal de contadores.
 - [ ] Confirmar a disponibilidade e as condições da API da 99Food antes de vender o módulo.

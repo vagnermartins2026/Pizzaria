@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; }
+body { @apply bg-white font-corpo text-texto antialiased; }
+h1, h2, h3 { @apply font-titulo text-carvao; text-wrap: balance; }
+p { text-wrap: pretty; }
+:focus-visible { outline: 2px solid #C2361C; outline-offset: 3px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .pz-flutuar { animation: pz-flutuar 6s ease-in-out infinite; }
+  @keyframes pz-flutuar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
