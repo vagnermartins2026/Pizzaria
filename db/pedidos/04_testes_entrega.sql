@@ -44,6 +44,15 @@ BEGIN
   IF (SELECT data_negocio FROM public.pedidos WHERE id = (r->>'pedido_id')::uuid) <> '2026-11-13' THEN
     RAISE EXCEPTION 'data de negócio'; END IF;
 
+  -- dia do turno: 00:15 de sábado dentro do turno de sexta conta como sexta; 00:45 (fora do turno) é sábado
+  r := public.pedido_criar(E, ped, 'turno-0001', '2026-11-14 00:15-03');
+  IF (SELECT data_negocio FROM public.pedidos WHERE id = (r->>'pedido_id')::uuid) <> '2026-11-13' THEN
+    RAISE EXCEPTION 'dia do turno: 00:15 de sábado deveria ser sexta'; END IF;
+  r := public.pedido_criar(E, jsonb_set(ped, '{canal}', '"balcao"'), 'turno-0002', '2026-11-14 00:45-03');
+  IF (SELECT data_negocio FROM public.pedidos WHERE id = (r->>'pedido_id')::uuid) <> '2026-11-14' THEN
+    RAISE EXCEPTION 'dia do turno: 00:45 (fora do turno) deveria ser sábado'; END IF;
+  IF public.loja_dia_negocio(S, '2026-11-14 00:15-03') <> '2026-11-14' THEN RAISE EXCEPTION 'loja sem turno noturno: calendário'; END IF;
+
   FOR caso IN SELECT * FROM (VALUES
       ('PEDIDO_MINIMO',       jsonb_set(ped, '{itens,0,quantidade}', '3'), '2026-11-13 19:00-03'),   -- 4200 < 5000
       ('BAIRRO_NAO_ATENDIDO', jsonb_set(ped, '{endereco,bairro}', '"Barão Geraldo"'), '2026-11-13 19:00-03'),
@@ -70,13 +79,13 @@ BEGIN
     RAISE EXCEPTION 'deveria recusar com PEDIDOS_PAUSADOS';
   EXCEPTION WHEN raise_exception THEN IF SQLERRM <> 'PEDIDOS_PAUSADOS: cozinha cheia' THEN RAISE; END IF; END;
   r := public.pedido_criar(E, jsonb_set(ped, '{canal}', '"telefone"'), 'pausa-0002', '2026-11-13 19:00-03');
-  IF (r->>'numero')::int <> 4 THEN RAISE EXCEPTION 'telefone durante a pausa / número sem buraco: %', r; END IF;
+  IF (r->>'numero')::int <> 6 THEN RAISE EXCEPTION 'telefone durante a pausa / número sem buraco: %', r; END IF;
 
   BEGIN
     PERFORM public.pedido_criar(S, jsonb_set(jsonb_set(ped, '{tipo}', '"retirada"'), '{itens,0,item_id}', to_jsonb(refri_s)),
                                 'sem-horario-0001', '2026-11-13 19:00-03');
     RAISE EXCEPTION 'loja sem horário deveria recusar o link';
   EXCEPTION WHEN raise_exception THEN IF SQLERRM <> 'LOJA_SEM_HORARIO' THEN RAISE; END IF; END;
-  RAISE NOTICE 'entrega e horário: OK (13 instantes de horário com virada da meia-noite e dois turnos, próxima abertura, bairro normalizado e inativo, frete, mínimo só na entrega, 4 recusas, balcão com loja fechada, pausa, loja sem horário)';
+  RAISE NOTICE 'entrega e horário: OK (13 instantes de horário com virada da meia-noite e dois turnos, próxima abertura, bairro normalizado e inativo, dia do turno, frete, mínimo só na entrega, 4 recusas, balcão com loja fechada, pausa, loja sem horário)';
 END $$;
 ROLLBACK;

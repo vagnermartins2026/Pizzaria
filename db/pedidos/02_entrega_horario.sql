@@ -66,6 +66,17 @@ LANGUAGE sql STABLE AS $$
     'proxima_abertura', (SELECT to_char(abre_em, 'YYYY-MM-DD"T"HH24:MI') FROM prox))
 $$;
 
+-- Dia de negócio = dia do TURNO (decisão do dono, 11/11/2026): o pedido das 00:15 dentro do turno de sexta que
+-- vai até 00:30 conta como sexta — no caixa, nos relatórios e no CRM. Fora de turno noturno, vale o calendário.
+CREATE OR REPLACE FUNCTION public.loja_dia_negocio(p_store uuid, p_quando timestamptz DEFAULT now()) RETURNS date
+LANGUAGE sql STABLE AS $$
+  WITH l AS (SELECT (p_quando AT TIME ZONE 'America/Sao_Paulo') AS t)
+  SELECT CASE WHEN EXISTS (SELECT 1 FROM public.loja_horarios h, l
+                            WHERE h.store_id = p_store AND h.abre > h.fecha AND l.t::time < h.fecha
+                              AND h.dia_semana = (extract(dow FROM l.t)::int + 6) % 7)
+              THEN (SELECT t::date - 1 FROM l) ELSE (SELECT t::date FROM l) END
+$$;
+
 CREATE OR REPLACE FUNCTION public.pedido_validar_operacao(p_store uuid, p_pedido jsonb, p_subtotal bigint,
                                                           p_quando timestamptz DEFAULT now())
 RETURNS jsonb LANGUAGE plpgsql STABLE AS $$

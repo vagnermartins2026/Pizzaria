@@ -22,6 +22,4 @@ de horário acusadas.
 2. **Papéis:** depois de "saiu para entrega", só o dono cancela (PRD §9) — depende do papel da base.
 3. **Ligar ao caixa e ao cliente da base:** pagamento do pedido entra no caixa aberto; `customer_id` liga ao cadastro
    pelo telefone; o adaptador do CRM passa a ler `pedidos` concluídos.
-4. **Decisão do dono:** pedido feito às 00:15 dentro do turno de sexta conta como sábado (data do calendário, RN-02).
-   Se o fechamento do caixa e os relatórios precisarem tratar o turno inteiro como sexta, a regra muda (dia de negócio
-   = dia do turno).
+4. **Decidido (11/11/2026): dia de negócio = dia do turno** (`loja_dia_negocio`). Pedido das 00:15 no turno de sexta conta como sexta.

@@ -492,7 +492,7 @@ entende por que vale pedir o consentimento.
 | ID | Regra |
 |---|---|
 | RN-01 | Todo valor monetário é guardado em **centavos inteiros** (`*_cents bigint`). Nada de ponto flutuante |
-| RN-02 | Datas e horas são guardadas com fuso (`timestamptz`). **Data de negócio** (dia do pedido, do caixa, "hoje" do CRM) é sempre a data em `America/Sao_Paulo`. Pedido feito às 23h50 pertence ao dia em que foi feito, não ao dia seguinte em UTC |
+| RN-02 | Datas e horas são guardadas com fuso (`timestamptz`), sempre interpretadas em `America/Sao_Paulo`. **Data de negócio = dia do turno** (decisão do dono, 11/11/2026): pedido das 00h15 dentro do turno de sexta que vai até 00h30 conta como **sexta** no caixa, nos relatórios e no CRM. Fora de turno que atravessa a meia-noite, vale a data do calendário (23h50 é do próprio dia, nunca do dia seguinte em UTC) |
 | RN-03 | **Preço da pizza com mais de um sabor:** padrão = **preço do sabor mais caro** naquele tamanho; opção da loja = **média** dos sabores, arredondada para cima no centavo. Adicionais somam por cima |
 | RN-04 | **O servidor recalcula o pedido inteiro** (preços, frete, mínimo, horário, disponibilidade). O valor enviado pelo navegador é ignorado. Divergência → o cliente vê "O preço de X mudou, confira" |
 | RN-05 | **Idempotência do pedido:** cada tentativa de envio leva uma chave única gerada no aparelho; a mesma chave nunca cria dois pedidos |

@@ -210,6 +210,10 @@ BEGIN
                             'quantidade', v_qtd, 'sabores', v_sabores, 'adicionais', v_adicionais);
 END $$;
 
+-- ---------- dia de negócio (substituída por 02_entrega_horario.sql: o dia do TURNO) ----------
+CREATE OR REPLACE FUNCTION public.loja_dia_negocio(p_store uuid, p_quando timestamptz DEFAULT now()) RETURNS date
+LANGUAGE sql STABLE AS $$ SELECT (p_quando AT TIME ZONE 'America/Sao_Paulo')::date $$;
+
 -- ---------- regras de operação (substituída por 02_entrega_horario.sql) ----------
 -- Devolve a taxa de entrega e o bairro; levanta erro se a operação não aceita o pedido.
 CREATE OR REPLACE FUNCTION public.pedido_validar_operacao(p_store uuid, p_pedido jsonb, p_subtotal bigint,
@@ -265,7 +269,7 @@ BEGIN
   INSERT INTO public.pedidos (store_id, numero, data_negocio, canal, tipo, status, cliente_nome, cliente_telefone,
          endereco, bairro_id, subtotal_cents, taxa_entrega_cents, total_cents, forma_pagamento, troco_para_cents,
          observacao, idempotency_key)
-  VALUES (p_store, v_num, (p_quando AT TIME ZONE 'America/Sao_Paulo')::date, v_canal, p_pedido->>'tipo', v_status,
+  VALUES (p_store, v_num, public.loja_dia_negocio(p_store, p_quando), v_canal, p_pedido->>'tipo', v_status,
           NULLIF(btrim(p_pedido #>> '{cliente,nome}'), ''), v_fone, p_pedido->'endereco',
           (v_op->>'bairro_id')::uuid, v_sub, (v_op->>'taxa_entrega_cents')::bigint, v_total,
           p_pedido->>'forma_pagamento', (p_pedido->>'troco_para_cents')::bigint, p_pedido->>'observacao',
