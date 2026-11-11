@@ -4,7 +4,7 @@
  * Trocou o nome ou o domínio? Mude AQUI e também em index.html (og:site_name, theme-color) e public/robots.txt
  * (arquivos estáticos). Títulos, descrições, canonical e sitemap saem daqui no build (scripts/prerender.mjs).
  *
- * Checagem de domínio feita em 11/11/2026 nos registros públicos (RDAP do Registro.br, Verisign e Google):
+ * Nome aprovado pelo dono em 11/11/2026. Checagem de domínio feita no mesmo dia nos registros públicos (RDAP do Registro.br, Verisign e Google):
  *   pizzalia.com.br  livre · pizzalia.app livre · pizzalia.com registrado por terceiro
  *   fornalia.com.br  REGISTRADO por terceiro (nome do plano original) · fornalia.app livre
  * Disponibilidade muda a qualquer hora: só vale depois de registrado. Ver docs/MARCA-E-DOMINIO.md.
@@ -15,8 +15,11 @@ export const MARCA = {
   /** Selo do fabricante. A marca que aparece para o cliente final é sempre a da pizzaria. */
   assinatura: "by Contera",
   dominio: "pizzalia.com.br",
-  /** Endereço oficial do site (canonical). */
-  site: "https://www.pizzalia.com.br",
+  /**
+   * Endereço oficial do site (canonical, imagem de prévia, sitemap). A prévia na Cloudflare é gerada com
+   * VITE_SITE=https://pizzalia.pages.dev VITE_PREVIA=1 (ver docs/PUBLICAR-SITE.md).
+   */
+  site: (import.meta.env?.VITE_SITE as string | undefined) || "https://www.pizzalia.com.br",
   /** Onde o sistema vai morar. O cadastro de assinante fica em `${app}/cadastro`. */
   app: "https://app.pizzalia.com.br",
   /** Formato do link de pedidos de cada pizzaria (domínio curto, separado do site). */

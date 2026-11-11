@@ -1,4 +1,4 @@
-# Plano de negócio: Fornalia by Contera
+# Plano de negócio: Pizzalia by Contera
 
 | Campo | Valor |
 |---|---|
@@ -24,13 +24,17 @@ Na comunicação com o dono da pizzaria, use "sistema de gestão" mais do que "E
 que ele usa. "ERP" fica para material com contador, investidor ou rede de franquias.
 
 ## 2. Nome e marca
-**Recomendado: Fornalia, by Contera.**
-- *Forno* + sufixo *-alia* (sonoridade italiana de festa e abundância). Curto, fácil de falar,
-  e funciona como domínio e como link de cardápio (`fornalia.app/sua-pizzaria`).
-- É um nome inventado, então tem mais chance de registro do que um nome genérico.
-- Assinatura de marca: **"Fornalia, by Contera"**. A Contera é a fabricante (selo discreto no
-  sistema); a Fornalia é o produto. Isso permite lançar depois outras verticais
+**Aprovado (11/11/2026): Pizzalia, by Contera.**
+- *Pizza* + sufixo *-alia* (sonoridade italiana de festa e abundância). Curto, fácil de falar,
+  diz o segmento na primeira sílaba e funciona como domínio (`pizzalia.com.br`) e como link de
+  cardápio (`pizzalia.app/sua-pizzaria`).
+- Substitui a recomendação anterior, **Fornalia**, porque `fornalia.com.br` e `fornalia.com` já eram
+  de terceiros. Checagem e alternativas em [`MARCA-E-DOMINIO.md`](./MARCA-E-DOMINIO.md).
+- Assinatura de marca: **"Pizzalia, by Contera"**. A Contera é a fabricante (selo discreto no
+  sistema); a Pizzalia é o produto. Isso permite lançar depois outras verticais
   (hamburgueria, açaí) com a mesma base.
+- Ponto de atenção: por ter "pizza" no nome, o registro no INPI pode ser mais disputado que o de um
+  nome totalmente inventado. A consulta no INPI (classes 9 e 42) vem antes de investir em logo.
 
 | Alternativa | Prós | Contras |
 |---|---|---|
@@ -159,8 +163,8 @@ primeiro pedido no sistema e **pedidos recuperados pelo CRM** (o número que mai
 5. Conteúdo e anúncios regionais primeiro (Campinas e região), depois expansão.
 
 ## 9. Decisões pendentes deste plano
-- [ ] Aprovar o nome (após checagem no INPI e de domínio). **11/11/2026:** `fornalia.com.br` já
-  está registrado por terceiro; nova recomendação **Pizzalia** em [`MARCA-E-DOMINIO.md`](./MARCA-E-DOMINIO.md).
+- [x] Aprovar o nome: **Pizzalia**, aprovado em 11/11/2026 (`fornalia.com.br` já era de terceiro).
+  Falta a checagem no INPI e o registro dos domínios ([`BACKLOG-DO-DONO.md`](./BACKLOG-DO-DONO.md)).
 - [ ] Validar os preços com a pesquisa de concorrentes (faixas da seção 4).
 - [ ] Definir o percentual de comissão do canal de contadores.
 - [ ] Confirmar a disponibilidade e as condições da API da 99Food antes de vender o módulo.

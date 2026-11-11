@@ -31,12 +31,13 @@
 | 8 | Acessibilidade (axe, WCAG AA) sem violações em 8 páginas × celular e computador | Claude | ✅ |
 | 9 | Build automático no GitHub (Actions), aprovado na 1ª execução | Claude | ✅ |
 | 9b | Passo a passo de publicação e DNS | Claude | ✅ [`PUBLICAR-SITE.md`](./PUBLICAR-SITE.md) |
-| 10 | Aprovar nome, INPI, registrar domínios, @ do Instagram | Dono | ⏳ backlog 1 a 4 |
+| 10 | Aprovar nome | Dono | ✅ Pizzalia, 11/11/2026 |
+| 10b | INPI, registrar domínios, @ do Instagram | Dono | ⏳ backlog 2 a 4 |
 | 11 | Contato, empresa e preços | Dono | ⏳ backlog 5 a 7 |
 | 12 | Publicar a prévia na Cloudflare | Claude, após autorização | ⏳ backlog 9 |
 | 13 | Apontar DNS de `www` e `app` | Dono, com passo a passo do Claude | ⏳ backlog 13 |
 | 14 | Logo, fotos, revisão jurídica, medição de visitas | Dono | ⏳ backlog 10 a 12, 14 |
-| 15 | Trocar "Fornalia" por "Pizzalia" nos documentos | Claude, após aprovação do nome | ⏳ backlog 17 |
+| 15 | Trocar "Fornalia" por "Pizzalia" nos documentos | Claude | ✅ |
 | 16 | Virar a chave para "aberto" quando o cadastro do sistema existir | Claude | ⏳ backlog 16 |
 | 17 | Trocar a tela ilustrativa por prints ou vídeo do painel real | Claude | ⏳ quando o painel existir |
 | 18 | Depoimentos reais dos primeiros clientes | Dono | ⏳ depois da abertura |

@@ -3,7 +3,7 @@
 | Campo | Valor |
 |---|---|
 | Data | 2026-11-11 |
-| Status | **Recomendação. Falta aprovar e registrar** |
+| Status | **Pizzalia aprovado pelo dono em 11/11/2026.** Falta INPI e registrar os domínios |
 | Onde mudar | `site/src/config/marca.ts` (fonte única do site) |
 
 ## 1. O que mudou desde o plano de negócio
@@ -19,7 +19,7 @@ checagem de 11/11/2026 o nome ficou sem o endereço principal:
 Para o dono de pizzaria brasileiro, o `.com.br` é o endereço que ele digita e em que confia.
 Sem ele, a recomendação passa a ser outro nome.
 
-## 2. Recomendação: **Pizzalia**, by Contera
+## 2. Escolhido: **Pizzalia**, by Contera
 - Mantém a ideia da Fornalia (sonoridade italiana, de festa e de abundância) e já diz "pizza"
   na primeira sílaba: ninguém precisa explicar do que se trata.
 - É curto, fácil de falar no balcão e de digitar no WhatsApp.
@@ -32,7 +32,7 @@ Sem ele, a recomendação passa a ser outro nome.
 
 | Nome | .com.br | .com | .app | Leitura |
 |---|---|---|---|---|
-| **Pizzalia** (recomendado) | **livre** | registrado | **livre** | Mais próximo da Fornalia, diz o segmento |
+| **Pizzalia** (aprovado) | **livre** | registrado | **livre** | Mais próximo da Fornalia, diz o segmento |
 | Pizzou | livre | registrado | livre | Divertido, "pizzou" soa como verbo; mais cara de app de consumidor que de sistema de gestão |
 | Giroforno | livre | livre | não confirmado | "Giro" de clientes e o forno que gira; esperto, mas pede explicação |
 | Fornaly | livre | livre | livre | Todos os domínios livres, mas a grafia confunde ("Fornali? Fornaly?") |
@@ -52,8 +52,7 @@ pode mudar a qualquer hora: só vale depois de registrar.
   de sistema. Pizzarias com nome parecido (classe 43, restaurante) não impedem, mas confira.
 - [ ] Registrar `pizzalia.com.br` no Registro.br e `pizzalia.app`.
 - [ ] Garantir o @ no Instagram (não deu para checar automaticamente).
-- [ ] Trocar "Fornalia" por "Pizzalia" no PRD, no plano de negócio e no `db/crm/LEIAME.md`
-  (o código SQL não usa o nome da marca).
+- [x] Trocar "Fornalia" por "Pizzalia" no PRD, no plano de negócio e no motor do CRM (11/11/2026).
 - [ ] Apontar o DNS: `www` para a hospedagem do site e `app` para o sistema.
 
 Se a escolha for outro nome, mude `site/src/config/marca.ts`, o `site/index.html` e o

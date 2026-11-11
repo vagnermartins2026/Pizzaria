@@ -8,9 +8,9 @@ Ordem = prioridade. Os itens 1 a 4 destravam a publicação do site.
 
 | # | Ação | Por que importa | Como fazer | Tempo |
 |---|---|---|---|---|
-| 1 | [ ] **Aprovar o nome Pizzalia** (ou escolher outro da lista) | Tudo depende do nome: domínio, logo, documentos | Responder "aprovo Pizzalia" ou o nome escolhido. Lista em [`MARCA-E-DOMINIO.md`](./MARCA-E-DOMINIO.md) | 1 min |
+| 1 | [x] ~~Aprovar o nome~~ | **Aprovado em 11/11/2026: Pizzalia.** | — | — |
 | 2 | [ ] **Pesquisar o nome no INPI** | Evita ter que trocar de marca depois de lançar | busca.inpi.gov.br → Marcas → "Pizzalia", classes 9 e 42 | 10 min |
-| 3 | [ ] **Registrar os domínios** `pizzalia.com.br` e `pizzalia.app` | Alguém pode registrar antes (o `fornalia.com.br` já foi) | registro.br (o `.com.br` sai cerca de R$ 40/ano); o `.app` em qualquer registrador, incluindo a Cloudflare | 15 min |
+| 3 | [ ] **Registrar os domínios** `pizzalia.com.br` e `pizzalia.app` (**URGENTE**: livres na última checagem, 11/11/2026) | Alguém pode registrar antes (o `fornalia.com.br` já foi). Envolve pagamento no seu login, por isso é seu | registro.br (o `.com.br` sai cerca de R$ 40/ano); o `.app` em qualquer registrador, incluindo a Cloudflare | 15 min |
 | 4 | [ ] **Criar o @ no Instagram** | Mesmo motivo do domínio; não deu para checar automaticamente | Criar `@pizzalia` ou a variação livre mais próxima | 5 min |
 | 5 | [ ] **Confirmar o WhatsApp e o e-mail comerciais** | O site usa `(19) 98214-7840` e `comercial@contera.com`, copiados da Minha Maleta, e o repositório é **público** | Responder "confirmo" ou mandar os contatos certos | 1 min |
 | 6 | [ ] **Dizer qual empresa assina o produto** (razão social e CNPJ) | Exigido no rodapé, nos Termos e na Privacidade (Decreto 7.962/2013) | Responder com a empresa (ex.: a mesma da Minha Maleta, VHM LABS LTDA?) | 1 min |
@@ -28,4 +28,4 @@ Ordem = prioridade. Os itens 1 a 4 destravam a publicação do site.
 | # | Ação | Observação |
 |---|---|---|
 | 16 | [ ] Sistema com cadastro e assinatura funcionando (PRD, M01, fase F9) | Quando existir, o Claude troca a fase do site para `"aberto"` e os botões passam a levar para `app.pizzalia.com.br/cadastro`. O contrato que o cadastro do sistema precisa aceitar está em [`site/LEIAME.md`](../site/LEIAME.md) |
-| 17 | [ ] Trocar "Fornalia" por "Pizzalia" no PRD, no plano e no motor do CRM | Só depois do item 1 |
+| 17 | [x] Trocar "Fornalia" por "Pizzalia" no PRD, no plano e no motor do CRM | Feito em 11/11/2026 |

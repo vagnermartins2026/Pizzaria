@@ -15,6 +15,8 @@ const ssr = join(raiz, "dist-ssr");
 const { desenhar, PAGINAS, metaDe, urlAbsoluta } = await import(pathToFileURL(join(ssr, "servidor.js")).href);
 
 const modelo = readFileSync(join(dist, "index.html"), "utf8");
+// Prévia (pages.dev): nenhuma página é indexada; o site oficial é o do domínio próprio.
+const previa = process.env.VITE_PREVIA === "1";
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
 function paginaHtml(caminho) {
@@ -26,7 +28,8 @@ function paginaHtml(caminho) {
     .replace(/(<meta property="og:title" content=")[^"]*"/, `$1${esc(m.titulo)}"`)
     .replace(/(<meta property="og:description" content=")[^"]*"/, `$1${esc(m.descricao)}"`)
     .replace(/(<meta property="og:url" content=")[^"]*"/, `$1${url}"`)
-    .replace("</head>", `    <link rel="canonical" href="${url}" />\n    <meta name="robots" content="${m.indexar === false ? "noindex" : "index, follow"}" />\n  </head>`)
+    .replace(/(<meta property="og:image" content=")[^"]*"/, `$1${urlAbsoluta("/og-image.png")}"`)
+    .replace("</head>", `    <link rel="canonical" href="${url}" />\n    <meta name="robots" content="${previa || m.indexar === false ? "noindex" : "index, follow"}" />\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">${desenhar(caminho)}</div>`);
   return html;
 }

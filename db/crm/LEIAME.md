@@ -1,6 +1,6 @@
-# Motor do CRM em SQL (Fornalia)
+# Motor do CRM em SQL (Pizzalia)
 
-O núcleo do diferencial da Fornalia (PRD §10 e §11.6), escrito **antes da base remixada** e independente dela.
+O núcleo do diferencial da Pizzalia (PRD §10 e §11.6), escrito **antes da base remixada** e independente dela.
 
 | Arquivo | O que é |
 |---|---|
