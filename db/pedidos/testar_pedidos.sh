@@ -6,7 +6,7 @@ set -euo pipefail
 RAIZ="$(cd "$(dirname "$0")/../.." && pwd)"; DB=fornalia_teste_pedidos; HOJE=2026-11-08; SAIDA="$RAIZ/demo/saida"
 PSQL=(psql -X -q -v ON_ERROR_STOP=1 -d "$DB")
 python3 "$RAIZ/demo/gerar_dados_demo.py" --hoje "$HOJE" --verificar >/dev/null
-dropdb --if-exists "$DB" 2>/dev/null; createdb "$DB"
+dropdb --if-exists --force "$DB"; createdb "$DB"
 for t in tenants categories pizza_sizes flavors flavor_prices addon_groups addons products delivery_zones \
          customers customer_addresses orders order_items order_item_flavors order_item_addons; do
   cols=$(head -1 "$SAIDA/$t.csv" | sed 's/,/ text, /g; s/$/ text/')
