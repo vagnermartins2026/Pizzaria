@@ -9,7 +9,7 @@ export const Seta = () => (
   </svg>
 );
 
-/** O botão principal. Vai para /fundadores no pré-lançamento e para o cadastro do sistema depois (config/marca.ts). */
+/** O botão principal. Vai para a lista de espera no pré-lançamento e para o cadastro do sistema depois (config/marca.ts). */
 export function CtaPrincipal({ children = TEXTO_DO_CTA, className = "", claro = false, plano }: { children?: React.ReactNode; className?: string; claro?: boolean; plano?: string }) {
   // A origem (UTM, indicação) só existe no navegador: no HTML pré-renderizado o link sai sem ela e o
   // React completa ao carregar a página.

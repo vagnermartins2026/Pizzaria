@@ -12,7 +12,7 @@ import { GUIAS } from "@/config/guias";
 import { FAQS } from "@/config/faq";
 import { PAGINAS, metaDe } from "@/config/paginas";
 import { descreverOrigem, guardarOrigemDaUrl, lerOrigem } from "@/config/origem";
-import { montarMensagem, whatsappValido } from "@/pages/Fundadores";
+import { montarMensagem, whatsappValido } from "@/pages/ListaDeEspera";
 import { desenhar } from "@/servidor";
 
 const raiz = join(__dirname, "..", "..");
@@ -40,9 +40,9 @@ describe("preços batem com o plano de negócio", () => {
 });
 
 describe("para onde vão os botões", () => {
-  it("pré-lançamento: página das fundadoras, com o plano", () => {
-    expect(destinoDoCta(undefined, {}, "pre-lancamento")).toEqual({ href: "/fundadores", externo: false });
-    expect(destinoDoCta("premium", { utm_source: "google" }, "pre-lancamento").href).toBe("/fundadores?plano=premium");
+  it("pré-lançamento: lista de espera, com o plano", () => {
+    expect(destinoDoCta(undefined, {}, "pre-lancamento")).toEqual({ href: "/lista-de-espera", externo: false });
+    expect(destinoDoCta("premium", { utm_source: "google" }, "pre-lancamento").href).toBe("/lista-de-espera?plano=premium");
   });
   it("aberto: cadastro do sistema com plano, origem e UTM (contrato do site/LEIAME.md)", () => {
     const { href, externo } = destinoDoCta("profissional", { utm_source: "instagram", indicacao: "CONTADOR1" }, "aberto");
@@ -85,7 +85,7 @@ describe("origem da visita", () => {
   });
 });
 
-describe("formulário das fundadoras", () => {
+describe("formulário da lista de espera", () => {
   it("valida WhatsApp brasileiro", () => {
     for (const ok of ["(19) 99999-9999", "19999999999", "+55 19 99999-9999", "1933334444"]) expect(whatsappValido(ok), ok).toBe(true);
     for (const ruim of ["", "99999-9999", "019999999999", "abc", "1999999999999"]) expect(whatsappValido(ruim), ruim).toBe(false);
@@ -139,6 +139,10 @@ describe("páginas", () => {
       expect(html.length, caminho).toBeGreaterThan(500);
       for (const [, href] of html.matchAll(/href="(\/[^"#?]*)/g)) expect(caminhos.has(href), `${caminho} → ${href}`).toBe(true);
     }
+  });
+  it("sem oferta de fundadoras (decisão do dono, 11/11/2026): nenhuma página promete desconto ou vaga limitada", () => {
+    for (const { caminho } of PAGINAS) expect(desenhar(caminho), caminho).not.toMatch(/fundador|50% de desconto|\d+ vagas/i);
+    expect(llms).not.toMatch(/fundador/i);
   });
   it("as perguntas frequentes não prometem o que o site não tem", () => {
     expect(FAQS.length).toBeGreaterThanOrEqual(6);

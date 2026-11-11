@@ -804,7 +804,8 @@ sistema principal. Ela manteria outro sistema para emitir nota e não migraria.
 ### 15.4 Piloto e beta
 1. **Piloto interno:** a pizzaria fictícia [Forno da Vila (DEMO)](./PILOTO-DEMO.md) é usada
    em todas as fases e em toda demonstração.
-2. **Beta fechado** ao fim da F8: 3 a 10 pizzarias reais com desconto (plano de negócio, seção 8).
+2. **Beta fechado** ao fim da F8: 3 a 10 pizzarias reais. **Sem oferta de fundadoras** (decisão do dono,
+   11/11/2026): as condições do beta ficam a definir; o site tem só uma lista de espera.
 3. Critérios de sucesso do beta: ≥ 90% dos pedidos registrados no sistema; ≥ 90% dos pedidos
    do link com cliente identificado; o dono envia campanhas em ≥ 3 de cada 4 semanas;
    pedidos atribuídos ao CRM medidos e publicados como caso de sucesso.

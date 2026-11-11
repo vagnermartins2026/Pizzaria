@@ -26,15 +26,14 @@ export const MARCA = {
 
 /**
  * Fase do site.
- *  - "pre-lancamento": o sistema ainda está sendo construído. Os botões levam à página /fundadores, que monta
- *    a mensagem e abre o WhatsApp comercial. Nada fica guardado no site.
+ *  - "pre-lancamento": o sistema ainda está sendo construído. Os botões levam à lista de espera (/lista-de-espera),
+ *    que monta a mensagem e abre o WhatsApp comercial. Nada fica guardado no site. Sem desconto nem vaga limitada
+ *    (decisão do dono, 11/11/2026: sem oferta de fundadoras).
  *  - "aberto": o cadastro do sistema existe. Os botões levam direto a `${MARCA.app}/cadastro`.
  * Virar a chave é mudar só esta linha.
  */
 export const LANCAMENTO = {
   fase: "pre-lancamento" as "pre-lancamento" | "aberto",
-  vagasFundadores: 10,
-  descontoFundadores: "50% de desconto por 6 meses",
   diasDeTeste: 14,
 };
 
@@ -60,7 +59,7 @@ export function linkWhatsApp(mensagem = `Olá! Vim pelo site da ${MARCA.nome} e 
 /**
  * Para onde vai o botão principal, conforme a fase.
  *  - aberto: `${MARCA.app}/cadastro?plano=…&origem=site&utm_…&indicacao=…` (contrato em site/LEIAME.md)
- *  - pré-lançamento: `/fundadores?plano=…` (a página já abre com o plano escolhido)
+ *  - pré-lançamento: `/lista-de-espera?plano=…` (a página já abre com o plano escolhido)
  */
 export function destinoDoCta(plano?: string, origem: Origem = {}, fase = LANCAMENTO.fase): { href: string; externo: boolean } {
   const p = new URLSearchParams();
@@ -71,7 +70,7 @@ export function destinoDoCta(plano?: string, origem: Origem = {}, fase = LANCAME
     return { href: `${MARCA.app}/cadastro?${p}`, externo: true };
   }
   const q = p.toString();
-  return { href: q ? `/fundadores?${q}` : "/fundadores", externo: false };
+  return { href: q ? `/lista-de-espera?${q}` : "/lista-de-espera", externo: false };
 }
 
-export const TEXTO_DO_CTA = LANCAMENTO.fase === "aberto" ? `Testar ${LANCAMENTO.diasDeTeste} dias grátis` : "Quero ser fundador";
+export const TEXTO_DO_CTA = LANCAMENTO.fase === "aberto" ? `Testar ${LANCAMENTO.diasDeTeste} dias grátis` : "Entrar na lista de espera";

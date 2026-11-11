@@ -1,6 +1,6 @@
 # Publicar o site (passo a passo)
 
-Para quando os itens 1 a 9 do [backlog do dono](./BACKLOG-DO-DONO.md) estiverem resolvidos.
+Para quando os itens 1 a 7 e 9 do [backlog do dono](./BACKLOG-DO-DONO.md) estiverem resolvidos.
 Com a autorização (item 9), o Claude faz a parte da Cloudflare; a parte do Registro.br é do dono,
 porque exige o login dele.
 
@@ -30,8 +30,8 @@ porque exige o login dele.
 
 ## 3. Conferir depois de publicar
 - [ ] `https://www.pizzalia.com.br` abre com cadeado (HTTPS).
-- [ ] `https://www.pizzalia.com.br/fundadores` abre direto (sem passar pela página inicial).
+- [ ] `https://www.pizzalia.com.br/lista-de-espera` abre direto (sem passar pela página inicial).
 - [ ] Um endereço inexistente mostra a página "saiu do forno antes da hora".
 - [ ] Colar o link no WhatsApp mostra a imagem de prévia (`og-image.png`).
 - [ ] Google Search Console: adicionar o domínio e enviar `https://www.pizzalia.com.br/sitemap.xml`.
-- [ ] O botão "Enviar pelo WhatsApp" da página das fundadoras abre a conversa com o número comercial certo.
+- [ ] O botão "Enviar pelo WhatsApp" da lista de espera abre a conversa com o número comercial certo.

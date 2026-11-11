@@ -149,8 +149,9 @@ primeiro pedido no sistema e **pedidos recuperados pelo CRM** (o número que mai
 ## 8. Estratégia de entrada no mercado
 1. **Demonstração com a pizzaria fictícia** "Forno da Vila" (dados já gerados): o prospect vê
    as oportunidades do CRM em 2 minutos.
-2. **Primeiros 10 clientes** com 50% de desconto por 6 meses, em troca de depoimento e
-   reuniões de feedback quinzenais.
+2. ~~**Primeiros 10 clientes** com 50% de desconto por 6 meses, em troca de depoimento e
+   reuniões de feedback quinzenais.~~ **Decisão do dono (11/11/2026): sem oferta de fundadoras.**
+   No pré-lançamento o site tem uma lista de espera, sem desconto nem vaga limitada.
 3. **Canal de contadores** (rede do Grupo Contabilize): o contador indica e recebe comissão
    recorrente (ex.: 10% por 12 meses). O módulo fiscal e o financeiro facilitam a vida do
    próprio contador, o que dá a ele um bom motivo para indicar.

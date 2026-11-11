@@ -30,8 +30,8 @@ export function Termos() {
       <p>Estes termos valem para o site {MARCA.dominio}. Os termos completos do sistema (assinatura, cobrança, cancelamento e suporte) serão publicados antes da abertura do cadastro.</p>
       <h2>1. O que é a {MARCA.nome}</h2>
       <p>Um sistema de gestão para pizzarias, contratado por assinatura mensal ou anual, por loja. O sistema está em construção; as funções e os preços mostrados no site são os previstos e podem mudar até a abertura.</p>
-      <h2>2. Pizzarias fundadoras</h2>
-      <p>A inscrição de fundadora não cria contrato nem cobrança. As condições (desconto e prazo) valem para as pizzarias convidadas, por ordem de inscrição, e são confirmadas por escrito no convite.</p>
+      <h2>2. Lista de espera</h2>
+      <p>Entrar na lista de espera não cria contrato, cobrança nem condição especial: só garante o aviso, por ordem de inscrição, quando o sistema abrir.</p>
       <h2>3. Mensagens para os clientes da pizzaria</h2>
       <p>O sistema prepara mensagens, mas quem envia é a pizzaria, pelo próprio WhatsApp. A pizzaria é responsável por só enviar a quem autorizou e por respeitar quem pediu para sair.</p>
       <h2>4. Contato</h2>
@@ -44,7 +44,7 @@ export function Privacidade() {
   return (
     <Documento titulo="Política de Privacidade" caminho="/privacidade">
       <h2>1. Neste site</h2>
-      <p>O site não tem cadastro nem formulário que grava dados. O formulário de fundadoras só monta uma mensagem que abre no seu WhatsApp; o que você enviar por lá é tratado como uma conversa comercial, para responder ao seu pedido, e não é repassado a terceiros.</p>
+      <p>O site não tem cadastro nem formulário que grava dados. O formulário da lista de espera só monta uma mensagem que abre no seu WhatsApp; o que você enviar por lá é tratado como uma conversa comercial, para responder ao seu pedido, e não é repassado a terceiros.</p>
       <p>Não usamos cookies de publicidade. Se passarmos a medir visitas, este texto será atualizado antes.</p>
       <h2>2. No sistema (quando abrir)</h2>
       <p>A pizzaria é dona dos dados dos clientes dela; a {MARCA.nome} trata esses dados em nome dela, só para fazer o sistema funcionar. Cada pizzaria enxerga apenas os próprios dados.</p>

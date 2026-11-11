@@ -15,14 +15,14 @@ Ordem = prioridade. Os itens 1 a 4 destravam a publicação do site.
 | 5 | [ ] **Confirmar o WhatsApp e o e-mail comerciais** | O site usa `(19) 98214-7840` e `comercial@contera.com`, copiados da Minha Maleta, e o repositório é **público** | Responder "confirmo" ou mandar os contatos certos | 1 min |
 | 6 | [ ] **Dizer qual empresa assina o produto** (razão social e CNPJ) | Exigido no rodapé, nos Termos e na Privacidade (Decreto 7.962/2013) | Responder com a empresa (ex.: a mesma da Minha Maleta, VHM LABS LTDA?) | 1 min |
 | 7 | [ ] **Validar os preços** (R$ 149 / 299 / 549 + módulos) | Os preços do site são os do plano de negócio, ainda sem pesquisa de concorrentes | Conferir 3 a 5 concorrentes e responder "mantém" ou os novos valores | 30 min |
-| 8 | [ ] **Confirmar a oferta das fundadoras** (10 vagas, 50% por 6 meses) | É a promessa principal do site hoje | Responder "mantém" ou a nova condição | 1 min |
+| 8 | [x] ~~Confirmar a oferta das fundadoras~~ | **Decidido em 11/11/2026: sem oferta de fundadoras.** O site virou lista de espera, sem desconto nem vaga limitada | — | — |
 | 9 | [ ] **Autorizar a publicação de uma prévia** | Hoje o site só roda aqui; com a prévia você abre no celular | Responder "pode publicar a prévia": o Claude publica na sua Cloudflare (endereço `*.pages.dev`, sem domínio ainda; [`PUBLICAR-SITE.md`](./PUBLICAR-SITE.md), seção 1) | 1 min |
 | 10 | [ ] **Logo definitiva** | O ícone atual (fatia de pizza) é provisório | Mandar a logo, ou pedir propostas (skill de marketing, ou designer) | — |
 | 11 | [ ] **Revisão jurídica** de Termos e Privacidade | Hoje são rascunhos de pré-lançamento | Mandar para o jurídico antes de abrir o cadastro e a cobrança | — |
 | 12 | [ ] **Decidir se quer medir visitas** (Google Analytics, Meta Pixel ou nenhum) | Medição com cookies exige aviso de cookies e muda a Política de Privacidade | Responder qual ferramenta (ou "nenhuma por enquanto") | 1 min |
 | 13 | [ ] **Apontar o DNS** depois de registrar | Faz `www.pizzalia.com.br` abrir o site | Passo a passo pronto em [`PUBLICAR-SITE.md`](./PUBLICAR-SITE.md), seção 2 | 10 min |
 | 14 | [ ] **Fotos reais** (pizzaria, dono, balcão) ou autorizar imagens geradas por IA | O site está pronto para receber; os espaços aparecem com `?espacos` no endereço | Mandar as fotos ou responder "pode gerar" | — |
-| 15 | [ ] **Depoimentos** das fundadoras, com autorização por escrito | A seção de depoimentos só aparece quando houver depoimento real | Depois do beta | — |
+| 15 | [ ] **Depoimentos** dos primeiros clientes, com autorização por escrito | A seção de depoimentos só aparece quando houver depoimento real | Depois que os primeiros clientes usarem | — |
 
 ## Depende de outra frente (não deste site)
 | # | Ação | Observação |

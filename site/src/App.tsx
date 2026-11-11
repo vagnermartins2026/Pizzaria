@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Inicio from "./pages/Inicio";
-import Fundadores from "./pages/Fundadores";
+import ListaDeEspera from "./pages/ListaDeEspera";
 import { Privacidade, Termos } from "./pages/Legais";
 import NaoEncontrada from "./pages/NaoEncontrada";
 import { Guia, Guias } from "./pages/Guias";
@@ -25,7 +25,7 @@ export function Rotas() {
       <RolarParaTopo />
       <Routes>
         <Route path="/" element={<Inicio />} />
-        <Route path="/fundadores" element={<Fundadores />} />
+        <Route path="/lista-de-espera" element={<ListaDeEspera />} />
         <Route path="/guias" element={<Guias />} />
         <Route path="/guias/:slug" element={<Guia />} />
         <Route path="/termos" element={<Termos />} />

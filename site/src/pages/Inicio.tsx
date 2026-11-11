@@ -132,8 +132,8 @@ export default function Inicio() {
               <CtaPrincipal className="self-start" />
               <span className="text-sm">
                 {preLancamento
-                  ? `${LANCAMENTO.vagasFundadores} vagas · ${LANCAMENTO.descontoFundadores}`
-                  : `Sem cartão · ${LANCAMENTO.diasDeTeste} dias grátis`}
+                  ? `Em construção · avisamos quando abrir`
+                  : `${LANCAMENTO.diasDeTeste} dias grátis`}
               </span>
             </div>
             <a href={linkWhatsApp()} target="_blank" rel="noopener noreferrer"
@@ -349,25 +349,6 @@ export default function Inicio() {
         </div>
       </section>
 
-      {/* ───────── Fundadores ───────── */}
-      {preLancamento && (
-        <section className="bg-tomate">
-          <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 md:grid-cols-[1.3fr_0.7fr] md:py-20">
-            <div>
-              <Sobretitulo className="text-white">Pizzarias fundadoras</Sobretitulo>
-              <h2 className="text-[2rem] font-semibold leading-[1.06] tracking-[-0.03em] !text-white sm:text-[2.7rem]">
-                {LANCAMENTO.vagasFundadores} pizzarias vão usar primeiro. E ajudar a decidir o que vem antes.
-              </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#FFE6DC]">
-                As fundadoras entram antes da abertura, pagam {LANCAMENTO.descontoFundadores} e falam direto com quem está
-                construindo o sistema, numa conversa a cada 15 dias. Em troca, contam para os outros como foi.
-              </p>
-            </div>
-            <CtaPrincipal claro className="md:justify-self-end">Quero uma das vagas</CtaPrincipal>
-          </div>
-        </section>
-      )}
-
       {/* Depoimentos: só com depoimento real e autorizado, ou com "?espacos" */}
       {espacos && (
         <section>
@@ -427,7 +408,7 @@ export default function Inicio() {
               ))}
             </ul>
           </div>
-          <p className="mt-5 text-xs">Preços previstos para a abertura: podem mudar até lá. Fundadoras têm {LANCAMENTO.descontoFundadores} sobre o plano escolhido.</p>
+          <p className="mt-5 text-xs">Preços previstos para a abertura: podem mudar até lá.</p>
         </div>
       </section>
 

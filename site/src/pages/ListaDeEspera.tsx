@@ -7,7 +7,7 @@ import { PLANOS } from "@/config/planos";
 import { usePagina } from "@/config/paginas";
 
 /**
- * Pré-cadastro das pizzarias fundadoras (fase "pre-lancamento" em config/marca.ts).
+ * Lista de espera (fase "pre-lancamento" em config/marca.ts). Sem desconto nem vaga limitada.
  * Não tem banco: o formulário só monta a mensagem e abre o WhatsApp comercial. Nada fica guardado no site.
  * Quando o sistema abrir o cadastro (fase "aberto"), os botões do site passam a ir direto para `${MARCA.app}/cadastro`
  * e esta página vira a lista de espera ou sai do ar.
@@ -27,7 +27,7 @@ export function whatsappValido(texto: string): boolean {
 export function montarMensagem(d: Dados, origem = "") {
   const plano = PLANOS.find((p) => p.id === d.plano)?.nome;
   return [
-    `Olá! Quero ser uma das pizzarias fundadoras da ${MARCA.nome}.`,
+    `Olá! Quero entrar na lista de espera da ${MARCA.nome}.`,
     "",
     `Nome: ${d.nome}`,
     `Pizzaria: ${d.pizzaria}`,
@@ -40,8 +40,8 @@ export function montarMensagem(d: Dados, origem = "") {
   ].join("\n");
 }
 
-export default function Fundadores() {
-  usePagina("/fundadores");
+export default function ListaDeEspera() {
+  usePagina("/lista-de-espera");
   const [busca] = useSearchParams();
   const planoDoLink = PLANOS.some((p) => p.id === busca.get("plano")) ? busca.get("plano")! : "";
   const [d, setD] = useState<Dados>({ nome: "", pizzaria: "", cidade: "", whatsapp: "", pedidos: "", plano: planoDoLink, canais: [] });
@@ -65,19 +65,17 @@ export default function Fundadores() {
       <section className="bg-gradient-to-b from-creme to-white">
         <div className="mx-auto grid max-w-6xl gap-12 px-5 py-14 md:grid-cols-[0.9fr_1.1fr] md:gap-16 md:py-20">
           <div>
-            <Sobretitulo>Pizzarias fundadoras</Sobretitulo>
+            <Sobretitulo>Lista de espera</Sobretitulo>
             <h1 className="text-[2.3rem] font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl">
-              Seja uma das {LANCAMENTO.vagasFundadores} primeiras.
+              Saiba antes quando a {MARCA.nome} abrir.
             </h1>
-            <ul className="mt-8 space-y-4 text-lg leading-relaxed">
-              <li><strong className="text-carvao">{LANCAMENTO.descontoFundadores}</strong> no plano que escolher.</li>
-              <li><strong className="text-carvao">Implantação com a gente:</strong> montamos o cardápio junto e treinamos a equipe.</li>
-              <li><strong className="text-carvao">Voz no produto:</strong> uma conversa a cada 15 dias com quem está construindo.</li>
-              <li><strong className="text-carvao">Em troca:</strong> você usa de verdade e, se gostar, conta como foi.</li>
-            </ul>
+            <ol className="mt-8 space-y-4 text-lg leading-relaxed">
+              <li><strong className="text-carvao">1. Deixe o nome da pizzaria.</strong> Leva um minuto.</li>
+              <li><strong className="text-carvao">2. Avisamos pelo WhatsApp</strong> quando o sistema abrir, por ordem de inscrição.</li>
+              <li><strong className="text-carvao">3. Teste {LANCAMENTO.diasDeTeste} dias grátis</strong> com uma pizzaria de exemplo já carregada, antes de decidir.</li>
+            </ol>
             <p className="mt-8 text-sm leading-relaxed">
-              O sistema está em construção. Vamos chamar as fundadoras por ordem de inscrição, quando a primeira versão estiver
-              pronta para o dia a dia da pizzaria.
+              O sistema está em construção. Entrar na lista não cria compromisso nem cobrança.
             </p>
           </div>
 

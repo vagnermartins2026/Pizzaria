@@ -16,9 +16,9 @@ export const PAGINAS: MetaPagina[] = [
       "Sistema para pizzarias: link de pedidos próprio, caixa e um CRM que mostra todo dia quem parou de pedir, com a mensagem pronta no WhatsApp.",
   },
   {
-    caminho: "/fundadores",
-    titulo: `Pizzarias fundadoras · ${MARCA.nome}`,
-    descricao: "Seja uma das 10 primeiras pizzarias a usar o sistema, com desconto e voz no que vem primeiro.",
+    caminho: "/lista-de-espera",
+    titulo: `Lista de espera · ${MARCA.nome}`,
+    descricao: "Deixe o nome da sua pizzaria e avisamos pelo WhatsApp quando o sistema abrir.",
   },
   {
     caminho: "/guias",

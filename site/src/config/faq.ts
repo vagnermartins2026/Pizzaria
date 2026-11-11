@@ -4,7 +4,7 @@ import { LANCAMENTO, MARCA } from "./marca";
 export const FAQS: { q: string; a: string }[] = [
   {
     q: `A ${MARCA.nome} já está funcionando?`,
-    a: `Ainda não: o sistema está em construção. As primeiras ${LANCAMENTO.vagasFundadores} pizzarias fundadoras entram antes de todo mundo, com ${LANCAMENTO.descontoFundadores}, e ajudam a decidir o que vem primeiro.`,
+    a: `Ainda não: o sistema está em construção. Entre na lista de espera e avisamos pelo WhatsApp assim que abrir, por ordem de inscrição. Na abertura, todo plano começa com ${LANCAMENTO.diasDeTeste} dias grátis.`,
   },
   {
     q: "Vou ter que largar o iFood?",

@@ -36,7 +36,7 @@ export function lerOrigem(): Origem {
   }
 }
 
-/** "Google (cpc) · campanha X · indicação ABC" para a mensagem de WhatsApp dos fundadores. */
+/** "Google (cpc) · campanha X · indicação ABC" para a mensagem de WhatsApp da lista de espera. */
 export function descreverOrigem(o: Origem): string {
   const partes = [
     o.utm_source && `${o.utm_source}${o.utm_medium ? ` (${o.utm_medium})` : ""}`,

@@ -14,7 +14,7 @@ com o conteúdo do [PRD](../docs/PRD.md) e do [plano de negócio](../docs/PLANO-
 cd site
 npm install
 npm run dev       # http://localhost:5173 (desenha no navegador, sem pré-renderização)
-npm test          # 18 testes
+npm test          # 19 testes
 npm run build     # testes + build + pré-renderização → dist/ (site estático pronto para publicar)
 ```
 Endereço com `?espacos` (ex.: `http://localhost:5173/?espacos`) mostra onde entram fotos,
@@ -34,8 +34,8 @@ vídeo e depoimentos que ainda vão chegar.
 ## Páginas
 | Rota | O que é |
 |---|---|
-| `/` | Página inicial: topo, calculadora, antes × depois, funções, como funciona, comparativo, confiança, fundadoras, planos, perguntas, guias |
-| `/fundadores` | Inscrição das 10 pizzarias fundadoras. Sem banco: monta a mensagem (com plano e origem) e abre o WhatsApp comercial |
+| `/` | Página inicial: topo, calculadora, antes × depois, funções, como funciona, comparativo, confiança, planos, perguntas, guias |
+| `/lista-de-espera` | Lista de espera, sem desconto nem vaga limitada (decisão do dono, 11/11/2026). Sem banco: monta a mensagem (com plano e origem) e abre o WhatsApp comercial |
 | `/guias` e `/guias/:slug` | 3 guias com contas em reais: cliente que some, link próprio × marketplace, custo da pizza (CMV) |
 | `/termos`, `/privacidade` | **Rascunhos**: falta revisão jurídica, razão social e CNPJ |
 
@@ -48,7 +48,7 @@ vídeo e depoimentos que ainda vão chegar.
    leem sem JavaScript; no navegador o React só "hidrata" a página. Também gera `404.html` e `sitemap.xml`.
 
 ## Contrato do cadastro (site → sistema)
-Enquanto `LANCAMENTO.fase = "pre-lancamento"`, os botões levam a `/fundadores?plano=…`.
+Enquanto `LANCAMENTO.fase = "pre-lancamento"`, os botões levam a `/lista-de-espera?plano=…`.
 Com `"aberto"`, todos os botões levam a:
 
 ```
@@ -73,5 +73,5 @@ app, como a Minha Maleta faz com a `Landing.tsx`. Até lá, site e sistema ficam
 
 ## Publicar
 É um site estático. Na Cloudflare Pages: diretório raiz `site`, comando `npm run build`, saída `dist`,
-Node 20. A Cloudflare serve `fundadores/index.html` em `/fundadores` e o `404.html` para endereço
+Node 20. A Cloudflare serve `lista-de-espera/index.html` em `/lista-de-espera` e o `404.html` para endereço
 inexistente. O GitHub Actions (`.github/workflows/site.yml`) roda o mesmo build a cada mudança no site.

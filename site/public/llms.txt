@@ -1,6 +1,6 @@
 # Pizzalia
 
-> Sistema de gestão para pizzarias, vendido por assinatura (SaaS), com um CRM que mostra todo dia quais clientes pararam de pedir e deixa a mensagem de WhatsApp pronta para trazê-los de volta. Fabricado pela Contera. Em pré-lançamento: o sistema está em construção e as 10 primeiras pizzarias fundadoras terão 50% de desconto por 6 meses.
+> Sistema de gestão para pizzarias, vendido por assinatura (SaaS), com um CRM que mostra todo dia quais clientes pararam de pedir e deixa a mensagem de WhatsApp pronta para trazê-los de volta. Fabricado pela Contera. Em pré-lançamento: o sistema está em construção e há uma lista de espera; na abertura, todo plano começa com 14 dias grátis.
 
 ## O que faz (primeira versão)
 - Link de pedidos próprio da pizzaria (cardápio digital, pizza meio a meio, frete por bairro, Pix online), sem comissão por pedido
@@ -21,7 +21,7 @@ Sem fidelidade no mensal. Anual com 2 meses grátis. Preços podem mudar até a 
 
 ## Páginas
 - [Página inicial](https://www.pizzalia.com.br/)
-- [Pizzarias fundadoras](https://www.pizzalia.com.br/fundadores)
+- [Lista de espera](https://www.pizzalia.com.br/lista-de-espera)
 - [Guias para donos de pizzaria](https://www.pizzalia.com.br/guias)
 - [Termos de Uso](https://www.pizzalia.com.br/termos)
 - [Política de Privacidade](https://www.pizzalia.com.br/privacidade)
