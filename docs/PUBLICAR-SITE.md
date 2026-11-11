@@ -1,6 +1,6 @@
 # Publicar o site (passo a passo)
 
-Para quando os itens 1 a 7 e 9 do [backlog do dono](./BACKLOG-DO-DONO.md) estiverem resolvidos.
+Para quando os itens D1 a D6 do [backlog do dono](./BACKLOG-DO-DONO.md) estiverem resolvidos.
 Com a autorização (item 9), o Claude faz a parte da Cloudflare; a parte do Registro.br é do dono,
 porque exige o login dele.
 

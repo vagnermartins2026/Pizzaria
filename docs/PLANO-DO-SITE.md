@@ -10,9 +10,9 @@
 ## Onde estamos
 ```
 [1. Rascunho]  ✅ feito
-[2. Pronto para publicar]  ✅ feito, falta só o que é do dono (itens 1 a 7 e 9 do backlog)
+[2. Pronto para publicar]  ✅ feito, falta só o que é do dono (backlog D1 a D6)
 [3. Prévia no ar]  ✅ https://pizzalia.pages.dev
-[4. No domínio próprio]  ⏳ espera nome, domínio e DNS (backlog 1, 3, 13)
+[4. No domínio próprio]  ⏳ espera nome, domínio e DNS (backlog D1 e D11)
 [5. Pré-lançamento: lista de espera recebendo pizzarias]  ⏳ depende da etapa 4
 [6. Abertura: botões levam ao cadastro do sistema]  ⏳ depende do sistema (M01/F9 do PRD)
 ```
@@ -31,14 +31,18 @@
 | 8 | Acessibilidade (axe, WCAG AA) sem violações em 8 páginas × celular e computador | Claude | ✅ |
 | 9 | Build automático no GitHub (Actions), aprovado na 1ª execução | Claude | ✅ |
 | 9b | Passo a passo de publicação e DNS | Claude | ✅ [`PUBLICAR-SITE.md`](./PUBLICAR-SITE.md) |
+| 9c | Pesquisa de preços de 5 concorrentes, com recomendação | Claude | ✅ [`PESQUISA-DE-PRECOS.md`](./PESQUISA-DE-PRECOS.md) |
+| 9d | 3 opções de logo para escolher | Claude | ✅ [`marca/`](./marca/LEIAME.md) |
+| 9e | Especificação do cadastro do sistema, com prompt pronto | Claude | ✅ [`CADASTRO-DO-SISTEMA.md`](./CADASTRO-DO-SISTEMA.md) |
+| 9f | Rascunho dos Termos e da Privacidade do sistema | Claude | ✅ [`legal/`](./legal/LEIAME.md) |
 | 10 | Aprovar nome | Dono | ✅ Pizzalia, 11/11/2026 |
-| 10b | INPI, registrar domínios, @ do Instagram | Dono | ⏳ backlog 2 a 4 |
-| 11 | Contato, empresa e preços | Dono | ⏳ backlog 5 a 7 |
+| 10b | INPI, registrar domínios, @ do Instagram | Dono | ⏳ backlog D1 a D3 |
+| 11 | Empresa, preços e contatos | Dono | ⏳ backlog D4 a D6 (pesquisa de preços pronta: [`PESQUISA-DE-PRECOS.md`](./PESQUISA-DE-PRECOS.md)) |
 | 12 | Publicar a prévia na Cloudflare | Claude | ✅ https://pizzalia.pages.dev, ligada ao GitHub |
-| 13 | Apontar DNS de `www` e `app` | Dono, com passo a passo do Claude | ⏳ backlog 13 |
-| 14 | Logo, fotos, revisão jurídica, medição de visitas | Dono | ⏳ backlog 10 a 12, 14 |
+| 13 | Apontar DNS de `www` e `app` | Dono, com passo a passo do Claude | ⏳ backlog D11 |
+| 14 | Logo, documentos legais, medição de visitas, fotos | Dono | ⏳ backlog D7 a D10 (3 opções de logo e rascunhos legais prontos) |
 | 15 | Trocar "Fornalia" por "Pizzalia" nos documentos | Claude | ✅ |
-| 16 | Virar a chave para "aberto" quando o cadastro do sistema existir | Claude | ⏳ backlog 16 |
+| 16 | Virar a chave para "aberto" quando o cadastro do sistema existir | Claude | ⏳ backlog D13 (especificação pronta: [`CADASTRO-DO-SISTEMA.md`](./CADASTRO-DO-SISTEMA.md)) |
 | 17 | Trocar a tela ilustrativa por prints ou vídeo do painel real | Claude | ⏳ quando o painel existir |
 | 18 | Depoimentos reais dos primeiros clientes | Dono | ⏳ depois da abertura |
 
