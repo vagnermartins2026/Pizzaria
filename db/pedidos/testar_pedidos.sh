@@ -23,6 +23,7 @@ passo() {  # roda um arquivo SQL; qualquer erro marca a prova como falha (sem es
 }
 passo "$SQL1"
 passo "$RAIZ/db/pedidos/02_entrega_horario.sql"
+passo "$RAIZ/db/pedidos/05_link_publico.sql"
 passo "$RAIZ/db/pedidos/carregar_demo.sql"
 passo "$RAIZ/db/pedidos/03_testes_cardapio.sql"
 passo "$RAIZ/db/pedidos/04_testes_entrega.sql"

@@ -25,7 +25,7 @@ CREATE FUNCTION public.current_store_id() RETURNS uuid LANGUAGE sql STABLE AS $f
 CREATE FUNCTION public.fornalia_papel() RETURNS text LANGUAGE sql STABLE AS $f$ SELECT nullif(current_setting('app.papel', true), '') $f$;
 GRANT EXECUTE ON FUNCTION public.current_store_id(), public.fornalia_papel() TO authenticated;
 SQL
-for f in db/pedidos/01_cardapio_pedido.sql db/pedidos/02_entrega_horario.sql db/crm/01_motor_crm.sql db/crm/04_campanhas.sql \
+for f in db/pedidos/01_cardapio_pedido.sql db/pedidos/02_entrega_horario.sql db/pedidos/05_link_publico.sql db/crm/01_motor_crm.sql db/crm/04_campanhas.sql \
          db/crm/05_resumo.sql db/crm/02_adaptador_demo.sql; do "${QUIETO[@]}" "${PSQL[@]}" -f "$RAIZ/$f" >/dev/null; done
 "${PSQL[@]}" -c "GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated, service_role;
                  GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated, service_role;"   # padrão do Supabase

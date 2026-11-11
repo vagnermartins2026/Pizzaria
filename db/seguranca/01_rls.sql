@@ -24,7 +24,7 @@ DECLARE t text;
 BEGIN
   FOREACH t IN ARRAY ARRAY['cardapio_categorias','cardapio_tamanhos','cardapio_sabores','cardapio_grupos_adicionais',
                            'cardapio_adicionais','cardapio_itens','loja_horarios','loja_bairros','loja_config_pedido',
-                           'crm_regras','crm_modelos'] LOOP
+                           'crm_regras','crm_modelos','loja_links'] LOOP
     EXECUTE format('ALTER TABLE public.%I ENABLE ROW LEVEL SECURITY', t);
     EXECUTE format('REVOKE ALL ON public.%I FROM anon, authenticated', t);
     EXECUTE format('GRANT SELECT, INSERT, UPDATE ON public.%I TO authenticated', t);
@@ -82,6 +82,8 @@ BEGIN
 END $$;
 ALTER TABLE public.loja_contadores ENABLE ROW LEVEL SECURITY;          -- só o servidor (sem policy = ninguém)
 REVOKE ALL ON public.loja_contadores FROM anon, authenticated;
+ALTER TABLE public.link_tentativas ENABLE ROW LEVEL SECURITY;          -- limite do link: só o servidor
+REVOKE ALL ON public.link_tentativas FROM anon, authenticated;
 
 -- A equipe muda status (o gatilho do banco guarda as transições) e liga o cliente; nada de mexer em valores.
 GRANT UPDATE (status, cancelamento_motivo, customer_id) ON public.pedidos TO authenticated;
@@ -136,10 +138,10 @@ DECLARE f regprocedure;
 BEGIN
   FOR f IN SELECT p.oid::regprocedure FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace
             WHERE n.nspname = 'public' AND p.prokind = 'f'
-              AND p.proname ~ '^(cardapio_|pedido_|loja_|crm_|fone_e164_br$|brl$|url_codificar$|normalizar_bairro$|resumo_hoje$|auth_uid_ou_nulo$|fornalia_pode_configurar$)' LOOP
+              AND p.proname ~ '^(cardapio_|pedido_|loja_|link_|crm_|fone_e164_br$|brl$|url_codificar$|normalizar_bairro$|resumo_hoje$|auth_uid_ou_nulo$|fornalia_pode_configurar$)' LOOP
     EXECUTE format('REVOKE ALL ON FUNCTION %s FROM PUBLIC', f);
     IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'anon') THEN EXECUTE format('REVOKE ALL ON FUNCTION %s FROM anon', f); END IF;
-    IF f::text !~ '^(pedido_criar\(|crm_calcular\(|pedido_validar_operacao\()' THEN
+    IF f::text !~ '^(pedido_criar\(|crm_calcular\(|pedido_validar_operacao\(|pedido_acompanhar\(|link_)' THEN
       EXECUTE format('GRANT EXECUTE ON FUNCTION %s TO authenticated', f);
     ELSE
       EXECUTE format('REVOKE ALL ON FUNCTION %s FROM authenticated', f);

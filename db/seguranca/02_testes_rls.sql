@@ -79,6 +79,10 @@ BEGIN
   EXCEPTION WHEN raise_exception THEN IF SQLERRM <> 'SEM_ACESSO' THEN RAISE; END IF; END;
   BEGIN PERFORM public.crm_calcular(A, current_date); RAISE EXCEPTION 'equipe rodou o motor';
   EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+  BEGIN PERFORM public.pedido_acompanhar(repeat('0', 64)); RAISE EXCEPTION 'equipe chamou função do link';
+  EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+  BEGIN PERFORM public.link_consumir_limite('x', 1, 60); RAISE EXCEPTION 'equipe mexeu no limite do link';
+  EXCEPTION WHEN insufficient_privilege THEN NULL; END;
   -- depois de sair para entrega, atendente não cancela
   BEGIN UPDATE public.pedidos SET status = 'cancelado', cancelamento_motivo = 'cliente desistiu' WHERE status = 'saiu_entrega';
     RAISE EXCEPTION 'atendente cancelou pedido que já saiu';
@@ -133,7 +137,7 @@ DO $$
 DECLARE faltando text; del text; vis text;
 BEGIN
   SELECT string_agg(c.relname, ', ') INTO faltando FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
-   WHERE n.nspname = 'public' AND c.relkind = 'r' AND c.relname ~ '^(cardapio_|pedido|loja_|crm_)' AND NOT c.relrowsecurity;
+   WHERE n.nspname = 'public' AND c.relkind = 'r' AND c.relname ~ '^(cardapio_|pedido|loja_|link_|crm_)' AND NOT c.relrowsecurity;
   IF faltando IS NOT NULL THEN RAISE EXCEPTION 'tabelas sem RLS: %', faltando; END IF;
   SELECT string_agg(tablename || '.' || policyname, ', ') INTO del FROM pg_policies
    WHERE schemaname = 'public' AND cmd IN ('DELETE', 'ALL')
