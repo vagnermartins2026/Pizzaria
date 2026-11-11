@@ -1,9 +1,9 @@
 # Termos de Uso da Pizzalia (RASCUNHO v0.1, para revisão jurídica)
 
-> Rascunho de 11/11/2026. Não publicar antes da revisão jurídica e do preenchimento dos `[COLCHETES]`.
-> Itens **⚖️ DECIDIR** estão em `docs/legal/LEIAME.md`.
+> Rascunho de 11/11/2026, com as decisões L1 a L4 do dono aplicadas (11/11/2026). Não publicar antes da revisão
+> jurídica e do preenchimento dos `[COLCHETES]` que restam.
 
-**Partes.** De um lado, `[RAZÃO SOCIAL]`, CNPJ `[CNPJ]`, com sede em `[CIDADE/UF]` ("Pizzalia"). De outro, a
+**Partes.** De um lado, VHM LABS LTDA, CNPJ 64.393.377/0001-30, com sede em Campinas/SP ("Pizzalia"). De outro, a
 pessoa jurídica ou o empresário que cria a conta ("Assinante"), representado pela pessoa que fez o cadastro.
 
 ## 1. O que é o serviço
@@ -30,10 +30,10 @@ são cobrados à parte.
 4.2. Pagamento pelo Mercado Pago (cartão de crédito recorrente ou Pix). As tarifas dos pagamentos que a pizzaria recebe
 dos clientes dela (Pix no link de pedidos) são do Assinante.
 4.3. **Mensal:** sem fidelidade. **Anual:** pago de uma vez, com 2 meses de desconto.
-4.4. **Implantação** (cadastro do cardápio, configuração e treinamento): `[VALOR]` no mensal; sem custo no anual.
+4.4. **Implantação** (cadastro do cardápio, configuração e treinamento): R$ 190,00 no mensal; sem custo no anual.
 4.5. Reajuste anual pelo IPCA/IBGE, com aviso de 30 dias.
-4.6. **⚖️ DECIDIR (L1):** garantia de `[7]` dias: se o Assinante pedir em até `[7]` dias depois do primeiro pagamento,
-a Pizzalia devolve esse pagamento inteiro.
+4.6. **Garantia de 7 dias:** se o Assinante pedir em até 7 dias depois do primeiro pagamento, a Pizzalia devolve esse
+pagamento inteiro.
 
 ## 5. Atraso no pagamento
 5.1. A Pizzalia avisa 5 dias e 1 dia antes e no dia do vencimento.
@@ -66,10 +66,10 @@ terceiros (WhatsApp, marketplaces, Mercado Pago, SEFAZ), embora trabalhe para mi
 
 ## 9. Cancelamento e saída
 9.1. O Assinante cancela quando quiser, pelo próprio sistema. No mensal, o acesso vai até o fim do mês já pago.
-9.2. **⚖️ DECIDIR (L2):** no anual, `[devolução do proporcional dos meses inteiros não usados, descontado o benefício do anual]`.
-9.3. **Os dados são do Assinante.** Ele pode exportar tudo a qualquer momento. **⚖️ DECIDIR (L3):** depois do
-cancelamento, os dados ficam disponíveis para exportação por `[90]` dias e então são apagados, exceto o que a lei
-mandar guardar.
+9.2. No anual, a Pizzalia devolve o proporcional dos meses inteiros ainda não usados, descontado o benefício de 2 meses do
+plano anual (o valor usado é recalculado pelo preço mensal).
+9.3. **Os dados são do Assinante.** Ele pode exportar tudo a qualquer momento. Depois do cancelamento, os dados ficam
+disponíveis para exportação por 90 dias e então são apagados, exceto o que a lei mandar guardar.
 9.4. A Pizzalia pode encerrar a conta em caso de fraude ou uso ilegal, com aviso, salvo quando a lei exigir ação imediata.
 
 ## 10. Dados pessoais
@@ -85,6 +85,6 @@ propriedade.
 Mudanças relevantes são avisadas com 30 dias de antecedência. Se o Assinante não concordar, pode cancelar sem multa.
 
 ## 13. Foro
-**⚖️ DECIDIR (L4):** fica eleito o foro de `[Campinas/SP]`.
+Fica eleito o foro da comarca de Campinas/SP.
 
 Versão `[v1.0]` · vigente desde `[DATA]`. O aceite fica registrado com data, hora e versão.

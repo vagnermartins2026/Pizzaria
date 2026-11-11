@@ -1,6 +1,9 @@
-# Marca: opções de logo (rascunho)
+# Marca: logo
 
-Três direções para escolher; veja tudo junto em [`opcoes-de-logo.png`](./opcoes-de-logo.png).
+**Escolhida: opção A (fatia)**, pelo dono em 11/11/2026. Já aplicada em `site/public/favicon.svg`, nos ícones e na imagem de
+compartilhamento. É uma versão inicial: um designer pode refinar o traço mantendo a ideia.
+
+As três direções apresentadas; veja tudo junto em [`opcoes-de-logo.png`](./opcoes-de-logo.png).
 
 | Opção | Arquivo | Ideia | Melhor para |
 |---|---|---|---|

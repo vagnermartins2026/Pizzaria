@@ -4,7 +4,7 @@ import { BalaoWhatsApp, Celular, TelaOportunidades } from "@/components/TelaOpor
 import { Calculadora } from "@/components/Calculadora";
 import { FAQS } from "@/config/faq";
 import { EMPRESA, LANCAMENTO, MARCA, linkWhatsApp } from "@/config/marca";
-import { MODULOS, PLANOS, reais } from "@/config/planos";
+import { IMPLANTACAO_MENSAL_CENTAVOS, MODULOS, PLANOS, reais } from "@/config/planos";
 import { usePagina } from "@/config/paginas";
 import { ListaDeGuias } from "./Guias";
 
@@ -89,12 +89,14 @@ const JSON_LD = {
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
       description: MARCA.descricaoCurta,
-      offers: PLANOS.map((p) => ({ "@type": "Offer", name: `Plano ${p.nome}`, price: (p.centavos / 100).toFixed(2), priceCurrency: "BRL" })),
+      offers: PLANOS.filter((p) => p.mostrarPreco !== false).map((p) => ({ "@type": "Offer", name: `Plano ${p.nome}`, price: (p.centavos / 100).toFixed(2), priceCurrency: "BRL" })),
     },
     {
       "@type": "Organization",
       name: MARCA.nome,
       url: `${MARCA.site}/`,
+      legalName: EMPRESA.razaoSocial,
+      taxID: EMPRESA.cnpj,
       logo: `${MARCA.site}/icon-512.png`,
       email: EMPRESA.email,
       address: { "@type": "PostalAddress", addressLocality: EMPRESA.cidade.split("/")[0], addressRegion: EMPRESA.cidade.split("/")[1], addressCountry: "BR" },
@@ -371,7 +373,7 @@ export default function Inicio() {
             Comece pelo plano que cabe <Ideia>e ligue o resto depois.</Ideia>
           </Titulo>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed">
-            Preço por loja, por mês. Sem fidelidade no mensal. No anual, 2 meses grátis e implantação sem custo.
+            Preço por loja, por mês. Sem fidelidade no mensal, com implantação de {reais(IMPLANTACAO_MENSAL_CENTAVOS)}. No anual, 2 meses grátis e implantação sem custo.
           </p>
           <div className="mt-12 grid gap-5 lg:grid-cols-3">
             {PLANOS.map((p) => (
@@ -382,10 +384,16 @@ export default function Inicio() {
                   {p.destaque && <span className="rounded-full bg-brasa px-3 py-1 text-xs font-semibold text-carvao">Recomendado</span>}
                 </div>
                 <p className="mt-2 text-sm">{p.paraQuem}</p>
-                <p className="mt-6 tabular-nums">
-                  <span className={`font-titulo text-[2.6rem] font-semibold tracking-[-0.03em] ${p.destaque ? "text-brasa-clara" : "text-carvao"}`}>{reais(p.centavos)}</span>
-                  <span className="text-sm">/mês</span>
-                </p>
+                {p.mostrarPreco === false ? (
+                  <p className="mt-6">
+                    <span className="font-titulo text-[2.1rem] font-semibold tracking-[-0.03em] text-carvao">Sob consulta</span>
+                  </p>
+                ) : (
+                  <p className="mt-6 tabular-nums">
+                    <span className={`font-titulo text-[2.6rem] font-semibold tracking-[-0.03em] ${p.destaque ? "text-brasa-clara" : "text-carvao"}`}>{reais(p.centavos)}</span>
+                    <span className="text-sm">/mês</span>
+                  </p>
+                )}
                 <p className={`mt-3 rounded-xl px-3.5 py-2.5 text-[13px] leading-snug ${p.destaque ? "bg-white/10" : "bg-creme"}`}>{p.situacao}</p>
                 <ul className="mt-6 flex-1 space-y-2.5 text-[15px]">
                   {p.itens.map((t) => (

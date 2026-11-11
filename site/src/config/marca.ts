@@ -41,12 +41,12 @@ export const LANCAMENTO = {
 };
 
 /**
- * Quem vende. Contato comercial copiado do site da Minha Maleta (Contera): CONFIRME antes de publicar.
- * Razão social e CNPJ ficam em branco até o dono decidir qual empresa assina o produto.
+ * Quem vende (Decreto 7.962/2013, art. 2º: dados públicos da empresa, não segredo). Decisões do dono em 11/11/2026
+ * (D4 e D6, "siga as opções recomendadas"): a mesma empresa e os mesmos contatos comerciais da Minha Maleta.
  */
 export const EMPRESA = {
-  razaoSocial: "", // ex.: "VHM LABS LTDA" (a definir)
-  cnpj: "", // a definir
+  razaoSocial: "VHM LABS LTDA",
+  cnpj: "64.393.377/0001-30",
   cidade: "Campinas/SP",
   email: "comercial@contera.com",
   /** Com DDI, só dígitos: é o formato do wa.me. */

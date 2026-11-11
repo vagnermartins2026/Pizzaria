@@ -27,6 +27,10 @@ export const FAQS: { q: string; a: string }[] = [
     a: "Não. A comanda sai pelo navegador em qualquer impressora. A impressão automática na térmica da cozinha chega numa etapa seguinte.",
   },
   {
+    q: "E se eu assinar e não gostar?",
+    a: "O primeiro pagamento tem 7 dias de garantia: se pedir nesse prazo, devolvemos o valor inteiro.",
+  },
+  {
     q: "Tem fidelidade ou multa?",
     a: "No plano mensal, não: você cancela quando quiser. No anual você ganha 2 meses e a implantação sai de graça.",
   },

@@ -14,7 +14,7 @@ com o conteúdo do [PRD](../docs/PRD.md) e do [plano de negócio](../docs/PLANO-
 cd site
 npm install
 npm run dev       # http://localhost:5173 (desenha no navegador, sem pré-renderização)
-npm test          # 19 testes
+npm test          # 21 testes
 npm run build     # testes + build + pré-renderização → dist/ (site estático pronto para publicar)
 ```
 Endereço com `?espacos` (ex.: `http://localhost:5173/?espacos`) mostra onde entram fotos,

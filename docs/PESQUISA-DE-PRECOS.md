@@ -4,7 +4,7 @@
 |---|---|
 | Data | 2026-11-11 |
 | Para quê | Validar os preços previstos (plano de negócio, seção 4) antes de publicar o site no domínio |
-| Decisão do dono | Backlog D5 |
+| Decisão do dono | **Aplicada em 11/11/2026:** recomendações 1 a 4 e Premium opção A |
 
 > **Como ler.** Os valores vêm de buscas na internet em 11/11/2026. Os marcados como **oficial**
 > estavam no site da própria empresa; os marcados como **terceiro** vêm de blog ou comparativo,

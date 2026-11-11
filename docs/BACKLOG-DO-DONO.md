@@ -1,14 +1,12 @@
 # Backlog do dono: o que só você pode fazer
 
-Atualizado em 11/11/2026. Cada item diz **o que é**, **por que importa**, a **recomendação**, as **alternativas**, o
+Atualizado em 11/11/2026 (depois de "siga todas as opções recomendadas"). Cada item diz **o que é**, **por que importa**, a **recomendação**, as **alternativas**, o
 **passo a passo** e **como conferir**. No fim de cada um há uma **resposta rápida**: é só copiar na conversa.
 O que o Claude faz sozinho está em [`PLANO-DO-SITE.md`](./PLANO-DO-SITE.md).
 
-## Resposta rápida de tudo (copie, ajuste e mande)
+## Resposta rápida do que falta (copie, ajuste e mande)
 ```
-D1 registrei · D2 sem marca parecida · D3 criei @pizzalia · D4 empresa: <razão social e CNPJ>
-D5 preços: 1 mantém · 2 mantém · 3A · 4 sim · D6 contatos confirmados · D7 logo A
-D8 L1 sim · L2 sugestão · L3 90 dias · L4 Campinas · L5 <nome e e-mail> · D9 nenhuma · D10 pode gerar
+D1 registrei · D2 sem marca parecida · D3 criei @pizzalia · D8 L5 encarregado: <nome e e-mail> · jurídico revisou
 ```
 
 ---
@@ -50,56 +48,18 @@ D8 L1 sim · L2 sugestão · L3 90 dias · L4 Campinas · L5 <nome e e-mail> · 
 - **Como conferir:** abrir instagram.com/pizzalia.
 - **Resposta rápida:** `D3 criei @<nome>`
 
-### D4 · Qual empresa assina o produto (razão social e CNPJ)
-- **O que é e por que importa:** a lei (Decreto 7.962/2013) exige, em quem vende pela internet, razão social e CNPJ no site,
-  nos Termos e na Privacidade. Hoje esses campos estão em branco.
-- **Recomendação:** usar a mesma empresa da Minha Maleta, se for a da Contera. Só você sabe qual é a certa.
-- **Alternativas:** (A) a mesma da Minha Maleta · (B) outra empresa do grupo · (C) uma empresa nova só para a Pizzalia (mais custo, mais separação).
-- **Depois:** eu preencho `site/src/config/marca.ts` e os documentos legais, e publico.
-- **Resposta rápida:** `D4 empresa: <razão social>, CNPJ <número>`
-
-### D5 · Preços
-- **O que é e por que importa:** o site mostra os preços do plano de negócio como "previstos". A pesquisa de 11/11/2026
-  ([`PESQUISA-DE-PRECOS.md`](./PESQUISA-DE-PRECOS.md)) mostrou que o Premium (R$ 549) é o mais caro do mercado para um plano que ainda não existe inteiro.
-- **Recomendação:**
-  1. Essencial: **manter R$ 149**.
-  2. Profissional: **manter R$ 299** (R$ 249 na abertura).
-  3. Premium: **(A) tirar o preço do site até ficar completo** ("em pré-venda, sob consulta").
-  4. Implantação no mensal: **baixar de R$ 390 para R$ 190**; o anual continua com implantação grátis.
-- **Alternativas para o Premium:** (A) sob consulta · (B) manter R$ 549 · (C) baixar para R$ 449. Prós e contras na pesquisa, seção 3.
-- **Resposta rápida:** `D5 preços: 1 mantém · 2 mantém · 3A · 4 sim`
-
-### D6 · Confirmar o WhatsApp e o e-mail comerciais
-- **O que é e por que importa:** o site usa `(19) 98214-7840` e `comercial@contera.com` (os da Minha Maleta). O repositório é
-  **público** e a prévia já está no ar com eles. É por esse número que chegam as inscrições da lista de espera.
-- **Recomendação:** manter, se esse número atende os dois produtos.
-- **Resposta rápida:** `D6 contatos confirmados` ou `D6 WhatsApp <número>, e-mail <e-mail>`
-
-### D7 · Escolher a logo
-- **O que é e por que importa:** o ícone de hoje é provisório. A logo aparece no site, no sistema e no Instagram.
-- **Recomendação:** **A (fatia)**, que fica legível até em 24 px, o tamanho do ícone no celular. A B conta melhor a história, mas tem mais detalhe.
-- **Alternativas:** veja [`marca/opcoes-de-logo.png`](./marca/opcoes-de-logo.png) (A fatia · B a fatia que volta · C letra P).
-- **Depois:** eu troco no site e gero de novo os ícones e a imagem de compartilhamento.
-- **Resposta rápida:** `D7 logo A` (ou B, ou C)
-
-### D8 · Documentos legais do sistema: 6 decisões + revisão jurídica
-- **O que é e por que importa:** os Termos de assinatura e a Política de Privacidade do sistema estão em rascunho
-  ([`legal/`](./legal/LEIAME.md)). Precisam estar prontos antes de abrir o cadastro e a cobrança.
-- **Recomendação:** L1 garantia de 7 dias · L2 devolver o proporcional no anual · L3 90 dias para exportar · L4 foro em Campinas/SP · L5 indicar o encarregado de dados · L6 eu confirmo a região dos servidores quando o banco for criado.
-- **Passo a passo:** responder as decisões e mandar os dois arquivos de `docs/legal/` para o jurídico.
-- **Resposta rápida:** `D8 L1 sim · L2 sugestão · L3 90 dias · L4 Campinas · L5 <nome e e-mail>`
-
-### D9 · Medir visitas do site
-- **O que é e por que importa:** saber quantas pessoas entram e de onde vêm. Ferramenta com cookies exige aviso de cookies e muda a Privacidade.
-- **Recomendação:** **nenhuma por enquanto**. A origem de cada inscrição já chega na mensagem do WhatsApp (anúncio ou indicação). Revisitar quando houver anúncio pago.
-- **Alternativas:** (A) nenhuma · (B) Google Analytics (grátis, exige aviso de cookies) · (C) uma ferramenta sem cookies, como Plausible ou Cloudflare Web Analytics.
-- **Resposta rápida:** `D9 nenhuma` (ou B, ou C)
-
-### D10 · Fotos do site
-- **O que é e por que importa:** o site tem espaços para fotos (pizzaria, dono, balcão), visíveis com `?espacos` no endereço. Foto real convence mais.
-- **Recomendação:** fotos reais quando houver a primeira pizzaria cliente. Até lá, o site funciona sem elas.
-- **Observação:** nesta sessão não há ferramenta que gere imagem. Se quiser imagens de IA, use o Higgsfield ou o ChatGPT e me mande.
-- **Resposta rápida:** `D10 sem fotos por enquanto` ou mande as fotos
+### D8 · Documentos legais do sistema: falta o encarregado de dados e a revisão jurídica
+- **O que é e por que importa:** os Termos de assinatura e a Política de Privacidade do sistema ([`legal/`](./legal/LEIAME.md))
+  precisam estar prontos antes de abrir o cadastro e a cobrança. As decisões L1 a L4 já foram aplicadas (garantia de 7 dias,
+  proporcional no anual, 90 dias para exportar, foro em Campinas) e a empresa já está preenchida.
+- **Falta:** (L5) dizer quem é o **encarregado de dados** (a pessoa que responde a pedidos de titulares; a LGPD exige que
+  o nome e o contato estejam publicados) e mandar os dois arquivos para o **jurídico** revisar.
+- **Recomendação:** você ou alguém da Contera como encarregado, com um e-mail próprio (ex.: `privacidade@contera.com`).
+- **Alternativas:** (A) uma pessoa da equipe · (B) um serviço terceirizado de DPO (mais caro, mais especializado).
+- **Passo a passo:** responder com o nome e o e-mail; enviar `docs/legal/TERMOS-DE-USO-DO-SISTEMA.md` e
+  `docs/legal/POLITICA-DE-PRIVACIDADE-DO-SISTEMA.md` ao jurídico.
+- **Como conferir:** o jurídico devolve os textos aprovados; eu publico junto com o cadastro do sistema.
+- **Resposta rápida:** `D8 L5 encarregado: <nome e e-mail>` e, depois, `jurídico revisou`
 
 ### Depois (não precisa responder agora)
 | # | O quê | Quando |
@@ -111,6 +71,13 @@ D8 L1 sim · L2 sugestão · L3 90 dias · L4 Campinas · L5 <nome e e-mail> · 
 ## Já resolvido
 | O quê | Quando |
 |---|---|
+| D4 Empresa: **VHM LABS LTDA**, CNPJ 64.393.377/0001-30 (a mesma da Minha Maleta), no rodapé, no site e nos documentos legais | 11/11/2026 |
+| D5 Preços: Essencial R$ 149 e Profissional R$ 299 mantidos; **Premium "sob consulta"** no site; implantação no mensal de R$ 390 para **R$ 190** | 11/11/2026 |
+| D6 WhatsApp (19) 98214-7840 e comercial@contera.com confirmados | 11/11/2026 |
+| D7 Logo: **opção A (fatia)**, aplicada no site, nos ícones e na imagem de compartilhamento | 11/11/2026 |
+| D8 L1 a L4: garantia de 7 dias, proporcional no anual, 90 dias para exportar, foro em Campinas/SP | 11/11/2026 |
+| D9 Medição de visitas: nenhuma por enquanto | 11/11/2026 |
+| D10 Fotos: sem fotos por enquanto (até a primeira pizzaria cliente) | 11/11/2026 |
 | Nome aprovado: **Pizzalia** | 11/11/2026 |
 | Sem oferta de fundadoras: o site virou lista de espera | 11/11/2026 |
 | Prévia publicada em https://pizzalia.pages.dev | 11/11/2026 |

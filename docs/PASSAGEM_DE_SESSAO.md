@@ -13,9 +13,7 @@
 | O quê | Onde | Falta |
 |---|---|---|
 | Domínio próprio | `PUBLICAR-SITE.md`, seção 2 | Dono registrar `pizzalia.com.br` e `pizzalia.app` (D1) |
-| Logo definitiva | `docs/marca/` (3 opções) | Dono escolher (D7) |
-| Preços revisados | `PESQUISA-DE-PRECOS.md` | Dono decidir (D5) |
-| Termos e Privacidade do sistema | `docs/legal/` | Decisões L1 a L6 e revisão jurídica (D8) |
+| Termos e Privacidade do sistema | `docs/legal/` | Encarregado de dados (L5), região dos servidores (L6) e revisão jurídica (D8) |
 | Cadastro do sistema | `CADASTRO-DO-SISTEMA.md` (com prompt) | Sessão do sistema construir (D13) |
 
 ### Decisões do dono (com a recomendação)
@@ -23,18 +21,16 @@ Todas em [`BACKLOG-DO-DONO.md`](./BACKLOG-DO-DONO.md), no formato de decisão, c
 **D1: registrar os domínios**.
 
 ### Já decidido pelo dono
-Nome **Pizzalia** (11/11) · **sem oferta de fundadoras**, site com lista de espera (11/11) · seguir com as ações recomendadas (11/11).
+Nome **Pizzalia** · **sem oferta de fundadoras** (lista de espera) · seguir as ações e opções recomendadas: empresa VHM LABS LTDA,
+preços mantidos com Premium "sob consulta" e implantação de R$ 190, contatos confirmados, logo A, garantia de 7 dias,
+proporcional no anual, 90 dias para exportar, foro em Campinas, sem medição de visitas, sem fotos por enquanto (todos em 11/11/2026).
 
 ### O que o Claude faz assim que cada decisão chegar
 | Resposta | Ação do Claude |
 |---|---|
 | D1 registrei | Adicionar o domínio na Cloudflare (Pages → Custom domains), passar o passo do DNS, apagar `VITE_SITE`/`VITE_PREVIA` depois que o DNS estiver apontado, conferir HTTPS, sitemap e prévia de link |
-| D4 empresa | Preencher `EMPRESA` em `site/src/config/marca.ts` e os `[COLCHETES]` de `docs/legal/` |
-| D5 preços | Mudar `site/src/config/planos.ts`, `site/public/llms.txt` e o plano de negócio no mesmo commit (o teste exige) |
-| D6 contatos | Mudar `EMPRESA` em `site/src/config/marca.ts` se mudar |
-| D7 logo | Trocar `site/public/favicon.svg` pela opção escolhida e rodar `node site/scripts/gerar_imagens.cjs Pizzalia` |
-| D8 decisões legais | Preencher os documentos, levar ao site junto com o cadastro do sistema |
-| D9 medição | Se B ou C: instalar, ajustar a Privacidade e, se houver cookies, o aviso |
+| D8 encarregado | Preencher o nome e o e-mail na Política de Privacidade; publicar os dois textos junto com o cadastro do sistema |
+| Preço novo | Mudar `site/src/config/planos.ts`, `site/public/llms.txt` e o plano de negócio no mesmo commit (o teste exige) |
 
 ### Como trabalhar no site
 `cd site && npm install && npm run build` (testes, build, pré-renderização). Regras e mapa dos arquivos: [`site/LEIAME.md`](../site/LEIAME.md).

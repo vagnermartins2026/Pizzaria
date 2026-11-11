@@ -7,7 +7,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { LANCAMENTO, MARCA, destinoDoCta, linkWhatsApp } from "@/config/marca";
-import { MODULOS, PLANOS } from "@/config/planos";
+import { IMPLANTACAO_MENSAL_CENTAVOS, MODULOS, PLANOS } from "@/config/planos";
 import { GUIAS } from "@/config/guias";
 import { FAQS } from "@/config/faq";
 import { PAGINAS, metaDe } from "@/config/paginas";
@@ -32,7 +32,17 @@ describe("preços batem com o plano de negócio", () => {
     }
   });
   it("llms.txt repete os mesmos preços", () => {
-    for (const p of PLANOS) expect(llms).toContain(`${p.nome}: R$ ${p.centavos / 100}`);
+    for (const p of PLANOS) {
+      if (p.mostrarPreco === false) expect(llms).toContain(`${p.nome}: sob consulta`);
+      else expect(llms).toContain(`${p.nome}: R$ ${p.centavos / 100}`);
+    }
+  });
+  it("Premium sem preço no site (decisão D5): nenhuma página mostra R$ 549", () => {
+    expect(PLANOS.find((p) => p.id === "premium")!.mostrarPreco).toBe(false);
+    for (const { caminho } of PAGINAS) expect(desenhar(caminho), caminho).not.toContain("549");
+  });
+  it("implantação do mensal igual à do plano de negócio", () => {
+    expect(plano).toContain(`R$ ${IMPLANTACAO_MENSAL_CENTAVOS / 100} no mensal`);
   });
   it("só um plano recomendado", () => {
     expect(PLANOS.filter((p) => p.destaque)).toHaveLength(1);

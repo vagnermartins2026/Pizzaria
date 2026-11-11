@@ -1,7 +1,8 @@
 /**
  * Planos e módulos: valores de docs/PLANO-DE-NEGOCIO.md (seções 4 e 5).
- * São PREÇOS PREVISTOS, ainda não validados com a pesquisa de concorrentes. O site diz isso na tela.
- * Mudou o plano de negócio? Mude aqui no mesmo commit.
+ * São PREÇOS PREVISTOS. Decisão do dono (11/11/2026, D5, após docs/PESQUISA-DE-PRECOS.md): Essencial e
+ * Profissional mantidos; o Premium aparece SEM preço ("sob consulta") até ficar completo; implantação de
+ * R$ 190 no mensal. Mudou o plano de negócio? Mude aqui no mesmo commit (o teste confere).
  */
 export type Plano = {
   id: "essencial" | "profissional" | "premium";
@@ -11,6 +12,8 @@ export type Plano = {
   destaque?: boolean;
   /** Situação no lançamento (plano de negócio, seção 4.1). */
   situacao: string;
+  /** false = o site mostra "Sob consulta" em vez do preço (decisão D5 para o Premium). */
+  mostrarPreco?: boolean;
   itens: string[];
 };
 
@@ -51,8 +54,9 @@ export const PLANOS: Plano[] = [
     id: "premium",
     nome: "Premium",
     centavos: 54900,
+    mostrarPreco: false,
     paraQuem: "Para a operação maior que quer gestão completa e controle de margem.",
-    situacao: "Em pré-venda: financeiro, estoque e compras chegam nas próximas etapas.",
+    situacao: "Em pré-venda, sob consulta: financeiro, estoque e compras chegam nas próximas etapas.",
     itens: [
       "Tudo do Profissional",
       "Nota fiscal: NFC-e e NF-e",
@@ -72,6 +76,9 @@ export const MODULOS: { nome: string; preco: string }[] = [
   { nome: "Loja adicional", preco: "70% do plano" },
   { nome: "Usuário extra", preco: "R$ 15/mês" },
 ];
+
+/** Implantação no plano mensal (cadastro do cardápio, configuração e treinamento); no anual é sem custo. */
+export const IMPLANTACAO_MENSAL_CENTAVOS = 19000;
 
 export const reais = (centavos: number) =>
   (centavos / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: centavos % 100 ? 2 : 0 });

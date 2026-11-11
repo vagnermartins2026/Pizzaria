@@ -1,9 +1,9 @@
 # Política de Privacidade da Pizzalia (RASCUNHO v0.1, para revisão jurídica)
 
 > Rascunho de 11/11/2026, baseado na LGPD (Lei 13.709/2018) e no PRD (seções 11.7 e 12.4). Não publicar antes da
-> revisão jurídica e do preenchimento dos `[COLCHETES]`. Itens **⚖️ DECIDIR** estão em `docs/legal/LEIAME.md`.
+> revisão jurídica e do preenchimento dos `[COLCHETES]`. Decisão L3 aplicada; L5 e L6 em aberto (`docs/legal/LEIAME.md`).
 
-**Quem somos.** `[RAZÃO SOCIAL]`, CNPJ `[CNPJ]` ("Pizzalia"). Encarregado de dados (DPO): **⚖️ DECIDIR (L5)**
+**Quem somos.** VHM LABS LTDA, CNPJ 64.393.377/0001-30, Campinas/SP ("Pizzalia"). Encarregado de dados (DPO): **⚖️ DECIDIR (L5)**
 `[NOME]`, `[E-MAIL]`.
 
 ## 1. Dois tipos de dados, dois papéis
@@ -55,7 +55,7 @@ fica registrado.
 | Dado | Prazo |
 |---|---|
 | Conta ativa | Enquanto durar a assinatura |
-| Depois do cancelamento | **⚖️ DECIDIR (L3):** `[90]` dias para exportar; depois, exclusão |
+| Depois do cancelamento | 90 dias para exportar; depois, exclusão |
 | Notas fiscais e registros contábeis | O prazo da lei (em geral, 5 anos) |
 | Registros de acesso | 6 meses (Marco Civil da Internet, art. 15) |
 

@@ -13,11 +13,13 @@ O site publica hoje só os termos curtos do pré-lançamento (`site/src/pages/Le
 e no cadastro do sistema **antes** de abrir a cobrança.
 
 ## Decisões em aberto
-| # | Decisão | Sugestão do rascunho |
+| # | Decisão | Situação |
 |---|---|---|
-| L1 | Garantia de devolução no primeiro pagamento? (a Minha Maleta tem 7 dias) | 7 dias, igual à Minha Maleta |
-| L2 | Cancelamento do plano anual: devolve o proporcional? | Devolve o proporcional dos meses inteiros não usados, menos o desconto do anual |
-| L3 | Por quanto tempo os dados ficam disponíveis para exportar depois do cancelamento | 90 dias (o mesmo prazo do PRD para módulo desligado) |
-| L4 | Foro (cidade do processo, se houver) | Campinas/SP |
-| L5 | Quem é o encarregado de dados (DPO) e o e-mail dele | A definir |
-| L6 | Onde ficam os servidores (afeta a cláusula de transferência internacional) | Confirmar a região do banco ao criar o projeto |
+| L1 | Garantia de devolução no primeiro pagamento | ✅ 7 dias (dono, 11/11/2026) |
+| L2 | Cancelamento do plano anual | ✅ Devolve o proporcional dos meses inteiros não usados, menos o benefício do anual (dono, 11/11/2026) |
+| L3 | Prazo para exportar os dados depois do cancelamento | ✅ 90 dias (dono, 11/11/2026) |
+| L4 | Foro | ✅ Campinas/SP (dono, 11/11/2026) |
+| L5 | Encarregado de dados (DPO) e o e-mail dele | ⏳ Dono indicar a pessoa (backlog D8) |
+| L6 | Onde ficam os servidores (cláusula de transferência internacional) | ⏳ Claude confirma quando o banco do sistema for criado |
+
+Empresa: VHM LABS LTDA, CNPJ 64.393.377/0001-30 (decisão D4, 11/11/2026). Falta a **revisão jurídica** dos dois textos.

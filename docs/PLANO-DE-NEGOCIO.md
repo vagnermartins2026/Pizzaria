@@ -85,6 +85,9 @@ ou desligar um módulo não exige mudar código nem migrar dados.
 | Usuários incluídos | 3 | 8 | 20 |
 | Suporte | Chat e e-mail em horário comercial | Chat estendido até 23h | Prioritário, inclusive no horário de pico, com gerente de conta |
 
+**Decisão do dono (11/11/2026, após a [pesquisa de preços](./PESQUISA-DE-PRECOS.md)):** Essencial e Profissional
+mantidos; no site, o **Premium aparece como "sob consulta"** até ficar completo (R$ 549 segue como referência interna).
+
 ### 4.1 Disponibilidade por release (o que vender e quando)
 Os planos dependem de módulos que chegam em releases diferentes (PRD, seção 15). Regra:
 **só se cobra preço cheio de um plano quando todos os itens dele estiverem liberados.**
@@ -115,7 +118,7 @@ Os planos dependem de módulos que chegam em releases diferentes (PRD, seção 1
 **Cobranças únicas e condições**
 | Item | Recomendação |
 |---|---|
-| Implantação (cadastro do cardápio, configuração, treinamento de 1 h) | R$ 390 no mensal; **grátis no anual** |
+| Implantação (cadastro do cardápio, configuração, treinamento de 1 h) | R$ 190 no mensal (era R$ 390; decisão do dono em 11/11/2026, após a [pesquisa de preços](./PESQUISA-DE-PRECOS.md)); **grátis no anual** |
 | Pagamento anual | **2 meses grátis** (cerca de 17% de desconto) |
 | Teste grátis | 14 dias com o Profissional (no que estiver liberado), com a pizzaria demonstrativa carregada como exemplo, separada da conta real do cliente |
 | Fidelidade mínima | Nenhuma no mensal (reduz a objeção de compra) |
