@@ -85,6 +85,16 @@ D14 pode fazer o remix (quando a assinatura da MayFlower estiver pronta)
   adapto o cadastro (`CADASTRO-DO-SISTEMA.md`) e sigo as fases do PRD.
 - **Resposta rápida:** `D14 remix pronto: <repositório>` ou `D14 pode fazer o remix`
 
+### D15 · Vaga de banco de dados para a Pizzalia
+- **O que é e por que importa:** a sua organização do Supabase ("Contera 2º") está no **plano grátis**, que permite só
+  **2 projetos ativos**, e eles já são a Minha Maleta e o Gloss Club (conferido em 12/11/2026). O sistema da Pizzalia vai
+  precisar de um banco próprio para o usuário de teste e para as pizzarias de verdade.
+- **Recomendação:** decidir junto com o remix (D14). Se o remix no Lovable já vier com banco próprio, nada a fazer; se for
+  no Supabase, assinar o **plano Pro** da organização (cerca de US$ 25 por mês, que também tira o limite de 2 projetos).
+- **Alternativas:** (A) plano Pro · (B) usar o banco que o Lovable cria no remix · (C) pausar um projeto grátis (não
+  recomendado: a Minha Maleta tem cliente real).
+- **Resposta rápida:** `D15 A` (ou B)
+
 ### Depois (não precisa responder agora)
 | # | O quê | Quando |
 |---|---|---|
