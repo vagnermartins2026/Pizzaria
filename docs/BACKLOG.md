@@ -25,9 +25,9 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 ## 🔧 Falta e eu faço sozinho (ordem recomendada)
 | # | Item | Onde | Esforço |
 |---|---|---|---|
-| A | M03 · Pedido pelo link: cardápio digital público, montar a pizza (meio a meio, borda), entrega por bairro, pagamento na entrega | sistema | grande |
-| B | M04 · Fila de pedidos em tempo real + comanda pelo navegador | sistema | médio |
-| C | M07 · CRM: oportunidades do dia e mensagens por WhatsApp (o motor já está provado em SQL) | sistema | médio |
+| A | 🔨 EM ANDAMENTO (branch claude/pedido-link) · M03 · Pedido pelo link: cardápio digital público, montar a pizza (meio a meio, borda), entrega por bairro, pagamento na entrega | sistema | grande |
+| B | depois do M03 · M04 · Fila de pedidos em tempo real + comanda pelo navegador | sistema | médio |
+| C | 🔨 EM ANDAMENTO (branch claude/crm-pizzalia) · M07 · CRM: oportunidades do dia e mensagens por WhatsApp (o motor já está provado em SQL) | sistema | médio |
 | D | Cardápio dentro do backup da loja | servidor | pequeno |
 | E | Cardápio na busca rápida (Ctrl+K) e na barra do celular | tela | pequeno |
 | F | Ligar o domínio ao site e ao sistema (depois do D1) | Cloudflare/Lovable | pequeno |
@@ -38,7 +38,8 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | D1 | Registrar pizzalia.com.br e pizzalia.app | o nome pode ser registrado por outra pessoa | registrar hoje |
 | 2FA | Ativar o código no seu login | sem isso o roteiro não libera o painel Contera | 5 minutos, passo a passo enviado |
 | MP | Conta e chaves do Mercado Pago | cobrar a mensalidade e o Pix online | quando for vender (a conciliação está pausada até lá) |
-| R2 | Cópia do backup fora do Supabase (Cloudflare R2) | segurança se o Supabase falhar | posso tentar criar pela conta Cloudflare conectada |
+| R2 | Cópia do backup fora do Supabase (Cloudflare R2) | segurança se o Supabase falhar | posso tentar criar pela conta Cloudflare conectada — falta a sua autorização ("pode criar o R2") |
+| MP-pausa | A conciliação do Mercado Pago está PAUSADA (cron mp-reconcile-30min) até existirem as chaves | evitava um alarme crítico a cada 30 min | religar junto com o MP: `cron.alter_job(..., active := true)` |
 | Fiscal | Emissor parceiro (NFC-e) e certificado A1 | nota fiscal é do plano Premium | decidir o parceiro antes de vender o Premium |
 | Resend | Chave de e-mail | e-mails do sistema (cadastro, relatórios, cópia semanal) | junto com o domínio |
 | Cadastro | Abrir o cadastro sozinho (chaves do "não sou robô") | lançamento | no lançamento |
