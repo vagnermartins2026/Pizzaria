@@ -20,15 +20,20 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | 12 | Login de teste (Dono) e login do dono (administrador da demo) | login conferido |
 | 13 | Backup diário funcionando (cópia no Supabase) | backup disparado: sucesso |
 | 14 | Sistema publicado e conferido no ar | login + 7 telas sem erro |
-| 15 | Regra de ouro: 6 avisos à MayFlower (1 erro real confirmado e corrigido lá) | mensagens às sessões |
+| 15 | Regra de ouro: 7 avisos à MayFlower (2 erros reais confirmados e corrigidos lá: backup por e-mail e página pública travada) | mensagens às sessões |
+| 16 | M03 · Pedido pelo link publicado (/pedir/forno-da-vila-demo): preço recalculado no servidor, sem duplicar | PR #7; pedido de teste R$ 75,90 |
+| 17 | Correção: página pública travava em "Carregando" (1ª resposta do login limpava o cache) | PR #8; conferido no ar |
+| 18 | M07 · CRM publicado: 254 clientes para chamar hoje, link de pedidos nas mensagens, 492 autorizações | PR #9; gabarito 466/218 idêntico |
 
 ## 🔧 Falta e eu faço sozinho (ordem recomendada)
 | # | Item | Onde | Esforço |
 |---|---|---|---|
-| A | 🔨 EM ANDAMENTO (branch claude/pedido-link) · M03 · Pedido pelo link: cardápio digital público, montar a pizza (meio a meio, borda), entrega por bairro, pagamento na entrega | sistema | grande |
-| B | depois do M03 · M04 · Fila de pedidos em tempo real + comanda pelo navegador | sistema | médio |
-| C | 🔨 EM ANDAMENTO (branch claude/crm-pizzalia) · M07 · CRM: oportunidades do dia e mensagens por WhatsApp (o motor já está provado em SQL) | sistema | médio |
-| D | Cardápio dentro do backup da loja | servidor | pequeno |
+| A | ✅ feito (item 16) · M03 · Pedido pelo link | sistema | — |
+| B | 🔨 EM ANDAMENTO (branch claude/fila-pedidos) · M04 · Fila de pedidos, balcão/telefone, comanda e pedido → venda | sistema | médio |
+| G | 🔨 EM ANDAMENTO (branch claude/fiscal-pizzalia) · M12 · NFC-e pronta e desligada (falta o emissor) | sistema | grande |
+| H | Pix online no link (Mercado Pago) — depois do M04 | sistema | médio |
+| I | Cardápio, pedidos, CRM e notas dentro do backup da loja | servidor | médio |
+| C | ✅ feito (item 18) · M07 · CRM | sistema | — |
 | E | Cardápio na busca rápida (Ctrl+K) e na barra do celular | tela | pequeno |
 | F | Ligar o domínio ao site e ao sistema (depois do D1) | Cloudflare/Lovable | pequeno |
 
@@ -46,3 +51,15 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | D2 | INPI | proteger a marca | pesquisar em busca.inpi.gov.br |
 | D3 | @pizzalia no Instagram | marca | criar |
 | D8 | Encarregado de dados e revisão jurídica | LGPD e contratos | escolher e mandar ao jurídico |
+
+## ❓ Decisões de negócio deixadas pelos módulos (todas já com o padrão recomendado em uso; o dono só confirma ou muda)
+| # | Decisão | Padrão em uso |
+|---|---|---|
+| N1 | Preço da pizza de vários sabores | o sabor mais caro (a loja pode escolher a média) |
+| N2 | Pizzaria sem horário cadastrado no link | aceita pedido quando o link está ligado e sem pausa |
+| N3 | Aniversariante sem nenhum pedido entra no CRM? | não entra (igual à especificação) |
+| N4 | Texto da autorização de marketing (versão "v1") | o da especificação |
+| N5 | Cardápio com mensalidade atrasada | só consulta, como as outras telas de gestão |
+| N6 | NFC-e com a loja suspensa | continua emitindo (obrigação legal) |
+| N7 | Como cobrar o módulo fiscal avulso (R$ 79) | hoje só liga o módulo; cobrança separada não existe |
+
