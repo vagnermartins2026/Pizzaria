@@ -207,7 +207,11 @@ def gerar(hoje, semente):
             for n, (un, c, f) in INSUMOS.items():
                 if f != fk:
                     continue
-                alvo = media[n] * (prox + 6)          # margem para picos de fim de semana
+                # margem para picos: a média de 6 dias a mais OU 30% acima do que a cozinha vai usar até a próxima entrega
+                # (o comprador conhece o movimento da casa). Só a média deixava insumo de pouco giro (ex.: carne seca) faltar
+                # num fim de semana forte, dependendo da data de hoje (achado em 13/11 com --hoje 2026-11-13).
+                prox_uso = sum(consumo.get(d + timedelta(days=k), {}).get(n, 0) for k in range(prox + 1))
+                alvo = max(media[n] * (prox + 6), prox_uso * 1.3)
                 q = max(0.0, alvo - saldo[n])
                 q = math.ceil(q) if un != "kg" else math.ceil(q * 2) / 2
                 if q > 0:

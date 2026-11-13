@@ -3,13 +3,13 @@
   caixa_sessoes               179 linhas
   comanda_itens              1933 linhas
   comandas                    426 linhas
-  compra_itens               1729 linhas
+  compra_itens               1734 linhas
   compras                     258 linhas
   contas_pagar                443 linhas
   contas_receber             2671 linhas
   entregadores                  3 linhas
   entregas                   4113 linhas
-  estoque_movimentos         9400 linhas
+  estoque_movimentos         9404 linhas
   estoque_saldos               41 linhas
   extrato_bancario           5392 linhas
   ficha_tecnica               536 linhas
@@ -17,7 +17,7 @@
   insumos                      41 linhas
   mesas                        10 linhas
   notas_fiscais_exemplo       111 linhas
-  saldo bancário final: R$ 137.908,32 | caixas com diferença: 24 de 179 | insumos abaixo do mínimo: 0 | contas a pagar em aberto: R$ 52.808,15
+  saldo bancário final: R$ 137.927,05 | caixas com diferença: 24 de 179 | insumos abaixo do mínimo: 0 | contas a pagar em aberto: R$ 53.654,99
 
 == DRE 2026-05 ==
   Taxa de serviço (repassada à equipe)           R$ 875,63
@@ -30,19 +30,19 @@
   (=) Lucro bruto                             R$ 26.731,50
   (-) Aluguel                                 R$ -4.258,06
   (-) Contabilidade                             R$ -425,81
-  (-) Energia                                   R$ -981,28
-  (-) Entregadores                            R$ -4.142,00
+  (-) Energia                                   R$ -792,35
+  (-) Entregadores                            R$ -4.182,00
   (-) Folha                                   R$ -9.296,78
-  (-) Gás                                     R$ -1.244,53
+  (-) Gás                                     R$ -1.160,99
   (-) Internet                                  R$ -106,38
-  (-) Manutenção                                R$ -880,57
-  (-) Marketing                               R$ -1.235,70
+  (-) Manutenção                              R$ -1.044,16
+  (-) Marketing                                 R$ -934,67
   (-) Pró-labore                              R$ -5.677,42
   (-) Seguro                                    R$ -212,90
   (-) Sistema                                   R$ -212,19
-  (-) Água                                      R$ -219,21
+  (-) Água                                      R$ -207,48
   (-) Taxas de cartão                           R$ -449,27
-  (=) Resultado do mês                        R$ -2.610,60  (margem -6.1%)
+  (=) Resultado do mês                        R$ -2.228,96  (margem -5.2%)
 
 == DRE 2026-06 ==
   Taxa de serviço (repassada à equipe)         R$ 1.166,29
@@ -55,19 +55,19 @@
   (=) Lucro bruto                             R$ 60.856,46
   (-) Aluguel                                 R$ -6.000,00
   (-) Contabilidade                             R$ -600,00
-  (-) Energia                                 R$ -1.210,67
+  (-) Energia                                 R$ -1.187,13
   (-) Entregadores                            R$ -6.960,00
   (-) Folha                                  R$ -13.100,00
-  (-) Gás                                     R$ -1.665,82
+  (-) Gás                                     R$ -1.651,64
   (-) Internet                                  R$ -149,90
-  (-) Manutenção                              R$ -1.791,44
-  (-) Marketing                               R$ -1.242,92
+  (-) Manutenção                              R$ -1.316,30
+  (-) Marketing                               R$ -1.565,91
   (-) Pró-labore                              R$ -8.000,00
   (-) Seguro                                    R$ -300,00
   (-) Sistema                                   R$ -299,00
-  (-) Água                                      R$ -297,74
+  (-) Água                                      R$ -351,09
   (-) Taxas de cartão                         R$ -1.115,71
-  (=) Resultado do mês                        R$ 18.123,26  (margem 18.8%)
+  (=) Resultado do mês                        R$ 18.259,78  (margem 18.9%)
 
 == DRE 2026-07 ==
   Taxa de serviço (repassada à equipe)         R$ 1.163,24
@@ -76,23 +76,23 @@
   Vendas no salão                             R$ 11.632,40
   (=) Receita bruta                          R$ 116.288,70
   (-) Impostos (DAS 7%)                       R$ -8.140,21
-  (-) CMV (ficha técnica + perdas)           R$ -34.998,24  (30.1% da receita)
-  (=) Lucro bruto                             R$ 73.150,25
+  (-) CMV (ficha técnica + perdas)           R$ -34.966,94  (30.1% da receita)
+  (=) Lucro bruto                             R$ 73.181,55
   (-) Aluguel                                 R$ -6.000,00
   (-) Contabilidade                             R$ -600,00
-  (-) Energia                                 R$ -1.224,68
+  (-) Energia                                 R$ -1.263,36
   (-) Entregadores                            R$ -8.016,00
   (-) Folha                                  R$ -13.100,00
-  (-) Gás                                     R$ -1.613,29
+  (-) Gás                                     R$ -1.529,53
   (-) Internet                                  R$ -149,90
-  (-) Manutenção                              R$ -1.470,17
-  (-) Marketing                               R$ -1.423,26
+  (-) Manutenção                              R$ -1.737,08
+  (-) Marketing                               R$ -1.483,32
   (-) Pró-labore                              R$ -8.000,00
   (-) Seguro                                    R$ -300,00
   (-) Sistema                                   R$ -299,00
-  (-) Água                                      R$ -339,32
+  (-) Água                                      R$ -316,82
   (-) Taxas de cartão                         R$ -1.341,99
-  (=) Resultado do mês                        R$ 29.272,64  (margem 25.2%)
+  (=) Resultado do mês                        R$ 29.044,55  (margem 25.0%)
 
 == DRE 2026-08 ==
   Taxa de serviço (repassada à equipe)         R$ 1.241,30
@@ -101,23 +101,23 @@
   Vendas no salão                             R$ 12.413,00
   (=) Receita bruta                          R$ 117.492,40
   (-) Impostos (DAS 7%)                       R$ -8.224,47
-  (-) CMV (ficha técnica + perdas)           R$ -35.463,45  (30.2% da receita)
-  (=) Lucro bruto                             R$ 73.804,48
+  (-) CMV (ficha técnica + perdas)           R$ -35.452,44  (30.2% da receita)
+  (=) Lucro bruto                             R$ 73.815,49
   (-) Aluguel                                 R$ -6.000,00
   (-) Contabilidade                             R$ -600,00
-  (-) Energia                                 R$ -1.115,65
+  (-) Energia                                 R$ -1.109,69
   (-) Entregadores                            R$ -9.600,00
   (-) Folha                                  R$ -13.100,00
-  (-) Gás                                     R$ -1.648,04
+  (-) Gás                                     R$ -1.649,61
   (-) Internet                                  R$ -149,90
-  (-) Manutenção                              R$ -1.211,18
-  (-) Marketing                               R$ -1.460,68
+  (-) Manutenção                              R$ -1.211,81
+  (-) Marketing                               R$ -1.312,49
   (-) Pró-labore                              R$ -8.000,00
   (-) Seguro                                    R$ -300,00
   (-) Sistema                                   R$ -299,00
-  (-) Água                                      R$ -295,15
+  (-) Água                                      R$ -289,19
   (-) Taxas de cartão                         R$ -1.332,34
-  (=) Resultado do mês                        R$ 28.692,54  (margem 24.4%)
+  (=) Resultado do mês                        R$ 28.861,46  (margem 24.6%)
 
 == DRE 2026-09 ==
   Taxa de serviço (repassada à equipe)         R$ 1.169,72
@@ -126,23 +126,23 @@
   Vendas no salão                             R$ 11.697,20
   (=) Receita bruta                          R$ 105.199,10
   (-) Impostos (DAS 7%)                       R$ -7.363,94
-  (-) CMV (ficha técnica + perdas)           R$ -31.665,81  (30.1% da receita)
-  (=) Lucro bruto                             R$ 66.169,35
+  (-) CMV (ficha técnica + perdas)           R$ -31.662,90  (30.1% da receita)
+  (=) Lucro bruto                             R$ 66.172,26
   (-) Aluguel                                 R$ -6.000,00
   (-) Contabilidade                             R$ -600,00
-  (-) Energia                                 R$ -1.222,86
+  (-) Energia                                 R$ -1.127,43
   (-) Entregadores                            R$ -7.344,00
   (-) Folha                                  R$ -13.100,00
-  (-) Gás                                     R$ -1.764,84
+  (-) Gás                                     R$ -1.791,74
   (-) Internet                                  R$ -149,90
-  (-) Manutenção                              R$ -1.399,93
-  (-) Marketing                               R$ -1.549,29
+  (-) Manutenção                              R$ -1.607,58
+  (-) Marketing                               R$ -1.572,44
   (-) Pró-labore                              R$ -8.000,00
   (-) Seguro                                    R$ -300,00
   (-) Sistema                                   R$ -299,00
-  (-) Água                                      R$ -332,13
+  (-) Água                                      R$ -309,33
   (-) Taxas de cartão                         R$ -1.150,13
-  (=) Resultado do mês                        R$ 22.957,27  (margem 21.8%)
+  (=) Resultado do mês                        R$ 22.820,71  (margem 21.7%)
 
 == DRE 2026-10 ==
   Taxa de serviço (repassada à equipe)         R$ 1.455,00
@@ -151,23 +151,23 @@
   Vendas no salão                             R$ 14.550,00
   (=) Receita bruta                           R$ 99.648,10
   (-) Impostos (DAS 7%)                       R$ -6.975,37
-  (-) CMV (ficha técnica + perdas)           R$ -30.039,41  (30.1% da receita)
-  (=) Lucro bruto                             R$ 62.633,32
+  (-) CMV (ficha técnica + perdas)           R$ -30.009,17  (30.1% da receita)
+  (=) Lucro bruto                             R$ 62.663,56
   (-) Aluguel                                 R$ -6.000,00
   (-) Contabilidade                             R$ -600,00
-  (-) Energia                                 R$ -1.349,77
+  (-) Energia                                 R$ -1.200,28
   (-) Entregadores                            R$ -6.924,00
   (-) Folha                                  R$ -13.100,00
-  (-) Gás                                     R$ -1.539,91
+  (-) Gás                                     R$ -1.845,32
   (-) Internet                                  R$ -149,90
-  (-) Manutenção                              R$ -1.556,59
-  (-) Marketing                               R$ -1.347,94
+  (-) Manutenção                              R$ -1.489,53
+  (-) Marketing                               R$ -1.746,50
   (-) Pró-labore                              R$ -8.000,00
   (-) Seguro                                    R$ -300,00
   (-) Sistema                                   R$ -299,00
-  (-) Água                                      R$ -315,58
+  (-) Água                                      R$ -326,04
   (-) Taxas de cartão                         R$ -1.112,13
-  (=) Resultado do mês                        R$ 20.038,50  (margem 20.1%)
+  (=) Resultado do mês                        R$ 19.570,86  (margem 19.6%)
 
 == DRE 2026-11 ==  (mês em andamento: despesas fixas proporcionais a 7 de 30 dias)
   Taxa de serviço (repassada à equipe)           R$ 214,90
@@ -180,16 +180,16 @@
   (=) Lucro bruto                             R$ 14.920,55
   (-) Aluguel                                 R$ -1.400,00
   (-) Contabilidade                             R$ -140,00
-  (-) Energia                                   R$ -326,11
+  (-) Energia                                   R$ -321,65
   (-) Entregadores                              R$ -814,80
   (-) Folha                                   R$ -3.056,67
-  (-) Gás                                       R$ -393,06
+  (-) Gás                                       R$ -414,53
   (-) Internet                                   R$ -34,98
-  (-) Manutenção                                R$ -299,99
-  (-) Marketing                                 R$ -319,82
+  (-) Manutenção                                R$ -416,43
+  (-) Marketing                                 R$ -374,12
   (-) Pró-labore                              R$ -1.866,67
   (-) Seguro                                     R$ -70,00
   (-) Sistema                                    R$ -69,77
-  (-) Água                                       R$ -80,02
+  (-) Água                                       R$ -69,33
   (-) Taxas de cartão                           R$ -255,17
-  (=) Resultado do mês                         R$ 5.793,49  (margem 24.6%)
+  (=) Resultado do mês                         R$ 5.616,43  (margem 23.8%)
