@@ -448,6 +448,14 @@ VALUES ({q(L)}, {q(tenant["slug"])}, true, 3000, 40) ON CONFLICT (user_id) DO NO
         inserts("pedido_link_bairros", C("id", "user_id", "nome", "taxa_centavos", "minutos_extra"), bairros),
     ])
     blocos["80_pedido_link"] = f"DO $link$ BEGIN IF to_regclass('public.pedido_link_config') IS NULL THEN RAISE NOTICE 'link de pedidos (M03) ainda não instalado: pulado'; RETURN; END IF;\nEXECUTE {q(corpo_link)};\nEND $link$;"
+    # CRM (módulo M07 da Pizzalia: crm_*, migration 20261126010000): as autorizações de marketing dos clientes demo (LGPD), como a prova
+    # do gabarito (docs/auditoria/provas/prova-crm-gabarito.sh do pizzalia); o link das mensagens vem do link de pedidos (M03)
+    ORIGEM = {"counter": "balcao", "phone": "telefone", "link": "link", "whatsapp": "whatsapp"}
+    consent = [dict(id=uid(L, "consentimento", k), user_id=L, customer_id=m["customer_id"], canal=m["channel"],
+                    situacao="concedido" if m["status"] == "granted" else "revogado", origem=ORIGEM.get(m["source"], "importacao"),
+                    versao_texto=m["text_version"], registrado_em=m["recorded_at"]) for k, m in enumerate(ler(E, "marketing_consents"))]
+    corpo_crm = inserts("crm_consentimentos", C("id", "user_id", "customer_id", "canal", "situacao", "origem", "versao_texto", "registrado_em"), consent)
+    blocos["90_crm"] = f"DO $crm$ BEGIN IF to_regclass('public.crm_consentimentos') IS NULL THEN RAISE NOTICE 'CRM (M07) ainda não instalado: pulado'; RETURN; END IF;\nEXECUTE {q(corpo_crm)};\nEND $crm$;"
     blocos["60_extras"] = "\n".join([
         f"""INSERT INTO public.loyalty_config (user_id, points_per_brl, brl_per_point, active, validity_days, birthday_bonus_points)
 SELECT {q(L)}, 1, 0.05, true, 365, 50 WHERE NOT EXISTS (SELECT 1 FROM public.loyalty_config WHERE user_id = {q(L)});""",
