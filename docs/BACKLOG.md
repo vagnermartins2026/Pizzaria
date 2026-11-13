@@ -23,6 +23,8 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | 15 | Regra de ouro: 7 avisos à MayFlower (2 erros reais confirmados e corrigidos lá: backup por e-mail e página pública travada) | mensagens às sessões |
 | 16 | M03 · Pedido pelo link publicado (/pedir/forno-da-vila-demo): preço recalculado no servidor, sem duplicar | PR #7; pedido de teste R$ 75,90 |
 | 17 | Correção: página pública travava em "Carregando" (1ª resposta do login limpava o cache) | PR #8; conferido no ar |
+| 20 | M04 · Fila de pedidos no ar: tempo real, balcão/telefone, comanda, pedido → venda (pedido nº 2 virou a venda 6143, R$ 79,90, no caixa aberto) | PR #12; rush 30/30 |
+| 21 | Pedido completo pela tela do link no celular (R$ 79,90) e planos do fiscal corrigidos | PR #11 |
 | 19 | M12 · Nota fiscal NFC-e no ar e desligada (sem a chave do emissor responde "emissor não configurado"); tela Notas fiscais e aba Fiscal | PR #10; 1.032 testes de banco |
 | 18 | M07 · CRM publicado: 254 clientes para chamar hoje, link de pedidos nas mensagens, 492 autorizações | PR #9; gabarito 466/218 idêntico |
 
@@ -30,10 +32,11 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | # | Item | Onde | Esforço |
 |---|---|---|---|
 | A | ✅ feito (item 16) · M03 · Pedido pelo link | sistema | — |
-| B | 🔨 EM ANDAMENTO (branch claude/fila-pedidos) · M04 · Fila de pedidos, balcão/telefone, comanda e pedido → venda | sistema | médio |
-| G | ✅ feito (item 19) · M12 · NFC-e — o arquivo docs/auditoria/pizzalia-fiscal-planos.sql do pizzalia não liga o módulo nas lojas que JÁ estão no Premium (o do CRM liga); na demo liguei à mão com ligar_modulo. Ajustar o arquivo | sistema | pequeno |
+| B | ✅ feito (item 20) · M04 · Fila de pedidos | sistema | — |
+| G | ✅ feito (itens 19 e 21) · M12 · NFC-e | sistema | — |
 | H | Pix online no link (Mercado Pago) — depois do M04 | sistema | médio |
 | I | Cardápio, pedidos, CRM e notas dentro do backup da loja | servidor | médio |
+| J | Página pública do link mais leve no celular (hoje ~9 s em 4G lento; base do app e 7 famílias de fonte herdadas) | tela | médio |
 | C | ✅ feito (item 18) · M07 · CRM | sistema | — |
 | E | Cardápio na busca rápida (Ctrl+K) e na barra do celular | tela | pequeno |
 | F | Ligar o domínio ao site e ao sistema (depois do D1) | Cloudflare/Lovable | pequeno |
