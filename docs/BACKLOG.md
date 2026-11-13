@@ -44,7 +44,7 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | D1 | Registrar pizzalia.com.br e pizzalia.app | o nome pode ser registrado por outra pessoa | registrar hoje |
 | 2FA | Ativar o código no seu login | sem isso o roteiro não libera o painel Contera | 5 minutos, passo a passo enviado |
 | MP | Conta e chaves do Mercado Pago | cobrar a mensalidade e o Pix online | quando for vender (a conciliação está pausada até lá) |
-| R2 | Cópia do backup fora do Supabase (Cloudflare R2) | segurança se o Supabase falhar | posso tentar criar pela conta Cloudflare conectada — falta a sua autorização ("pode criar o R2") |
+| R2 | Cópia do backup fora do Supabase (Cloudflare R2) | segurança se o Supabase falhar | AUTORIZADO em 13/11 ("PODE CRIAR O R2"), mas TRAVADO: a chave da Cloudflare desta sessão não tem permissão de R2 nem de criar chaves (Authentication error / Unauthorized). Falta o dono ampliar a permissão (opção A) ou criar o bucket e a chave no painel (opção B) |
 | MP-pausa | A conciliação do Mercado Pago está PAUSADA (cron mp-reconcile-30min) até existirem as chaves | evitava um alarme crítico a cada 30 min | religar junto com o MP: `cron.alter_job(..., active := true)` |
 | Fiscal | Emissor parceiro (NFC-e) e certificado A1 | nota fiscal é do plano Premium | decidir o parceiro antes de vender o Premium |
 | Resend | Chave de e-mail | e-mails do sistema (cadastro, relatórios, cópia semanal) | junto com o domínio |
