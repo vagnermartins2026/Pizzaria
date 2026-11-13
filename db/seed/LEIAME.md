@@ -34,6 +34,18 @@ funcionando com dados em todos os módulos.
 3. Rodar `01_carregar_pizzalia_demo.sql`, o carregador dos módulos da base e `criar_usuario_teste.ts`.
 4. Conferir pelo site: entrar com o usuário de teste e abrir cada módulo.
 
+## Feito em 13/11/2026 (base = remix da MayFlower, Supabase `tsidqofldtkkgexbmtor`)
+| Passo | Como | Prova |
+|---|---|---|
+| Login de teste (papel Dono) | API de administração do Auth, com o id FIXO da loja demo (na base, id da loja = id da dona); e-mail `dono.demo@pizzalia.invalid` | login pelo site: entra no Início da "Forno da Vila (DEMO)" |
+| Planos e loja | `montar_carga_base.py` → `00_planos_e_loja.sql`: 3 planos × mensal/anual (desligados), loja pelos MESMOS passos do cadastro da base, assinatura Premium até 31/12/2027 | loja ativa, Dona, 4 módulos ligados |
+| Dados nas telas da base | `montar_carga_base.py` (CSVs → vendas, itens, pagamentos, clientes, produtos, caixa, contas, compras, estoque) | `testar_carga_base.sh` (banco local como remix novo): contagens = resumo, 2ª carga não duplica, venda = itens = pagamentos, caixa fecha, nada no futuro, a dona vê tudo e outra pessoa 0; sabotagem (some 1 item) reprovada |
+
+Números da carga de 13/11: 6.142 vendas (5.973 concluídas), 17.134 itens, 900 clientes, 129 produtos, 181 caixas, 444 contas a pagar,
+2.670 a receber, 259 compras, 8.326 movimentos de estoque; DRE pelo site: set. lucro R$ 31.134, out. R$ 24.601 (CMV ~25%); nov. parcial.
+`demo/criar_usuario_teste.ts` ficou sem uso (o vínculo é o gatilho da base, não a RPC `pizzalia_vincular_usuario_demo`).
+Ainda não entraram: os módulos próprios (cardápio de pizza, pedidos pelo link, CRM) — sem tela na base ainda.
+
 ## Remoção da demo
 Sempre pelo `store_id` da loja demo (`1e45234c-bd80-52ab-b4e0-983c9d2eee6b`), nunca por filtro genérico; o login de
 teste é apagado pelo painel do Supabase.
