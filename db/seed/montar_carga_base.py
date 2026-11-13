@@ -438,6 +438,16 @@ SELECT {q(L)}, p.id, {q(hoje.isoformat())}, '2027-12-31' FROM public.subscriptio
         inserts("cardapio_itens", C("id", "user_id", "categoria_id", "nome", "preco", "ordem", "ativo"), citens_c),
     ])
     blocos["70_cardapio"] = f"DO $cardapio$ BEGIN IF to_regclass('public.cardapio_sabores') IS NULL THEN RAISE NOTICE 'cardápio (M02) ainda não instalado: pulado'; RETURN; END IF;\nEXECUTE {q(corpo)};\nEND $cardapio$;"
+    # link de pedidos (módulo M03 da Pizzalia: pedido_link_*, migration 20261125010000); só entra se as tabelas existirem
+    tenant = ler(E, "tenants")[0]
+    bairros = [dict(id=z["id"], user_id=L, nome=z["neighborhood"], taxa_centavos=int(z["fee_cents"]), minutos_extra=int(z["extra_minutes"]))
+               for z in ler(E, "delivery_zones")]
+    corpo_link = "\n".join([
+        f"""INSERT INTO public.pedido_link_config (user_id, slug, ativo, pedido_minimo_centavos, tempo_preparo_min)
+VALUES ({q(L)}, {q(tenant["slug"])}, true, 3000, 40) ON CONFLICT (user_id) DO NOTHING;""",
+        inserts("pedido_link_bairros", C("id", "user_id", "nome", "taxa_centavos", "minutos_extra"), bairros),
+    ])
+    blocos["80_pedido_link"] = f"DO $link$ BEGIN IF to_regclass('public.pedido_link_config') IS NULL THEN RAISE NOTICE 'link de pedidos (M03) ainda não instalado: pulado'; RETURN; END IF;\nEXECUTE {q(corpo_link)};\nEND $link$;"
     blocos["60_extras"] = "\n".join([
         f"""INSERT INTO public.loyalty_config (user_id, points_per_brl, brl_per_point, active, validity_days, birthday_bonus_points)
 SELECT {q(L)}, 1, 0.05, true, 365, 50 WHERE NOT EXISTS (SELECT 1 FROM public.loyalty_config WHERE user_id = {q(L)});""",
