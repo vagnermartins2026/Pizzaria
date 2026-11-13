@@ -23,6 +23,7 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | 15 | Regra de ouro: 7 avisos à MayFlower (2 erros reais confirmados e corrigidos lá: backup por e-mail e página pública travada) | mensagens às sessões |
 | 16 | M03 · Pedido pelo link publicado (/pedir/forno-da-vila-demo): preço recalculado no servidor, sem duplicar | PR #7; pedido de teste R$ 75,90 |
 | 17 | Correção: página pública travava em "Carregando" (1ª resposta do login limpava o cache) | PR #8; conferido no ar |
+| 19 | M12 · Nota fiscal NFC-e no ar e desligada (sem a chave do emissor responde "emissor não configurado"); tela Notas fiscais e aba Fiscal | PR #10; 1.032 testes de banco |
 | 18 | M07 · CRM publicado: 254 clientes para chamar hoje, link de pedidos nas mensagens, 492 autorizações | PR #9; gabarito 466/218 idêntico |
 
 ## 🔧 Falta e eu faço sozinho (ordem recomendada)
@@ -30,7 +31,7 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 |---|---|---|---|
 | A | ✅ feito (item 16) · M03 · Pedido pelo link | sistema | — |
 | B | 🔨 EM ANDAMENTO (branch claude/fila-pedidos) · M04 · Fila de pedidos, balcão/telefone, comanda e pedido → venda | sistema | médio |
-| G | 🔨 EM ANDAMENTO (branch claude/fiscal-pizzalia) · M12 · NFC-e pronta e desligada (falta o emissor) | sistema | grande |
+| G | ✅ feito (item 19) · M12 · NFC-e — o arquivo docs/auditoria/pizzalia-fiscal-planos.sql do pizzalia não liga o módulo nas lojas que JÁ estão no Premium (o do CRM liga); na demo liguei à mão com ligar_modulo. Ajustar o arquivo | sistema | pequeno |
 | H | Pix online no link (Mercado Pago) — depois do M04 | sistema | médio |
 | I | Cardápio, pedidos, CRM e notas dentro do backup da loja | servidor | médio |
 | C | ✅ feito (item 18) · M07 · CRM | sistema | — |
