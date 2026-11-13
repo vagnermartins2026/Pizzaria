@@ -53,7 +53,8 @@ contar() { "${PSQL[@]}" -d "$DB" -tAc "SELECT string_agg(t || '=' || n, ' ' ORDE
   UNION ALL SELECT 'compras', count(*) FROM purchases UNION ALL SELECT 'itens_compra', count(*) FROM purchase_items UNION ALL SELECT 'estoque', count(*) FROM stock_movements
   UNION ALL SELECT 'planos', count(*) FROM subscription_plans UNION ALL SELECT 'assinaturas', count(*) FROM subscriptions
   UNION ALL SELECT 'pontos', count(*) FROM loyalty_transactions UNION ALL SELECT 'metas', count(*) FROM goals UNION ALL SELECT 'cupons', count(*) FROM promotions
-  UNION ALL SELECT 'fixas', count(*) FROM fixed_expenses UNION ALL SELECT 'premios', count(*) FROM loyalty_rewards) x"; }
+  UNION ALL SELECT 'fixas', count(*) FROM fixed_expenses UNION ALL SELECT 'premios', count(*) FROM loyalty_rewards
+  UNION ALL SELECT 'sabores', count(*) FROM cardapio_sabores UNION ALL SELECT 'precos_pizza', count(*) FROM cardapio_sabor_precos UNION ALL SELECT 'itens_cardapio', count(*) FROM cardapio_itens) x"; }
 for vez in 1 2; do
   for f in "$TMP"/carga/*.sql; do
     "${PSQL[@]}" -1 -d "$DB" -f "$f" > /dev/null 2> "$TMP/erro.txt" || { head -c 1500 "$TMP/erro.txt"; falha "carga $(basename "$f") (vez $vez)"; }

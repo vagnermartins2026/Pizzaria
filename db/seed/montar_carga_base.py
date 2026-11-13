@@ -413,6 +413,31 @@ SELECT {q(L)}, p.id, {q(hoje.isoformat())}, '2027-12-31' FROM public.subscriptio
     fixas = [dict(id=uid(L, "fixa", c), user_id=L, description=c, category_id=uid(L, "fincat", c), amount=reais(p["valor_cents"]),
                   due_day=int(p["vencimento"][8:]), active=True, start_date=min(x["vencimento"] for x in pagar if x["categoria"] == c),
                   notes="Despesa fixa fictícia (DEMO)") for c, p in sorted(ultima.items())]
+    # cardápio de pizza (módulo M02 da Pizzalia: tabelas cardapio_*, migration 20261124010000); só entra se as tabelas existirem
+    cat_rows = ler(E, "categories")
+    ccats = [dict(id=c["id"], user_id=L, nome=c["name"], ordem=int(c["sort_order"]), ativo=c["active"] == "True") for c in cat_rows]
+    ctams = [dict(id=t["id"], user_id=L, nome=t["name"], fatias=int(t["slices"]), max_sabores=int(t["max_flavors"]), ordem=int(t["sort_order"]))
+             for t in ler(E, "pizza_sizes")]
+    csabs = [dict(id=sid, user_id=L, categoria_id=v["category_id"], nome=v["name"], ordem=k, ativo=v["active"] == "True")
+             for k, (sid, v) in enumerate(sabores.items())]
+    cprecos = [dict(id=uid(L, "cardapio_preco", fp["flavor_id"], fp["size_id"]), user_id=L, sabor_id=fp["flavor_id"], tamanho_id=fp["size_id"],
+                    preco=reais(fp["price_cents"])) for fp in ler(E, "flavor_prices")]
+    cgrupos = [dict(id=g["id"], user_id=L, nome=g["name"], tipo="borda" if "orda" in g["name"] else "adicional",
+                    min_escolhas=int(g["min_choices"]), max_escolhas=int(g["max_choices"])) for g in ler(E, "addon_groups")]
+    cadds = [dict(id=x["id"], user_id=L, grupo_id=x["group_id"], nome=x["name"], preco=reais(x["price_cents"]), ordem=k)
+             for k, x in enumerate(ler(E, "addons"))]
+    citens_c = [dict(id=x["id"], user_id=L, categoria_id=x["category_id"], nome=x["name"], preco=reais(x["price_cents"]), ordem=k, ativo=x["active"] == "True")
+                for k, x in enumerate(ler(E, "products"))]
+    corpo = "\n".join([
+        inserts("cardapio_categorias", C("id", "user_id", "nome", "ordem", "ativo"), ccats),
+        inserts("cardapio_tamanhos", C("id", "user_id", "nome", "fatias", "max_sabores", "ordem"), ctams),
+        inserts("cardapio_sabores", C("id", "user_id", "categoria_id", "nome", "ordem", "ativo"), csabs),
+        inserts("cardapio_sabor_precos", C("id", "user_id", "sabor_id", "tamanho_id", "preco"), cprecos),
+        inserts("cardapio_grupos_adicionais", C("id", "user_id", "nome", "tipo", "min_escolhas", "max_escolhas"), cgrupos),
+        inserts("cardapio_adicionais", C("id", "user_id", "grupo_id", "nome", "preco", "ordem"), cadds),
+        inserts("cardapio_itens", C("id", "user_id", "categoria_id", "nome", "preco", "ordem", "ativo"), citens_c),
+    ])
+    blocos["70_cardapio"] = f"DO $cardapio$ BEGIN IF to_regclass('public.cardapio_sabores') IS NULL THEN RAISE NOTICE 'cardápio (M02) ainda não instalado: pulado'; RETURN; END IF;\nEXECUTE {q(corpo)};\nEND $cardapio$;"
     blocos["60_extras"] = "\n".join([
         f"""INSERT INTO public.loyalty_config (user_id, points_per_brl, brl_per_point, active, validity_days, birthday_bonus_points)
 SELECT {q(L)}, 1, 0.05, true, 365, 50 WHERE NOT EXISTS (SELECT 1 FROM public.loyalty_config WHERE user_id = {q(L)});""",
@@ -430,7 +455,8 @@ SELECT {q(L)}, 1, 0.05, true, 365, 50 WHERE NOT EXISTS (SELECT 1 FROM public.loy
                   movimentos_caixa=len(cmov), contas_pagar=len(contas_pagar), contas_receber=len(contas_receber), compras=len(compras_l),
                   itens_compra=len(citens_l), movimentos_estoque=len(estoque),
                   receita_concluida=round(sum(v["gross_total"] for v in vendas if v["status"] == "concluida"), 2),
-                  pontos=len(pontos), metas=len(metas), cupons=len(cupons), despesas_fixas=len(fixas))
+                  pontos=len(pontos), metas=len(metas), cupons=len(cupons), despesas_fixas=len(fixas),
+                  cardapio_sabores=len(csabs), cardapio_precos=len(cprecos), cardapio_itens=len(citens_c))
     with open(os.path.join(a.saida, "resumo.json"), "w", encoding="utf-8") as f:
         json.dump(resumo, f, ensure_ascii=False, indent=1)
     print(json.dumps(resumo, ensure_ascii=False))
