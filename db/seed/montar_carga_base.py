@@ -378,6 +378,50 @@ SELECT {q(L)}, p.id, {q(hoje.isoformat())}, '2027-12-31' FROM public.subscriptio
         inserts("purchase_items", C("id", "purchase_id", "product_id", "quantity", "unit_cost", "subtotal", "user_id"), citens_l),
     ])
     blocos["51_estoque"] = inserts("stock_movements", C("id", "user_id", "product_id", "type", "quantity", "reason", "notes", "created_at"), estoque)
+
+    # ---------------- clube, metas, cupons e despesas fixas (as telas que ficavam vazias) ----------------
+    # clube: 1 ponto por real, como a rotina de venda da base (FLOOR(base x points_per_brl)); validade de 365 dias
+    pontos = [dict(id=uid(L, "pontos", v["id"]), user_id=L, customer_id=v["customer_id"], sale_id=v["id"], type="ganho",
+                   points=int(v["gross_total"]), created_at=v["created_at"],
+                   expires_at=(datetime.fromisoformat(v["created_at"]) + timedelta(days=365)).isoformat())
+              for v in vendas if v["status"] == "concluida" and v["customer_id"] and int(v["gross_total"]) > 0]
+    premios = [dict(id=uid(L, "premio", n), user_id=L, title=t, description=d, points_cost=c, voucher_valid_days=30, active=True, sort_order=n)
+               for n, (t, d, c) in enumerate([("Borda recheada grátis", "Uma borda recheada em qualquer pizza grande ou família.", 200),
+                                              ("Refrigerante 2 L grátis", "Um refrigerante de 2 litros no próximo pedido.", 300),
+                                              ("Pizza broto grátis", "Uma pizza broto de qualquer sabor salgado.", 600)])]
+    # metas: faturamento de cada mês (10% acima do mês anterior, arredondado) e ticket médio do mês atual
+    por_mes = defaultdict(float)
+    for v in vendas:
+        if v["status"] == "concluida":
+            por_mes[v["created_at"][:7]] += v["gross_total"]
+    meses = sorted(por_mes)
+    metas = []
+    for i, m in enumerate(meses):
+        base_m = por_mes[meses[i - 1]] if i else por_mes[m]
+        metas.append(dict(id=uid(L, "meta", m), user_id=L, name=f"Faturamento de {m[5:]}/{m[:4]}", type="faturamento",
+                          target_value=float(round(base_m * 1.1, -3)), month=int(m[5:]), year=int(m[:4]), active=True))
+    metas.append(dict(id=uid(L, "meta", "ticket", meses[-1]), user_id=L, name="Ticket médio do mês", type="ticket_medio",
+                      target_value=105.0, month=int(meses[-1][5:]), year=int(meses[-1][:4]), active=True))
+    cupons = [dict(id=uid(L, "cupom", c), user_id=L, name=n, type="percent", value=v, applies_to="all", min_purchase=mn, coupon_code=c,
+                   start_date=(hoje - timedelta(days=30)).isoformat(), end_date=(hoje + timedelta(days=60)).isoformat(), active=True, max_uses=None)
+              for n, v, mn, c in [("Boas-vindas: 10% no 1º pedido", 10.0, 60.0, "BEMVINDO10"), ("Família: 15% acima de R$ 120", 15.0, 120.0, "FAMILIA15")]]
+    # despesas fixas: as contas mensais (o valor e o dia de vencimento do último mês de cada uma)
+    ultima = {}
+    for p in pagar:
+        if p["categoria"] in FIXAS and (p["categoria"] not in ultima or p["vencimento"] > ultima[p["categoria"]]["vencimento"]):
+            ultima[p["categoria"]] = p
+    fixas = [dict(id=uid(L, "fixa", c), user_id=L, description=c, category_id=uid(L, "fincat", c), amount=reais(p["valor_cents"]),
+                  due_day=int(p["vencimento"][8:]), active=True, start_date=min(x["vencimento"] for x in pagar if x["categoria"] == c),
+                  notes="Despesa fixa fictícia (DEMO)") for c, p in sorted(ultima.items())]
+    blocos["60_extras"] = "\n".join([
+        f"""INSERT INTO public.loyalty_config (user_id, points_per_brl, brl_per_point, active, validity_days, birthday_bonus_points)
+SELECT {q(L)}, 1, 0.05, true, 365, 50 WHERE NOT EXISTS (SELECT 1 FROM public.loyalty_config WHERE user_id = {q(L)});""",
+        inserts("loyalty_transactions", C("id", "user_id", "customer_id", "sale_id", "type", "points", "created_at", "expires_at"), pontos),
+        inserts("loyalty_rewards", C("id", "user_id", "title", "description", "points_cost", "voucher_valid_days", "active", "sort_order"), premios),
+        inserts("goals", C("id", "user_id", "name", "type", "target_value", "month", "year", "active"), metas),
+        inserts("promotions", C("id", "user_id", "name", "type", "value", "applies_to", "min_purchase", "coupon_code", "start_date", "end_date", "active", "max_uses"), cupons),
+        inserts("fixed_expenses", C("id", "user_id", "description", "category_id", "amount", "due_day", "active", "start_date", "notes"), fixas),
+    ])
     for nome, sql in blocos.items():
         with open(os.path.join(a.saida, nome + ".sql"), "w", encoding="utf-8") as f:
             f.write(f"-- Pizzalia · carga DEMO na base ({nome}) · loja {L} · gerado por db/seed/montar_carga_base.py\n{sql}\n")
@@ -385,7 +429,8 @@ SELECT {q(L)}, p.id, {q(hoje.isoformat())}, '2027-12-31' FROM public.subscriptio
                   vendas_concluidas=sum(v["status"] == "concluida" for v in vendas), itens=len(vitens), caixas=len(caixas),
                   movimentos_caixa=len(cmov), contas_pagar=len(contas_pagar), contas_receber=len(contas_receber), compras=len(compras_l),
                   itens_compra=len(citens_l), movimentos_estoque=len(estoque),
-                  receita_concluida=round(sum(v["gross_total"] for v in vendas if v["status"] == "concluida"), 2))
+                  receita_concluida=round(sum(v["gross_total"] for v in vendas if v["status"] == "concluida"), 2),
+                  pontos=len(pontos), metas=len(metas), cupons=len(cupons), despesas_fixas=len(fixas))
     with open(os.path.join(a.saida, "resumo.json"), "w", encoding="utf-8") as f:
         json.dump(resumo, f, ensure_ascii=False, indent=1)
     print(json.dumps(resumo, ensure_ascii=False))
