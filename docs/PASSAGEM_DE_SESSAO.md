@@ -6,6 +6,8 @@
 PR #12). Banco Supabase `tsidqofldtkkgexbmtor` com 191 migrations. Tudo o que está no ar foi conferido: veja `docs/BACKLOG.md`
 (itens 1–21).
 
+**17/11/2026 (sessão seguinte):** retomada travada no início — o pedido para anexar o `vagnermartins2026/pizzalia` à sessão (add_repo) foi recusado pelo controle de permissões automático, e sem ele não dá para clonar o sistema. Nada foi mudado em H nem em I. Para destravar: o dono autoriza o add_repo na sessão (ou inicia a sessão já com o `pizzalia` anexado).
+
 **Em execução (parado no meio e salvo no GitHub, NÃO juntado):**
 | Item | Ramo no `pizzalia` | Último commit | Onde parou |
 |---|---|---|---|
