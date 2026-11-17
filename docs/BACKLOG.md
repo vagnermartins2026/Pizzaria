@@ -1,6 +1,6 @@
 # Backlog da Pizzalia (atualizado em 17/11/2026)
 
-Sistema publicado: https://pizzalia.lovable.app (versão `mwfm8jo4`, commit `e5d1b930` da main do `vagnermartins2026/pizzalia`).
+Sistema publicado: https://pizzalia.lovable.app (versão `mwl3blvy`, commit `f57bf921` da main do `vagnermartins2026/pizzalia`).
 Retomada da próxima sessão: `docs/PASSAGEM_DE_SESSAO.md`.
 Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofldtkkgexbmtor` (grátis).
 
@@ -27,6 +27,7 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | 20 | M04 · Fila de pedidos no ar: tempo real, balcão/telefone, comanda, pedido → venda (pedido nº 2 virou a venda 6143, R$ 79,90, no caixa aberto) | PR #12; rush 30/30 |
 | 21 | Pedido completo pela tela do link no celular (R$ 79,90) e planos do fiscal corrigidos | PR #11 |
 | 19 | M12 · Nota fiscal NFC-e no ar e desligada (sem a chave do emissor responde "emissor não configurado"); tela Notas fiscais e aba Fiscal | PR #10; 1.032 testes de banco |
+| 22 | H · Pix online no link no ar e desligado: sem as chaves do Mercado Pago da loja, o "Pix agora" não aparece e o pedido com Pix é recusado com aviso claro; pedido de teste nº 3 (R$ 67,90) criado, clique duplo sem duplicar, página do pedido no celular sem erro, depois cancelado | PR #13; banco 1060/1060, tela 3247/3247, 30/30 sabotagens; migration 192 aplicada; funções pedido-link (v4) e pedido-link-aviso (v1) |
 | 18 | M07 · CRM publicado: 254 clientes para chamar hoje, link de pedidos nas mensagens, 492 autorizações | PR #9; gabarito 466/218 idêntico |
 
 ## 🔧 Falta e eu faço sozinho (ordem recomendada)
@@ -35,7 +36,7 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | A | ✅ feito (item 16) · M03 · Pedido pelo link | sistema | — |
 | B | ✅ feito (item 20) · M04 · Fila de pedidos | sistema | — |
 | G | ✅ feito (itens 19 e 21) · M12 · NFC-e | sistema | — |
-| H | 🟡 em execução · Pix online no link (Mercado Pago) — ramo `claude/pix-link` (`fce7bca7`), banco 1060/1060, falta tela + ensaio | sistema | médio |
+| H | ✅ feito (item 22) · Pix online no link | sistema | — |
 | I | 🟡 em execução · Cardápio, pedidos, CRM e notas dentro do backup da loja — ramo `claude/backup-modulos` (`c697fab9`), falta ler o placar + ensaio | servidor | médio |
 | J | Página pública do link mais leve no celular (hoje ~9 s em 4G lento; base do app e 7 famílias de fonte herdadas) | tela | médio |
 | C | ✅ feito (item 18) · M07 · CRM | sistema | — |
@@ -47,7 +48,7 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 |---|---|---|---|
 | D1 | Registrar pizzalia.com.br e pizzalia.app | o nome pode ser registrado por outra pessoa | registrar hoje |
 | 2FA | Ativar o código no seu login | sem isso o roteiro não libera o painel Contera | 5 minutos, passo a passo enviado |
-| MP | Conta e chaves do Mercado Pago | cobrar a mensalidade e o Pix online | quando for vender (a conciliação está pausada até lá) |
+| MP | Conta e chaves do Mercado Pago | cobrar a mensalidade e o Pix online (para ligar o Pix de uma pizzaria: as chaves dela nos segredos do servidor, `PEDIDO_LINK_<ID DA LOJA>_MP_ACCESS_TOKEN` e `_MP_WEBHOOK_SECRET`, e o aviso do Mercado Pago apontando para a função `pedido-link-aviso`) | quando for vender (a conciliação está pausada até lá) |
 | R2 | Cópia do backup fora do Supabase (Cloudflare R2) | segurança se o Supabase falhar | AUTORIZADO em 13/11 ("PODE CRIAR O R2"), mas TRAVADO: a chave da Cloudflare desta sessão não tem permissão de R2 nem de criar chaves (Authentication error / Unauthorized). Falta o dono ampliar a permissão (opção A) ou criar o bucket e a chave no painel (opção B) |
 | MP-pausa | A conciliação do Mercado Pago está PAUSADA (cron mp-reconcile-30min) até existirem as chaves | evitava um alarme crítico a cada 30 min | religar junto com o MP: `cron.alter_job(..., active := true)` |
 | Fiscal | Emissor parceiro (NFC-e) e certificado A1 | nota fiscal é do plano Premium | decidir o parceiro antes de vender o Premium |
