@@ -1,38 +1,19 @@
 # Passagem de sessão — Pizzalia
 
-## ▶️ RETOMADA (17/11/2026, 12h55 UTC) — comece por aqui
+## ▶️ RETOMADA (17/11/2026, 21h UTC) — comece por aqui
 
-**Estado:** sistema no ar em https://pizzalia.lovable.app (build `mwfm8jo4`, main do `vagnermartins2026/pizzalia` = `e5d1b930`,
-PR #12). Banco Supabase `tsidqofldtkkgexbmtor` com 191 migrations. Tudo o que está no ar foi conferido: veja `docs/BACKLOG.md`
-(itens 1–21).
+**Estado:** sistema no ar em https://pizzalia.lovable.app (build `mwl5hb6w`, main do `vagnermartins2026/pizzalia` = `9f25970c`, PR #16).
+Banco `tsidqofldtkkgexbmtor` com 193 migrations. Nesta sessão entraram e foram conferidos no ar: H (Pix no link, PR #13), I (módulos no
+backup, PR #14), E (atalhos, PR #15) e J 1ª parte (cardápio cedo, PR #16) — itens 22–25 do `docs/BACKLOG.md`. Nada em execução.
 
-**17/11/2026 (sessão seguinte):** retomada travada no início — o pedido para anexar o `vagnermartins2026/pizzalia` à sessão (add_repo) foi recusado pelo controle de permissões automático, e sem ele não dá para clonar o sistema. Nada foi mudado em H nem em I. Para destravar: o dono autoriza o add_repo na sessão (ou inicia a sessão já com o `pizzalia` anexado).
+**O que ainda dá para fazer sem o dono:** só o J2 (opcional, grande). O resto do backlog depende do dono (seção 🙋).
 
-**Em execução (parado no meio e salvo no GitHub, NÃO juntado):**
-| Item | Ramo no `pizzalia` | Último commit | Onde parou |
-|---|---|---|---|
-| H · Pix online no link | `claude/pix-link` | `fce7bca7` | bateria do banco 1060/1060; falta a suíte de tela inteira |
-| I · Módulos novos no backup | `claude/backup-modulos` | `c697fab9` | rodada final da bateria do banco (placar não lido) |
-Os dois ajudantes pararam pelo limite de 5 horas da assinatura (não foi erro do código).
-
-**Próximo passo, nesta ordem, para cada ramo (H primeiro, depois I):**
-1. Clonar o `pizzalia`, criar uma pasta por ramo (`git worktree add ../pizzalia-pix claude/pix-link`) e instalar (`npm install --no-audit --no-fund`).
-2. Ligar o Postgres local (`service postgresql start`; usuário/senha `postgres`) e rodar a bateria de banco
-   (`MF_SQL_TEST_HOST=localhost MF_SQL_TEST_PORT=5432 MF_SQL_TEST_USER=postgres PGPASSWORD=postgres npx vitest run src/__tests__/sql`) e a de tela (`npx vitest run`).
-3. Juntar a main no ramo; conflito de contagem/catálogo = somar os dois lados; renumerar sabotagem se colidir (faixas: Pix s2380–s2409, Backup s2410–s2439).
-4. Ensaio no banco real: migration dentro de `BEGIN … ROLLBACK` pela API de administração.
-5. PR → merge com o SHA completo (`git rev-parse HEAD` → `expectedHeadSha`); mensagem em português.
-6. Aplicar: `python3 /home/user/Pizzaria/scripts/ops/aplica.py supabase/migrations` (rodar dentro do clone do `pizzalia`).
-7. Funções mudadas: `python3 /home/user/Pizzaria/scripts/ops/publica.py <slugs>` (Pix: `pedido-link pedido-link-aviso`; conferir `config.toml`).
-8. Esperar o Lovable sincronizar (`get_project` → `latest_commit_sha`) e publicar (`deploy_project`); conferir `version.json`.
-9. Conferir no ar (Playwright no celular, sessão por link mágico) e atualizar `docs/BACKLOG.md` deste repositório.
-- Pix: sem as chaves do Mercado Pago da loja, o Pix fica desligado — conferir que a tela não oferece Pix e não quebra o pedido.
-
-**Depois de H e I (eu faço sozinho):** E (cardápio no Ctrl+K e na barra do celular) · J (página `/pedir` mais leve, hoje ~9 s em 4G lento).
-
-**Depende do dono (backlog `docs/BACKLOG.md`, seção 🙋):** R2 (falta ampliar a chave da Cloudflare ou criar bucket e chave no painel) ·
-D1 domínios · 2FA no login dele (depois rodar `scripts/master/criar-admin-geral.sql` do `pizzalia`) · Mercado Pago (religar o cron
-`mp-reconcile-30min`) · emissor fiscal + certificado A1 · Resend · Turnstile · D2/D3/D8 · decisões N1–N7 (padrão em uso).
+**Avisos para a próxima sessão:**
+- O controle de permissões automático barra ações que vêm só da mensagem de retomada: anexar repositórios (add_repo), aplicar migration no
+  banco real e gerar login de teste. Peça ao dono, na conversa, "pode anexar" e "pode aplicar no banco e publicar" logo no início.
+- O Postgres local vem sem senha: `su postgres -c "psql -qc \"ALTER USER postgres PASSWORD 'postgres'\""` antes da bateria.
+- Merge: copie o SHA completo de `git rev-parse HEAD` (nesta sessão, um SHA digitado de memória deu 409 de novo).
+- Sabotagens: rode só as suítes do módulo (`MF_SQL_TEST_SABOTAGE=... npx vitest run <arquivo>`); a suíte inteira por sabotagem leva horas.
 
 ## Ferramentas e fatos que economizam tempo
 - SQL no banco real: `POST https://api.supabase.com/v1/projects/tsidqofldtkkgexbmtor/database/query` com `{"query": ...}` — a chave entra sozinha pelo proxy (`Authorization: Bearer x`). Nunca imprimir segredo.
