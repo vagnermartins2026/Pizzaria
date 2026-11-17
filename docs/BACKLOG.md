@@ -39,9 +39,9 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | G | ✅ feito (itens 19 e 21) · M12 · NFC-e | sistema | — |
 | H | ✅ feito (item 22) · Pix online no link | sistema | — |
 | I | ✅ feito (item 23) · Módulos novos dentro do backup | servidor | — |
-| J | Página pública do link mais leve no celular (medido: cardápio na tela em 7,3–9,5 s em 4G lento; o pedido do cardápio só sai aos 5,8 s, depois de baixar e rodar 61 arquivos de código; fontes não são o gargalo principal) | tela | médio |
+| J | 🟡 1ª parte juntada (PR #16), falta publicar e medir no ar: o cardápio é pedido no primeiro instante (script no <head>). 2ª parte, se ainda for pouco: cortar o código que a página pública baixa (hoje 61 arquivos, 316 kB) · Página pública do link mais leve no celular (medido: cardápio na tela em 7,3–9,5 s em 4G lento; o pedido do cardápio só sai aos 5,8 s, depois de baixar e rodar 61 arquivos de código; fontes não são o gargalo principal) | tela | médio |
 | C | ✅ feito (item 18) · M07 · CRM | sistema | — |
-| E | 🟡 em execução · Barra do celular (Início, Pedidos, Cardápio) e busca rápida com sabores e "Novo pedido" — ramo `claude/cardapio-atalhos` | tela | pequeno |
+| E | 🟡 juntado (PR #15), falta publicar e conferir no ar · Barra do celular (Início, Pedidos, Cardápio) e busca rápida com sabores e "Novo pedido" | tela | pequeno |
 | F | Ligar o domínio ao site e ao sistema (depois do D1) | Cloudflare/Lovable | pequeno |
 
 | K | Regra de ouro (sem urgência): o filtro de `roda-sabotagens.sh` da MayFlower lê "aprovado" como "prova" (corrigido aqui no PR #13); lá nenhum teste é afetado hoje, por isso não houve aviso | — | — |
