@@ -1,6 +1,7 @@
-# Backlog da Pizzalia (atualizado em 13/11/2026)
+# Backlog da Pizzalia (atualizado em 17/11/2026)
 
-Sistema publicado: https://pizzalia.lovable.app (versão `mwfbd91y`, commit `5f62c2e` da main do `vagnermartins2026/pizzalia`).
+Sistema publicado: https://pizzalia.lovable.app (versão `mwfm8jo4`, commit `e5d1b930` da main do `vagnermartins2026/pizzalia`).
+Retomada da próxima sessão: `docs/PASSAGEM_DE_SESSAO.md`.
 Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofldtkkgexbmtor` (grátis).
 
 ## ✅ Feito e verificado
@@ -34,8 +35,8 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | A | ✅ feito (item 16) · M03 · Pedido pelo link | sistema | — |
 | B | ✅ feito (item 20) · M04 · Fila de pedidos | sistema | — |
 | G | ✅ feito (itens 19 e 21) · M12 · NFC-e | sistema | — |
-| H | Pix online no link (Mercado Pago) — depois do M04 | sistema | médio |
-| I | Cardápio, pedidos, CRM e notas dentro do backup da loja | servidor | médio |
+| H | 🟡 em execução · Pix online no link (Mercado Pago) — ramo `claude/pix-link` (`fce7bca7`), banco 1060/1060, falta tela + ensaio | sistema | médio |
+| I | 🟡 em execução · Cardápio, pedidos, CRM e notas dentro do backup da loja — ramo `claude/backup-modulos` (`c697fab9`), falta ler o placar + ensaio | servidor | médio |
 | J | Página pública do link mais leve no celular (hoje ~9 s em 4G lento; base do app e 7 famílias de fonte herdadas) | tela | médio |
 | C | ✅ feito (item 18) · M07 · CRM | sistema | — |
 | E | Cardápio na busca rápida (Ctrl+K) e na barra do celular | tela | pequeno |
