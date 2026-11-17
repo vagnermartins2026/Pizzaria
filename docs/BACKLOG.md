@@ -1,6 +1,6 @@
 # Backlog da Pizzalia (atualizado em 17/11/2026)
 
-Sistema publicado: https://pizzalia.lovable.app (versão `mwl3blvy`, commit `f57bf921` da main do `vagnermartins2026/pizzalia`).
+Sistema publicado: https://pizzalia.lovable.app (versão `mwl4xivg`, commit `d36ab815` da main do `vagnermartins2026/pizzalia`).
 Retomada da próxima sessão: `docs/PASSAGEM_DE_SESSAO.md`.
 Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofldtkkgexbmtor` (grátis).
 
@@ -28,6 +28,7 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | 21 | Pedido completo pela tela do link no celular (R$ 79,90) e planos do fiscal corrigidos | PR #11 |
 | 19 | M12 · Nota fiscal NFC-e no ar e desligada (sem a chave do emissor responde "emissor não configurado"); tela Notas fiscais e aba Fiscal | PR #10; 1.032 testes de banco |
 | 22 | H · Pix online no link no ar e desligado: sem as chaves do Mercado Pago da loja, o "Pix agora" não aparece e o pedido com Pix é recusado com aviso claro; pedido de teste nº 3 (R$ 67,90) criado, clique duplo sem duplicar, página do pedido no celular sem erro, depois cancelado | PR #13; banco 1060/1060, tela 3247/3247, 30/30 sabotagens; migration 192 aplicada; funções pedido-link (v4) e pedido-link-aviso (v1) |
+| 23 | I · Cardápio, pedidos, fila, CRM, fiscal e cobranças do Pix dentro do backup da loja (3.14.0). Corrigido: pizzaria com 1 pedido concluído não conseguia restaurar nenhum backup; evitado: pedido pago por Pix derrubaria a restauração | PR #14; banco 1068/1068, tela 3247/3247, 11/11 sabotagens; migration 193 aplicada; daily-backup v12; backup real da demo com sucesso (20 sabores, 3 pedidos, 522 autorizações) |
 | 18 | M07 · CRM publicado: 254 clientes para chamar hoje, link de pedidos nas mensagens, 492 autorizações | PR #9; gabarito 466/218 idêntico |
 
 ## 🔧 Falta e eu faço sozinho (ordem recomendada)
@@ -37,11 +38,13 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | B | ✅ feito (item 20) · M04 · Fila de pedidos | sistema | — |
 | G | ✅ feito (itens 19 e 21) · M12 · NFC-e | sistema | — |
 | H | ✅ feito (item 22) · Pix online no link | sistema | — |
-| I | 🟡 em execução · Cardápio, pedidos, CRM e notas dentro do backup da loja — ramo `claude/backup-modulos` (`c697fab9`), falta ler o placar + ensaio | servidor | médio |
-| J | Página pública do link mais leve no celular (hoje ~9 s em 4G lento; base do app e 7 famílias de fonte herdadas) | tela | médio |
+| I | ✅ feito (item 23) · Módulos novos dentro do backup | servidor | — |
+| J | Página pública do link mais leve no celular (medido: cardápio na tela em 7,3–9,5 s em 4G lento; o pedido do cardápio só sai aos 5,8 s, depois de baixar e rodar 61 arquivos de código; fontes não são o gargalo principal) | tela | médio |
 | C | ✅ feito (item 18) · M07 · CRM | sistema | — |
-| E | Cardápio na busca rápida (Ctrl+K) e na barra do celular | tela | pequeno |
+| E | 🟡 em execução · Barra do celular (Início, Pedidos, Cardápio) e busca rápida com sabores e "Novo pedido" — ramo `claude/cardapio-atalhos` | tela | pequeno |
 | F | Ligar o domínio ao site e ao sistema (depois do D1) | Cloudflare/Lovable | pequeno |
+
+| K | Regra de ouro (sem urgência): o filtro de `roda-sabotagens.sh` da MayFlower lê "aprovado" como "prova" (corrigido aqui no PR #13); lá nenhum teste é afetado hoje, por isso não houve aviso | — | — |
 
 ## 🙋 Depende do dono
 | # | Item | Por quê | Recomendação |
