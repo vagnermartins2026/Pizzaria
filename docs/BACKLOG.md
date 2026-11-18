@@ -49,7 +49,18 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 
 | K | Regra de ouro (sem urgência): o filtro de `roda-sabotagens.sh` da MayFlower lê "aprovado" como "prova" (corrigido aqui no PR #13); lá nenhum teste é afetado hoje, por isso não houve aviso | — | — |
 
-| K2 | Informação para a MayFlower (desempenho, não é erro): o portal da cliente (/meus-pontos) carrega a mesma raiz pesada; a técnica do J2 (PR #17 da Pizzalia) serviria lá se o portal ficar lento no celular | — | — |
+| K2 | ✅ Técnica do J2 levada aos outros sistemas (pedido do dono, 18/11) — ver a tabela "Página pública leve nos outros sistemas" abaixo | — | — |
+
+## 🌐 Página pública leve nos outros sistemas (18/11/2026)
+| Sistema | Página da cliente | Antes (no ar) | Depois | Situação |
+|---|---|---|---|---|
+| Minha Maleta | /guias, /termos, /parceiras, /privacidade, guias | 704–710 kB | 226–378 kB | ✅ NO AR (PR #184, `ae5473b`); auditoria no ar ok; registro em `docs/qa/99_POS_DEPLOY.md` da Maleta |
+| MayFlower | portal de pontos (/meus-pontos) | 770 kB | 509 kB | 🟡 pronto no ramo `claude/portal-leve` (`8872e05`); entregue à sessão ativa da MayFlower, que confere e publica depois dos lotes dela, com o OK do dono |
+| Gloss Club | agendamento online e portal de pontos | 1.086–1.114 kB | 630–654 kB | 🟡 na `main` (`dc2489e`), NÃO publicado: o salão estava funcionando; publicação agendada para 18/11 20h41 com o salão parado |
+| Cantina da Ná | portal de pontos | 831 kB | — | ⏸️ não aplicar por decisão do dono (18/11); anotado nas pendências da Cantina (`projeto/CONTINUIDADE.md`) |
+| Loja online MayFlower (em breve) | site | 453 kB | — | já enxuto, nada a fazer |
+| Red Adega, Fourteen, Cafuné, Contábil Hub | — | — | — | sem página pública para cliente (só telas com login) |
+| CRM e BI, Financeiro V4, Portal do Franqueado, Central de Chamados, Espetinhos (demo) | — | — | — | não medidos; pelo tipo, só telas com login |
 
 ## 🙋 Depende do dono
 | # | Item | Por quê | Recomendação |
