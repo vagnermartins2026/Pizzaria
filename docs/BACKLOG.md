@@ -57,7 +57,7 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 |---|---|---|---|---|
 | Minha Maleta | /guias, /termos, /parceiras, /privacidade, guias | 704–710 kB | 226–378 kB | ✅ NO AR (PR #184, `ae5473b`); auditoria no ar ok; registro em `docs/qa/99_POS_DEPLOY.md` da Maleta |
 | MayFlower | portal de pontos (/meus-pontos) | 770 kB | 513 kB | ✅ NO AR pela sessão da MayFlower (PR #78 de lá, `0fab2f58`); a conferência cega dela achou a falta do registro na Saúde na partida, corrigido lá e aplicado aqui (item 27) e na Gloss |
-| Gloss Club | agendamento online e portal de pontos | 1.086–1.114 kB | 631–655 kB | 🟡 na `main` (`7a98344`, com o registro na Saúde já na partida), NÃO publicado: o salão estava funcionando; publicação agendada para 18/11 20h41 com o salão parado |
+| Gloss Club | agendamento online e portal de pontos | 1.095–1.114 kB | 659–683 kB (no ar) | ✅ NO AR 18/11 19h (salão parado 0/0; `main` `7a98344` → `index-BtypTACa.js`); conferido no celular sem erros; registro em `docs/qa/CONTINUAR_AQUI.md` da Gloss |
 | Cantina da Ná | portal de pontos | 831 kB | — | ⏸️ não aplicar por decisão do dono (18/11); anotado nas pendências da Cantina (`projeto/CONTINUIDADE.md`) |
 | Loja online MayFlower (em breve) | site | 453 kB | — | já enxuto, nada a fazer |
 | Red Adega, Fourteen, Cafuné, Contábil Hub | — | — | — | sem página pública para cliente (só telas com login) |
