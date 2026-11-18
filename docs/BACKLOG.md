@@ -1,6 +1,6 @@
 # Backlog da Pizzalia (atualizado em 17/11/2026)
 
-Sistema publicado: https://pizzalia.lovable.app (versão `mwm4syrh`, commit `2347f961` da main do `vagnermartins2026/pizzalia`).
+Sistema publicado: https://pizzalia.lovable.app (versão `mwm8pm9r`, commit `085b8ec0` da main do `vagnermartins2026/pizzalia`).
 Retomada da próxima sessão: `docs/PASSAGEM_DE_SESSAO.md`.
 Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofldtkkgexbmtor` (grátis).
 
@@ -32,6 +32,7 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | 24 | E · Barra do celular com Início, Pedidos e Cardápio (Vendas e Estoque de reserva) e busca rápida (Ctrl+K) que acha sabores e itens e oferece "Novo pedido (balcão ou telefone)" | PR #15; tela 3254/3254; 7 testes falham no antigo; conferido no código publicado (o login de teste no ar foi barrado pelo controle de permissões da sessão) |
 | 25 | J (1ª parte) · Link de pedidos pede o cardápio no primeiro instante: no 4G lento o pedido do cardápio saía aos 5,8 s e agora sai em 1,2–1,5 s; cardápio na tela em 5,0–5,7 s (antes 6,3–7,0 s no mesmo teste) | PR #16; tela 3260/3260; medido no ar, sem erro na página |
 | 26 | J2 · Link de pedidos baixa só o que usa: no build, de 61 arquivos/895 kB para 42/481 kB; no ar, 4G lento: cardápio na tela em 3,3–3,9 s (eram 6,3–7,0 s antes do J). Corrigido na conferência cega: navegar do sistema para /pedir sem recarregar derrubaria a tela | PR #17; tela 3268/3268; pedido nº 4 feito pela tela do celular no ar (depois cancelado); tela de entrar sem erro |
+| 27 | Regra de ouro ao contrário (achado da MayFlower): registro na Saúde e tratador de falhas já na partida, fora do link de pedidos (numa aba antiga depois de publicar, o registro se perdia) | PR #18; tela 3268/3268; teste falha sem a correção; no ar `mwm8pm9r` (/pedir sem a Saúde, /login com ela, sem erros) |
 | 18 | M07 · CRM publicado: 254 clientes para chamar hoje, link de pedidos nas mensagens, 492 autorizações | PR #9; gabarito 466/218 idêntico |
 
 ## 🔧 Falta e eu faço sozinho (ordem recomendada)
@@ -55,8 +56,8 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | Sistema | Página da cliente | Antes (no ar) | Depois | Situação |
 |---|---|---|---|---|
 | Minha Maleta | /guias, /termos, /parceiras, /privacidade, guias | 704–710 kB | 226–378 kB | ✅ NO AR (PR #184, `ae5473b`); auditoria no ar ok; registro em `docs/qa/99_POS_DEPLOY.md` da Maleta |
-| MayFlower | portal de pontos (/meus-pontos) | 770 kB | 509 kB | 🟡 pronto no ramo `claude/portal-leve` (`8872e05`); entregue à sessão ativa da MayFlower, que confere e publica depois dos lotes dela, com o OK do dono |
-| Gloss Club | agendamento online e portal de pontos | 1.086–1.114 kB | 630–654 kB | 🟡 na `main` (`dc2489e`), NÃO publicado: o salão estava funcionando; publicação agendada para 18/11 20h41 com o salão parado |
+| MayFlower | portal de pontos (/meus-pontos) | 770 kB | 513 kB | ✅ NO AR pela sessão da MayFlower (PR #78 de lá, `0fab2f58`); a conferência cega dela achou a falta do registro na Saúde na partida, corrigido lá e aplicado aqui (item 27) e na Gloss |
+| Gloss Club | agendamento online e portal de pontos | 1.086–1.114 kB | 631–655 kB | 🟡 na `main` (`7a98344`, com o registro na Saúde já na partida), NÃO publicado: o salão estava funcionando; publicação agendada para 18/11 20h41 com o salão parado |
 | Cantina da Ná | portal de pontos | 831 kB | — | ⏸️ não aplicar por decisão do dono (18/11); anotado nas pendências da Cantina (`projeto/CONTINUIDADE.md`) |
 | Loja online MayFlower (em breve) | site | 453 kB | — | já enxuto, nada a fazer |
 | Red Adega, Fourteen, Cafuné, Contábil Hub | — | — | — | sem página pública para cliente (só telas com login) |
