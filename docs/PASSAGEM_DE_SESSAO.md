@@ -1,12 +1,12 @@
 # Passagem de sessão — Pizzalia
 
-## ▶️ RETOMADA (17/11/2026, 21h UTC) — comece por aqui
+## ▶️ RETOMADA (18/11/2026, 13h UTC) — comece por aqui
 
-**Estado:** sistema no ar em https://pizzalia.lovable.app (build `mwl5hb6w`, main do `vagnermartins2026/pizzalia` = `9f25970c`, PR #16).
+**Estado:** sistema no ar em https://pizzalia.lovable.app (build `mwm4syrh`, main do `vagnermartins2026/pizzalia` = `2347f961`, PR #17).
 Banco `tsidqofldtkkgexbmtor` com 193 migrations. Nesta sessão entraram e foram conferidos no ar: H (Pix no link, PR #13), I (módulos no
-backup, PR #14), E (atalhos, PR #15) e J 1ª parte (cardápio cedo, PR #16) — itens 22–25 do `docs/BACKLOG.md`. Nada em execução.
+backup, PR #14), E (atalhos, PR #15) J 1ª parte (cardápio cedo, PR #16) e J2 (página pública enxuta, PR #17) — itens 22–26 do `docs/BACKLOG.md`. Nada em execução.
 
-**O que ainda dá para fazer sem o dono:** só o J2 (opcional, grande). O resto do backlog depende do dono (seção 🙋).
+**O que ainda dá para fazer sem o dono:** nada pendente. O resto do backlog depende do dono (seção 🙋).
 
 **Avisos para a próxima sessão:**
 - O controle de permissões automático barra ações que vêm só da mensagem de retomada: anexar repositórios (add_repo), aplicar migration no

@@ -1,6 +1,6 @@
 # Backlog da Pizzalia (atualizado em 17/11/2026)
 
-Sistema publicado: https://pizzalia.lovable.app (versão `mwl5hb6w`, commit `9f25970c` da main do `vagnermartins2026/pizzalia`).
+Sistema publicado: https://pizzalia.lovable.app (versão `mwm4syrh`, commit `2347f961` da main do `vagnermartins2026/pizzalia`).
 Retomada da próxima sessão: `docs/PASSAGEM_DE_SESSAO.md`.
 Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofldtkkgexbmtor` (grátis).
 
@@ -31,6 +31,7 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | 23 | I · Cardápio, pedidos, fila, CRM, fiscal e cobranças do Pix dentro do backup da loja (3.14.0). Corrigido: pizzaria com 1 pedido concluído não conseguia restaurar nenhum backup; evitado: pedido pago por Pix derrubaria a restauração | PR #14; banco 1068/1068, tela 3247/3247, 11/11 sabotagens; migration 193 aplicada; daily-backup v12; backup real da demo com sucesso (20 sabores, 3 pedidos, 522 autorizações) |
 | 24 | E · Barra do celular com Início, Pedidos e Cardápio (Vendas e Estoque de reserva) e busca rápida (Ctrl+K) que acha sabores e itens e oferece "Novo pedido (balcão ou telefone)" | PR #15; tela 3254/3254; 7 testes falham no antigo; conferido no código publicado (o login de teste no ar foi barrado pelo controle de permissões da sessão) |
 | 25 | J (1ª parte) · Link de pedidos pede o cardápio no primeiro instante: no 4G lento o pedido do cardápio saía aos 5,8 s e agora sai em 1,2–1,5 s; cardápio na tela em 5,0–5,7 s (antes 6,3–7,0 s no mesmo teste) | PR #16; tela 3260/3260; medido no ar, sem erro na página |
+| 26 | J2 · Link de pedidos baixa só o que usa: no build, de 61 arquivos/895 kB para 42/481 kB; no ar, 4G lento: cardápio na tela em 3,3–3,9 s (eram 6,3–7,0 s antes do J). Corrigido na conferência cega: navegar do sistema para /pedir sem recarregar derrubaria a tela | PR #17; tela 3268/3268; pedido nº 4 feito pela tela do celular no ar (depois cancelado); tela de entrar sem erro |
 | 18 | M07 · CRM publicado: 254 clientes para chamar hoje, link de pedidos nas mensagens, 492 autorizações | PR #9; gabarito 466/218 idêntico |
 
 ## 🔧 Falta e eu faço sozinho (ordem recomendada)
@@ -41,12 +42,14 @@ Site de vendas (prévia): https://pizzalia.pages.dev. Banco: Supabase `tsidqofld
 | G | ✅ feito (itens 19 e 21) · M12 · NFC-e | sistema | — |
 | H | ✅ feito (item 22) · Pix online no link | sistema | — |
 | I | ✅ feito (item 23) · Módulos novos dentro do backup | servidor | — |
-| J2 | (opcional) Página pública ainda mais leve: hoje ela baixa o app inteiro (61 arquivos, 316 kB) antes de mostrar o cardápio (~5 s no 4G lento). Próximo passo seria uma entrada própria e enxuta para /pedir — mudança maior, só vale se as pizzarias reclamarem | tela | grande |
+| J2 | ✅ feito (item 26) · Página pública mais leve | tela | — |
 | C | ✅ feito (item 18) · M07 · CRM | sistema | — |
 | E | ✅ feito (item 24) · Cardápio e fila nos atalhos | tela | — |
 | F | Ligar o domínio ao site e ao sistema (depois do D1) | Cloudflare/Lovable | pequeno |
 
 | K | Regra de ouro (sem urgência): o filtro de `roda-sabotagens.sh` da MayFlower lê "aprovado" como "prova" (corrigido aqui no PR #13); lá nenhum teste é afetado hoje, por isso não houve aviso | — | — |
+
+| K2 | Informação para a MayFlower (desempenho, não é erro): o portal da cliente (/meus-pontos) carrega a mesma raiz pesada; a técnica do J2 (PR #17 da Pizzalia) serviria lá se o portal ficar lento no celular | — | — |
 
 ## 🙋 Depende do dono
 | # | Item | Por quê | Recomendação |
